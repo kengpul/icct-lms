@@ -1,0 +1,88 @@
+<div class="container-fluid contact-details d-none d-sm-block">
+  <div
+    class="container-fluid container-md py-1 d-flex justify-content-center justify-content-md-end"
+  >
+    <ul class="list-group list-group-horizontal">
+      <li class="list-group-item border-end">
+        <i class="fas fa-phone-alt me-1"></i>
+        +63.123.456.7890
+      </li>
+      <li class="list-group-item border-end">
+        <i class="fas fa-envelope me-1"></i>
+        info.icct.edu.ph
+      </li>
+      <li class="list-group-item">
+        Follow us on
+        <i class="fab fa-facebook-f ms-1"></i>
+        <i class="fab fa-twitter mx-1"></i>
+        <i class="fab fa-facebook-messenger"></i>
+      </li>
+    </ul>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a
+      class="navbar-brand me-4 d-flex justify-content-around align-items-center"
+      href="/"
+    >
+      <div>
+        <img src="images/logo.png" class="img-fluid" width="60" alt="" />
+      </div>
+      <div class="ms-2 border-start border-danger">
+        <div class="fs-5 fw-bold ms-1">ICCT Colleges</div>
+        <div class="lead fs-6 ms-1">Believe in Yourself</div>
+      </div>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarText"
+      aria-controls="navbarText"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Programs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Admissions</a>
+        </li>
+      </ul>
+      <ul
+        class="navbar-nav ms-auto mb-2 mb-lg-0 d-flex justify-content-center align-items-start align-items-lg-center"
+      >
+        <% if (!currentUser) { %>
+        <li class="nav-item">
+          <a class="nav-link btn px-3 me-3" href="/login">Log In</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-light px-4 py-1" href="/register"
+            >Sign Up</a
+          >
+        </li>
+        <% } else {%>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-light px-4 py-1" href="/logout"
+            >Log Out</a
+          >
+          <% } %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

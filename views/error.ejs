@@ -1,0 +1,11 @@
+<% layout('layouts/boilerplate') %>
+<div class="container my-5 bg-danger text-white rounded">
+  <div class="row">
+    <div class="col text-break">
+      <h1><%= err.message %></h1>
+      <% if (process.env.NODE_ENV === "production") {%>
+      <p class="lead"><%= err.stack %></p>
+      <% } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+.container-info {
+  background-color: #041562;
+  height: 70vh;
+  border-radius: 0.25rem 0 0 0.25rem;
+  position: relative;
+}
+.container-form {
+  background-color: white;
+  color: black;
+  height: 70vh;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+.w-60 {
+  width: 60%;
+}
+.w-35 {
+  width: 35%;
+}
+.container {
+  padding: 0;
+}
+.footer-info {
+  font-size: 13px;
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+}
+
+.form-control {
+  outline: 0;
+  border-width: 0 0 2px;
+  border-radius: 0;
+}
+
+.btn-secondary {
+  color: #041562 !important;
+}
+.btn-secondary:hover {
+  color: white !important;
+}
+
+@media (max-width: 992px) {
+  .w-60 {
+    width: 90%;
+  }
+}
