@@ -1,0 +1,56 @@
+<nav class="navbar shadow-sm navbar-expand-lg navbar-light">
+  <div class="container-fluid container-lg">
+    <a
+      class="navbar-brand me-4 d-none d-lg-flex justify-content-around align-items-center"
+      href="/home"
+    >
+      <div>
+        <img src="images/logo.png" class="img-fluid" width="50" alt="" />
+      </div>
+      <div class="ms-2 border-start border-4 border-danger">
+        <div class="fs-6 fw-bold ms-1">ICCT Colleges</div>
+        <div class="lead fs-6 ms-1">Learning Management System</div>
+      </div>
+    </a>
+
+    <div class="position-relative" id="navbarSupportedContent">
+      <div class="ms-auto d-flex flex-row-reverse flex-lg-row align-items-center position-relative">
+        <form class="position-relative me-auto ">
+          <input
+            class="form-control me-5 main-search "
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <i class="fas fa-search"></i>
+        </form>
+        <div class="notification-container">
+          <div class="d-flex notification flex-column justify-content-center align-items-center ms-5 me-2">
+            <i class="far fa-bell fa-2x"></i>
+            <span class="text-muted text-notification">Notification</span>
+          </div>
+          <span class="toast-notification"></span>
+        </div>
+        <div class="dropdown">
+            <button class="btn d-flex  align-items-center dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="img-fluid profile-picture me-2" width="50" src="images/profile-picture.jpg" alt="">
+                <div class="d-none d-lg-block">
+                    <div class="fw-bold">Mafia_John Doe da III</div>
+                    <div class="text-muted text-start">Student</div>
+                </div>
+                <i class="fas fa-sort-down ms-3 mb-auto fa-2x d-none d-lg-block"></i>
+            </button>
+            <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i>Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-newspaper"></i>What's New</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle"></i>Help Center</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i>Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

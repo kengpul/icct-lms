@@ -72,6 +72,10 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
+app.get('/home', (req, res) => {
+    res.render('posts/index')
+})
+
 app.use('/', userRoutes);
 
 app.all('*', (req, res, next) => {
