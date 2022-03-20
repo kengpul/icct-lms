@@ -6,6 +6,7 @@
 
 body {
   background-color: #f4f4f7;
+  font-family: "Tw Cen Mt", "Giuconda Regular";
 }
 .navbar {
   background-color: #fff;
@@ -55,6 +56,31 @@ body {
 .dropdown-item i {
   margin-right: 1rem;
   color: #010101;
+}
+
+.side-nav {
+  background-color: #041562;
+}
+.side-nav img,
+.author img {
+  border-radius: 50%;
+}
+.side-nav .btn-primary,
+.posts button {
+  background-color: #041562;
+  border: none;
+}
+.side-nav .btn-primary:hover {
+  background-color: #fff;
+  color: #041562;
+}
+.d-grid .active {
+  background-color: #fff;
+  color: #041562;
+}
+.posts .posts-form {
+  background-color: #f4f4f7;
+  height: 100px;
 }
 
 @media (max-width: 992px) {
