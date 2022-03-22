@@ -14,11 +14,13 @@ const flash = require('connect-flash');
 const User = require('./models/user');
 const ExpressError = require('./utils/ExpressError');
 const MongoStore = require('connect-mongo');
+const methodOverride = require('method-override');
 
 const userRoutes = require('./routes/users');
+const postRoutes = require('./routes/posts');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/authentication'
-mongoose.connect(dbUrl);
+mongoose.connect('mongodb://localhost:27017/authentication');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
@@ -30,7 +32,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
@@ -72,11 +75,9 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
-app.get('/home', (req, res) => {
-    res.render('posts/index')
-})
 
 app.use('/', userRoutes);
+app.use('/post', postRoutes);
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not Found'), 404);

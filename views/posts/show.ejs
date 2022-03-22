@@ -1,0 +1,43 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="author d-flex align-items-center">
+            <img
+              src="/images/user-image.png"
+              class="img-fluid me-2"
+              width="50"
+              alt=""
+            />
+            <h5 class="card-title fw-bold text-capitalize">
+              <%= post.author.username %>
+              <span class="text-muted">Posted to </span>THS1 - CS writing Cainta
+            </h5>
+          </div>
+          <div class="card-text ms-5 fw-bold">
+            <div class="text-muted"><%= post.author.type %></div>
+            <div class="text-muted">
+              Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i>
+            </div>
+          </div>
+          <div class="card-content mt-4">
+            <div class="card-subtitle"><%= post.text %></div>
+          </div>
+          <div
+            class="mt-3 d-inline d-flex justify-content-end align-items-center"
+          >
+            <a class="btn btn-primary px-3" href="/post/<%= post._id %>/edit"
+              >Edit</a
+            >
+            <form action="/post/<%= post._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-danger ms-2">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

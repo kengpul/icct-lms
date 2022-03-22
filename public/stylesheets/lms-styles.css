@@ -8,6 +8,9 @@ body {
   background-color: #f4f4f7;
   font-family: "Tw Cen Mt", "Giuconda Regular";
 }
+a {
+  text-decoration: none;
+}
 .navbar {
   background-color: #fff;
 }

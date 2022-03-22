@@ -1,0 +1,25 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5">
+            <div class="bg-white p-3 rounded">
+                <form action="/post/<%=post._id %>?_method=PUT" method="POST" >
+                  <div class="form-floating">
+                    <textarea
+                      class="form-control posts-form"
+                      placeholder="Update your Post"
+                      id="floatingTextarea2"
+                      name="text"
+                    ><%= post.text %></textarea>
+                    <label for="floatingTextarea2 fw-bold">Update your Post</label>
+                  </div>
+                 <hr class="dropdown-divider " /></li>
+                 <div class="text-end">
+                   <button class="btn btn-primary mt-1 px-4 ">Update</button>
+                  </div>
+                </form>
+              </div>
+        </div>
+    </div>
+</div>

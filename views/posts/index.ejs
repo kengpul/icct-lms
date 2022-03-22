@@ -12,10 +12,10 @@
 </nav>
 <div class="container-fluid">
   <div class="row mt-3 d-flex justify-content-center justify-content-lg-start">
-    <div class="col-0 col-lg-2 d-none d-lg-block side-nav text-white rounded">
+    <div class="col-0 col-lg-2 d-none d-lg-block side-nav text-white rounded h-100">
       <div class="profile mt-3 mb-5 text-center">
         <img
-          src="images/profile-picture.jpg"
+          src="/images/profile-picture.jpg"
           class="img-fluid"
           width="80"
           alt=""
@@ -46,12 +46,13 @@
     </div>
     <div class="col col-lg-4 posts p-0 mx-2">
       <div class="bg-white p-3 rounded">
-      <form action="#" >
+      <form action="/post" method="POST" >
         <div class="form-floating">
           <textarea
             class="form-control posts-form"
             placeholder="Type your post here..."
             id="floatingTextarea2"
+            name="text"
           ></textarea>
           <label for="floatingTextarea2 fw-bold">Type your post here...</label>
         </div>
@@ -62,24 +63,28 @@
       </form>
     </div>
 
+    <% for (let post of posts) {%> 
+      <a class="link-dark" href="/post/<%= post._id %> ">
       <div class="card mt-3">
         <div class="card-body">
           <div class="author d-flex align-items-center">
-            <img src="images/teacher-lexi.jpg" class="img-fluid me-2" width="50" alt="">
-            <h5 class="card-title fw-bold">Lexi Lore <span class="text-muted">Posted an anouncement to </span>THS1 - CS writing Cainta</h5>
+            <img src="images/user-image.png" class="img-fluid me-2" width="50" alt="">
+            <h5 class="card-title fw-bold text-capitalize"><%= post.author.username %>  <span class="text-muted">Posted to </span>THS1 - CS writing Cainta</h5>
           </div>
           <div class="card-text ms-5 fw-bold">
-            <div class="text-muted">Teacher</div>
+            <div class="text-muted"><%= post.author.type %> </div>
             <div class="text-muted">Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i></div>
           </div>
           <div class="card-content mt-4">
-            <div class="card-title fw-bold">CHAPTER 10: HTML - HOW TO MAKE LUMPIA</div>
-            <div class="card-subtitle">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Explicabo, sint quisquam expedita ex, minus, distinctio nisi natus iure labore perspiciatis nam! Odit ipsum assumenda esse aliquid minima vel aliquam impedit?</div>
+            <div class="card-subtitle"><%= post.text %> </div>
           </div>
         </div>
       </div>
+    </a>
+      <% } %> 
+
     </div>
-    <div class="col-0 col-lg-2 p-0 me-2 d-lg-block d-none">
+    <div class="col-0 col-lg-2 p-0 me-2 d-lg-block d-none h-100">
       <div class="side-card bg-white h-50 overflow-hidden rounded">
         <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
           <h5 class="pt-2">MY CLASSES <i class="fas fa-caret-down"></i></h5>
@@ -112,7 +117,7 @@
         </div>
       </div>  
     </div>
-    <div class="col-4 col-lg d-md-block d-none">
+    <div class="col-4 col-lg d-md-block d-none h-100">
       <div class="side-card bg-white h-50 overflow-hidden rounded">
         <div class="upcoming-header d-flex justify-content-between align-items-center pt-2 px-2">
           <h5 class="pt-2">UPCOMING</h5>

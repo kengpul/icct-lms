@@ -64,16 +64,20 @@
               />
               <label for="password">Password</label>
             </div>
-            <div class="form-floating mb-3">
-              <input
-                type="password"
-                class="form-control"
-                id="repeat-password"
-                placeholder="Repeat Password"
+            <div class="mb-3 form-floating">
+              <select
+                id="type"
+                class="form-select"
+                aria-label="Default select example"
+                name="type"
                 required
-              />
-              <label for="repeat-password">Repeat Password</label>
+              >
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+              </select>
+              <label for="type">Account Type</label>
             </div>
+
             <div class="form-check">
               <input
                 class="form-check-input"
