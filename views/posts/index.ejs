@@ -46,13 +46,14 @@
     </div>
     <div class="col col-lg-4 posts p-0 mx-2">
       <div class="bg-white p-3 rounded">
-      <form action="/post" method="POST" >
+      <form action="/post" method="POST" class="validate" novalidate>
         <div class="form-floating">
           <textarea
             class="form-control posts-form"
             placeholder="Type your post here..."
             id="floatingTextarea2"
             name="text"
+            required
           ></textarea>
           <label for="floatingTextarea2 fw-bold">Type your post here...</label>
         </div>

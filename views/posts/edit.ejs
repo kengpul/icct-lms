@@ -4,13 +4,14 @@
     <div class="row">
         <div class="col-md-6 offset-md-3 mt-5">
             <div class="bg-white p-3 rounded">
-                <form action="/post/<%=post._id %>?_method=PUT" method="POST" >
+                <form action="/post/<%=post._id %>?_method=PUT" method="POST" class="validate" novalidate>
                   <div class="form-floating">
                     <textarea
                       class="form-control posts-form"
                       placeholder="Update your Post"
                       id="floatingTextarea2"
                       name="text"
+                      required
                     ><%= post.text %></textarea>
                     <label for="floatingTextarea2 fw-bold">Update your Post</label>
                   </div>
