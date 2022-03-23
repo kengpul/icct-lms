@@ -14,7 +14,6 @@ module.exports.renderRegisterForm = (req, res) => {
 }
 
 module.exports.register = async (req, res, next) => {
-    console.log(req.body)
     try {
         const { username, email, type, password } = req.body;
         const user = new User({ username, email, type });
