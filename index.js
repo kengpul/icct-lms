@@ -72,7 +72,10 @@ app.use((req, res, next) => {
 })
 
 app.get('/', (req, res) => {
-    res.render('home');
+    if (!req.isAuthenticated()) {
+        return res.render('home');
+    }
+    return res.redirect('/post')
 })
 
 
