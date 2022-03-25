@@ -1,8 +1,10 @@
 const Post = require('../models/posts');
+const User = require('../models/user');
 
 module.exports.index = async (req, res) => {
     const posts = await Post.find({}).populate('author');
-    res.render('posts/index', { posts })
+    const user = await User.findById(req.user._id);
+    res.render('posts/index', { posts, user });
 }
 
 module.exports.createPost = async (req, res) => {

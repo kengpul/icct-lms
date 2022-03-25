@@ -32,7 +32,7 @@
 
       <div class="profile-container container">
         <div class="col-md-7 offset-md-3">
-          <form action="#">
+          <form action="/profile" method="POST">
             <div class="profile-row d-flex">
               <div class="profile-col-25">
                 <label for="fname">First Name:</label>
@@ -43,6 +43,7 @@
                   id="fname"
                   name="firstname"
                   placeholder="Given Name"
+                  value="<%= user.firstname %>"
                 />
               </div>
             </div>
@@ -57,6 +58,7 @@
                   id="lname"
                   name="lastname"
                   placeholder="Surname"
+                  value="<%= user.lastname %>"
                 />
               </div>
             </div>
@@ -71,6 +73,7 @@
                   id="bday"
                   name="birthday"
                   placeholder="Month Day,Year"
+                  value="<%= user.birthday %>"
                 />
               </div>
             </div>
@@ -83,8 +86,9 @@
                 <input
                   type="text"
                   id="cnumber"
-                  name="contact number"
+                  name="number"
                   placeholder="Landline or Mobile Number"
+                  value="<%= user.number %>"
                 />
               </div>
             </div>
@@ -97,8 +101,9 @@
                 <input
                   type="text"
                   id="email"
-                  name="Email"
+                  name="email"
                   placeholder="Email Address"
+                  value="<%= user.email %>"
                 />
               </div>
             </div>
@@ -111,8 +116,9 @@
                 <input
                   type="text"
                   id="course"
-                  name="Course"
+                  name="course"
                   placeholder="Course Taken"
+                  value="<%= user.course %>"
                 />
               </div>
             </div>
@@ -129,7 +135,7 @@
                   <option>Angono</option>
                   <option>Antipolo</option>
                   <option>Binangonan</option>
-                  <option>Cainta Main</option>
+                  <option selected>Cainta Main</option>
                   <option>Cogeo</option>
                   <option>San Mateo</option>
                   <option>Sumulong</option>
@@ -140,7 +146,7 @@
 
             <br />
             <div class="profile-row text-end">
-              <input type="submit" value="SAVE" />
+              <input type="submit" class="editBtn" value="SAVE" />
             </div>
           </form>
         </div>

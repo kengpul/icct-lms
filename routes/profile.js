@@ -6,4 +6,6 @@ router.get('/edit', profile.renderEditForm);
 
 router.get('/', profile.index);
 
+router.post('/', profile.edit);
+
 module.exports = router;

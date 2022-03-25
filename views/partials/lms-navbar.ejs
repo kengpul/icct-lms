@@ -35,13 +35,13 @@
             <button class="btn d-flex  align-items-center dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="img-fluid profile-picture me-2" width="50" src="/images/profile-picture.jpg" alt="">
                 <div class="d-none d-lg-block">
-                    <div class="fw-bold">Mafia_John Doe da III</div>
+                    <div class="fw-bold"><%= user.fullName %> </div>
                     <div class="text-muted text-start">Student</div>
                 </div>
                 <i class="fas fa-sort-down ms-3 mb-auto fa-2x d-none d-lg-block"></i>
             </button>
             <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i>Profile</a></li>
+              <li><a class="dropdown-item" href="/profile"><i class="fas fa-user"></i>Profile</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-newspaper"></i>What's New</a></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-question-circle"></i>Help Center</a></li>

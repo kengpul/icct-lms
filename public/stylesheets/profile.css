@@ -30,7 +30,7 @@ label {
   position: relative;
 }
 
-input[type="submit"] {
+.editBtn {
   background-color: #04aa6d;
   color: white;
   padding: 12px 18px;
@@ -40,7 +40,7 @@ input[type="submit"] {
   position: relative;
 }
 
-input[type="submit"]:hover {
+.editBtn:hover {
   background-color: #45a049;
 }
 
@@ -80,7 +80,7 @@ option {
 @media screen and (max-width: 600px) {
   .profile-col-25,
   .profile-col-75,
-  input[type="submit"] {
+  .editBtn {
     width: 100%;
     margin-top: 1;
   }

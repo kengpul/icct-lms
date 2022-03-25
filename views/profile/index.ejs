@@ -32,73 +32,71 @@
 
       <div class="profile-container container">
         <div class="col-md-7 offset-md-3">
-          <form action="#">
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="fname">First Name:</label>
-              </div>
-              <div class="profile-col-75 fs-3">test</div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="fname">First Name:</label>
             </div>
+            <div class="profile-col-75 fs-4"><%= user.firstname %></div>
+          </div>
 
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="lname">Last Name:</label>
-              </div>
-              <div class="profile-col-75">
-                <div class="profile-col-75 fs-3">test</div>
-              </div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="lname">Last Name:</label>
             </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.lastname %></div>
+            </div>
+          </div>
 
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="bday">Birthday:</label>
-              </div>
-              <div class="profile-col-75">
-                <div class="profile-col-75 fs-3">test</div>
-              </div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="bday">Birthday:</label>
             </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.birthday %></div>
+            </div>
+          </div>
 
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="cnumber">Contact Number:</label>
-              </div>
-              <div class="profile-col-75">
-                <div class="profile-col-75 fs-3">test</div>
-              </div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="cnumber">Contact Number:</label>
             </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.number %></div>
+            </div>
+          </div>
 
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="email">E-mail:</label>
-              </div>
-              <div class="profile-col-75">
-                <div class="profile-col-75 fs-3">test</div>
-              </div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="email">E-mail:</label>
             </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.email %></div>
+            </div>
+          </div>
 
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="course">Course:</label>
-              </div>
-              <div class="profile-col-75">
-                <div class="profile-col-75 fs-3">test</div>
-              </div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="course">Course:</label>
             </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.course %></div>
+            </div>
+          </div>
 
-            <div class="profile-row d-flex">
-              <div class="profile-col-25">
-                <label for="country">Campus:</label>
-              </div>
-              <div class="profile-col-75">
-                <div class="profile-col-75 fs-3">test</div>
-              </div>
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="country">Campus:</label>
             </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.campus %></div>
+            </div>
+          </div>
 
-            <br />
-            <div class="profile-row text-end">
-              <input type="submit" value="EDIT" />
-            </div>
-          </form>
+          <br />
+          <div class="profile-row text-end">
+            <a href="/profile/edit" class="editBtn">EDIT</a>
+          </div>
         </div>
       </div>
     </div>
