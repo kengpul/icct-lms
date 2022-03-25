@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const profile = require('../controllers/profile');
+const { validateProfile } = require('../middlewares');
+
+router.route('/')
+    .get(profile.index)
+    .post(validateProfile, profile.edit)
 
 router.get('/edit', profile.renderEditForm);
-
-router.get('/', profile.index);
-
-router.post('/', profile.edit);
 
 module.exports = router;

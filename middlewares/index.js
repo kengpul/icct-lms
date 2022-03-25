@@ -1,4 +1,4 @@
-const { postSchema } = require('../schemas');
+const { postSchema, profileSchema } = require('../schemas');
 const ExpressError = require('../utils/ExpressError');
 const Post = require('../models/posts');
 
@@ -28,4 +28,14 @@ module.exports.isAuthor = async (req, res, next) => {
         return res.redirect(`/post/${id}`);
     }
     next();
+}
+
+module.exports.validateProfile = (req, res, next) => {
+    const { error } = profileSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
 }

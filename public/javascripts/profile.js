@@ -11,7 +11,7 @@ function previewFile() {
         reader.readAsDataURL(file);
     }
 }
-$(function () {
+(function () {
     $('#profile-image1').on('click', function () {
         $('#profile-image-upload').click();
     });
