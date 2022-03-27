@@ -1,0 +1,105 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+<nav class="navbar fixed-bottom navbar-light bg-white d-block d-lg-none">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><i class="fas fa-house-user"></i></a>
+    <a class="navbar-brand" href="#"><i class="fas fa-users"></i></a>
+    <a class="navbar-brand" href="#"><i class="fas fa-desktop"></i></a>
+    <a class="navbar-brand" href="#"><i class="fas fa-list-alt"></i></a>
+    <a class="navbar-brand" href="#"><i class="fas fa-briefcase"></i></a>
+    <a class="navbar-brand" href="#"><i class="fas fa-comment-alt"></i></a>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row mt-3 d-flex justify-content-center">
+    <h1 class="text-center"><%= showClass.name %></h1>
+    <div class="col-3 col-lg-3 d-md-block d-none h-100">
+      <div class="list-group">
+        <% for (let _class of classes) {%>
+        <a href="/class/<%= _class._id %>" type="button" class="list-group-item list-group-item-action"><%= _class.name %></a>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="col col-lg-5 posts p-0 mx-2">
+      <div class="bg-white p-3 rounded">
+      <form action="/post" method="POST" class="validate" novalidate>
+        <div class="form-floating">
+          <textarea
+            class="form-control posts-form"
+            placeholder="Type your post here..."
+            id="floatingTextarea2"
+            name="text"
+            required
+          ></textarea>
+          <label for="floatingTextarea2 fw-bold">Type your post here...</label>
+        </div>
+       <hr class="dropdown-divider " /></li>
+       <div class="text-end">
+        <select name="class" class="form-select" aria-label="Default select example">
+          <option value="<%= showClass._id %>"><%= showClass.name %></option>
+        </select>
+         <button class="btn btn-primary mt-1 px-4 ">Post</button>
+        </div>
+      </form>
+    </div>
+
+    <% for (let post of posts) {%> 
+      <a class="link-dark" href="/post/<%= post._id %>">
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="author d-flex align-items-center">
+            <img src="/images/user-image.png" class="img-fluid me-2" width="50" alt="">
+            <h5 class="card-title fw-bold text-capitalize">
+              <%= post.author.fullName %>  
+              <span class="text-muted">Posted to </span>
+              <%= post.class.name %> 
+            </h5>
+          </div>
+          <div class="card-text ms-5 fw-bold">
+            <div class="text-muted"><%= post.author.type %> </div>
+            <div class="text-muted">Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i></div>
+          </div>
+          <div class="card-content mt-4">
+            <div class="card-subtitle"><%= post.text %> </div>
+          </div>
+        </div>
+      </div>
+    </a>
+      <% } %> 
+    </div>
+
+    <div class="col-3 col-lg-3 d-md-block d-none h-100">
+      <div class="side-card bg-white h-50 overflow-hidden rounded">
+        <div class="upcoming-header d-flex justify-content-between align-items-center pt-2 px-2">
+          <h5 class="pt-2">UPCOMING</h5>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+        <hr class="dropdown-divider " /></li>
+        <div class="upcoming">
+          <div class="d-grid gap-2 ">
+            <div class="d-flex justify-content-start align-items-center">
+              <div>
+                <i class="far fa-file-alt text-white bg-primary border p-2 rounded-circle px-2 mx-2"></i>
+              </div>
+              <div class="pt-3">
+                <h6 class="fs-6">THS1 BSCS OL2216 PART 1 QUIZ</h6>
+                <p class="text-danger">Due Date Dec 11</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-start align-items-center">
+              <div>
+                <i class="far fa-file-alt text-white bg-primary border p-2 rounded-circle px-2 mx-2"></i>
+              </div>
+              <div class="pt-3">
+                <h6 class="fs-6">THS1 BSCS OL2216 PART 2 QUIZ</h6>
+                <p class="text-danger">Due Date Dec 12</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+
+    </div>
+  </div>
+</div>

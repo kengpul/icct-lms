@@ -1,10 +1,12 @@
 const Post = require('../models/posts');
 const User = require('../models/user');
+const Classes = require('../models/class');
 
 module.exports.index = async (req, res) => {
-    const posts = await Post.find({}).populate('author');
+    const posts = await Post.find({}).populate('class').populate('author');
     const user = await User.findById(req.user._id);
-    res.render('posts/index', { posts, user });
+    const classes = await Classes.find({});
+    res.render('posts/index', { posts, user, classes });
 }
 
 module.exports.createPost = async (req, res) => {
@@ -12,11 +14,16 @@ module.exports.createPost = async (req, res) => {
     post.author = req.user._id;
     await post.save();
     req.flash('success', 'Successfully Created a Post');
-    res.redirect('/post');
+    res.redirect(`/class/${post.class}`);
 }
 
 module.exports.showPost = async (req, res) => {
-    const post = await Post.findById(req.params.id).populate('author');
+    const post = await Post.findById(req.params.id).populate({
+        path: 'class',
+        populate: {
+            path: 'name'
+        }
+    }).populate('author');
     res.render('posts/show', { post })
 }
 

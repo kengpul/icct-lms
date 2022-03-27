@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 const passportLocalMongoose = require('passport-local-mongoose');
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -23,7 +24,13 @@ const userSchema = new mongoose.Schema({
             'Angono', 'Antipolo', 'Binangonan', 'Cainta Main',
             'Cogeo', 'San Mateo', 'Sumulong', 'Taytay'
         ]
-    }
+    },
+    classes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Class'
+        }
+    ]
 })
 
 userSchema.virtual('givenName').get(function () {

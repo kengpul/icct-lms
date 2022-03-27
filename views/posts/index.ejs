@@ -24,10 +24,10 @@
         <a href="/profile" class="link-light">View Profile</a>
       </div>
       <div class="d-grid gap-2 mb-5">
-        <a href="#" class="btn btn-primary active fw-bold text-start"
+        <a href="/post" class="btn btn-primary active fw-bold text-start"
           ><i class="fas fa-house-user me-2 "></i>DASHBOARD</a
         >
-        <a href="#" class="btn btn-primary fw-bold text-start"
+        <a href="/class" class="btn btn-primary fw-bold text-start"
           ><i class="fas fa-users me-2"></i>MY CLASS</a
         >
         <a href="#" class="btn btn-primary fw-bold text-start"
@@ -57,9 +57,14 @@
           ></textarea>
           <label for="floatingTextarea2 fw-bold">Type your post here...</label>
         </div>
-       <hr class="dropdown-divider " /></li>
-       <div class="text-end">
-         <button class="btn btn-primary mt-1 px-4 ">Post</button>
+       <hr class="dropdown-divider" /></li>
+       <div class="d-flex justify-content-end align-items-center mt-2">
+        <select name="class" class="form-select" aria-label="Default select example">
+          <% for (let _class of classes) { %> 
+          <option value="<%= _class._id %>"><%= _class.name %></option>
+          <% } %> 
+        </select>
+         <button class="btn btn-primary ms-3 px-4">Post</button>
         </div>
       </form>
     </div>
@@ -70,14 +75,18 @@
         <div class="card-body">
           <div class="author d-flex align-items-center">
             <img src="images/user-image.png" class="img-fluid me-2" width="50" alt="">
-            <h5 class="card-title fw-bold text-capitalize"><%= post.author.fullName %>  <span class="text-muted">Posted to </span>THS1 - CS writing Cainta</h5>
+            <h5 class="card-title fw-bold text-capitalize">
+              <%= post.author.fullName %>  
+              <span class="text-muted">Posted to </span>
+              <%= post.class.name %> 
+          </h5>
           </div>
           <div class="card-text ms-5 fw-bold">
-            <div class="text-muted"><%= post.author.type %> </div>
+            <div class="text-muted"><%= post.author.type %></div>
             <div class="text-muted">Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i></div>
           </div>
           <div class="card-content mt-4">
-            <div class="card-subtitle"><%= post.text %> </div>
+            <div class="card-subtitle"><%= post.text %></div>
           </div>
         </div>
       </div>
@@ -118,7 +127,32 @@
       <div class="side-card bg-white h-50 mt-2 pb-3 overflow-hidden rounded">
         <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
           <h5 class="pt-2">MY CLASSES</h5>
-          <i class="fas fa-ellipsis-v"></i>
+          <div class="dropdown">
+            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join a Class</a></li>
+            </ul>
+          </div>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Join a Class</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-primary px-4">Join</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <hr class="dropdown-divider " /></li>
         <div class="classes">

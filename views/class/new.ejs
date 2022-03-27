@@ -1,0 +1,33 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <form action="/class" method="POST" class="validate" novalidate>
+        <div class="div form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            id="name"
+            placeholder="Name"
+            required
+          />
+          <label for="name">Name of the class</label>
+        </div>
+        <div class="div form-floating mb-3">
+          <input
+            type="text"
+            class="form-control"
+            name="code"
+            id="code"
+            placeholder="code"
+            required
+          />
+          <label for="code">Code of the class</label>
+        </div>
+        <button class="btn btn-primary">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
