@@ -4,9 +4,10 @@ const Classes = require('../models/class');
 
 module.exports.index = async (req, res) => {
     const posts = await Post.find({}).populate('class').populate('author');
-    const user = await User.findById(req.user._id);
+    const user = await User.findById(req.user._id).populate('classes');
     const classes = await Classes.find({});
     res.render('posts/index', { posts, user, classes });
+
 }
 
 module.exports.createPost = async (req, res) => {

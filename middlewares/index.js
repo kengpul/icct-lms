@@ -1,6 +1,7 @@
 const { postSchema, profileSchema } = require('../schemas');
 const ExpressError = require('../utils/ExpressError');
 const Post = require('../models/posts');
+const Class = require('../models/class');
 
 module.exports.validatePost = (req, res, next) => {
     const { error } = postSchema.validate(req.body);
@@ -37,5 +38,16 @@ module.exports.validateProfile = (req, res, next) => {
         throw new ExpressError(msg, 400);
     } else {
         next();
+    }
+}
+
+module.exports.isMember = async (req, res, next) => {
+    const { id } = req.params;
+    const currentClass = await Class.findById(id);
+    if (currentClass.students.includes(req.user._id)) {
+        next();
+    } else {
+        req.flash('error', 'Your not a member')
+        return res.redirect('/class')
     }
 }

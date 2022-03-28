@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const classes = require('../controllers/class');
-const { isLoggedIn } = require('../middlewares');
+const { isLoggedIn, isMember } = require('../middlewares');
 
 router.route('/',)
     .post(isLoggedIn, classes.createClass)
@@ -9,8 +9,11 @@ router.route('/',)
 
 router.get('/new', isLoggedIn, classes.createRenderForm)
 
+router.post('/:id/join', classes.joinClass)
+
+
 router.route('/:id')
-    .get(classes.showClass)
+    .get(isMember, classes.showClass)
 
 
 module.exports = router;
