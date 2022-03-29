@@ -143,13 +143,14 @@
                   <h5 class="modal-title" id="exampleModalLabel">Join a Class</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                  <input type="text" class="form-control">
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                  <button type="button" class="btn btn-primary px-4">Join</button>
-                </div>
+                <form action="/class/join" method="POST" class="validate" novalidate>
+                  <div class="modal-body">
+                      <input type="text" class="form-control" name="code" required>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary px-4">Join</button>
+                  </div>
+              </form>
               </div>
             </div>
           </div>

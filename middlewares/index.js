@@ -42,12 +42,16 @@ module.exports.validateProfile = (req, res, next) => {
 }
 
 module.exports.isMember = async (req, res, next) => {
-    const { id } = req.params;
-    const currentClass = await Class.findById(id);
-    if (currentClass.students.includes(req.user._id)) {
+    try {
+        const { id } = req.params;
+        const currentClass = await Class.findById(id);
+        if (!currentClass.students.includes(req.user._id)) {
+            req.flash('error', 'Your not a member');
+            return res.redirect('/class');
+        }
         next();
-    } else {
-        req.flash('error', 'Your not a member')
-        return res.redirect('/class')
+    } catch (e) {
+        req.flash('error', 'Cannot find that class')
+        res.redirect('/class')
     }
 }

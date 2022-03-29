@@ -10,14 +10,18 @@ const classSchema = new Schema({
         type: String,
         required: true,
     },
+    pending: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     students: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
     ]
-
-    // posts
 })
 
 module.exports = mongoose.model('Class', classSchema);
