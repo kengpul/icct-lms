@@ -14,6 +14,8 @@ module.exports.createRenderForm = (req, res) => {
 module.exports.createClass = async (req, res) => {
     const newClass = new Class(req.body);
     await newClass.save();
+    newClass.students.push(req.user._id);
+    await newClass.save();
     res.redirect('/class');
 }
 

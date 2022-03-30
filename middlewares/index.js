@@ -55,3 +55,11 @@ module.exports.isMember = async (req, res, next) => {
         res.redirect('/class')
     }
 }
+
+module.exports.isTeacher = async (req, res, next) => {
+    if (req.user.type !== 'Teacher') {
+        req.flash('error', 'Only Teacher can do that');
+        res.redirect('/class');
+    }
+    next();
+}

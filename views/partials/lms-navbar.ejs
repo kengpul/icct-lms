@@ -35,8 +35,13 @@
             <button class="btn d-flex  align-items-center dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="img-fluid profile-picture me-2" width="50" src="/images/profile-picture.jpg" alt="">
                 <div class="d-none d-lg-block">
+                  <% if (currentUser) {%> 
                     <div class="fw-bold"><%= currentUser.fullName %></div>
                     <div class="text-muted text-start"><%= currentUser.type %></div>
+                  <% } else { %> 
+                    <div class="fw-bold">Anonymous</div>
+                    <div class="text-muted text-start">Anonymous</div>
+                  <% } %> 
                 </div>
                 <i class="fas fa-sort-down ms-3 mb-auto fa-2x d-none d-lg-block"></i>
             </button>
