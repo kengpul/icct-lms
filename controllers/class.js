@@ -7,15 +7,13 @@ module.exports.index = async (req, res) => {
     res.render('class/index', { classes });
 }
 
-module.exports.createRenderForm = (req, res) => {
-    res.render('class/new');
-}
-
 module.exports.createClass = async (req, res) => {
     const newClass = new Class(req.body);
     await newClass.save();
     newClass.students.push(req.user._id);
+    req.user.classes.push(newClass._id);
     await newClass.save();
+    await req.user.save();
     res.redirect('/class');
 }
 

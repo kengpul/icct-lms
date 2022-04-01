@@ -132,7 +132,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <% if (currentUser.type === 'Teacher') {%> 
-              <li><a class="dropdown-item" href="/class/new">Create a Class</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createClassModal">Create a Class</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join a Class</a></li>
               <% } else { %> 
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join a Class</a></li>
@@ -149,10 +149,53 @@
                 </div>
                 <form action="/class/join" method="POST" class="validate" novalidate>
                   <div class="modal-body">
-                      <input type="text" class="form-control" name="code" required>
+                    <div class="form-floating">
+                      <input type="text" class="form-control" name="code" id="Code" placeholder="Code" required>
+                      <label for="Code">Code</label>
+                    </div>
                   </div>
                   <div class="modal-footer">
                       <button type="submit" class="btn btn-primary px-4">Join</button>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="createClassLabel">Create a Class</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/class" method="POST" class="validate" novalidate>
+                  <div class="modal-body">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        placeholder="Name"
+                        required
+                      />
+                      <label for="name">Name of the class</label>
+                    </div>
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="code"
+                        id="code"
+                        placeholder="code"
+                        required
+                      />
+                      <label for="code">Code of the class</label>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary px-4">Create</button>
                   </div>
               </form>
               </div>

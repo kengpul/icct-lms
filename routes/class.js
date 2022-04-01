@@ -8,8 +8,6 @@ router.route('/',)
     .post(isLoggedIn, isTeacher, catchAsync(classes.createClass))
     .get(isLoggedIn, classes.index)
 
-router.get('/new', isLoggedIn, isTeacher, classes.createRenderForm)
-
 router.post('/join',isLoggedIn, catchAsync(classes.joinClass))
 
 router.get('/:id', isLoggedIn, isMember, catchAsync(classes.showClass))
