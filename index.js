@@ -20,6 +20,7 @@ const userRoutes = require('./routes/users');
 const postRoutes = require('./routes/posts');
 const profileRoutes = require('./routes/profile');
 const classRoutes = require('./routes/class');
+const groupRoutes = require('./routes/group');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/authentication'
 mongoose.connect(dbUrl);
@@ -85,6 +86,7 @@ app.use('/', userRoutes);
 app.use('/post', postRoutes);
 app.use('/profile', profileRoutes);
 app.use('/class', classRoutes);
+app.use('/group', groupRoutes);
 
 app.all('*', (req, res, next) => {
     next(new ExpressError('Page not Found'), 404);

@@ -15,7 +15,11 @@
             <h5 class="card-title fw-bold text-capitalize">
               <%= post.author.fullName %>
               <span class="text-muted">Posted to </span>
-              <%= post.class.name %>
+              <% if (post.class) {%>
+                <%= post.class.name %>  
+               <% }else { %> 
+                <%= post.group.name %> 
+               <% } %> 
             </h5>
           </div>
           <div class="card-text ms-5 fw-bold">

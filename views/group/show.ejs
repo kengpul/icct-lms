@@ -12,17 +12,17 @@
 </nav>
 <div class="container-fluid">
   <div class="row mt-3 d-flex justify-content-center">
-    <h1 class="text-center"><%= showClass.name %></h1>
+    <h1 class="text-center"><%= showGroup.name %></h1>
     <div class="col-3 col-lg-3 d-md-block d-none h-100">
       <div class="list-group">
-        <% for (let _class of classes) {%>
-        <a href="/class/<%= _class._id %>" type="button" class="list-group-item list-group-item-action"><%= _class.name %></a>
+        <% for (let group of groups) {%>
+        <a href="/group/<%= group._id %>" type="button" class="list-group-item list-group-item-action"><%= group.name %></a>
         <% } %>
       </div>
 
       <div class="list-group mt-5">
-        <% for (let pendingStudents of showClass.pending) {%>
-        <form action="/class/<%= showClass._id %>/accept/<%= pendingStudents._id %>" method="POST">
+        <% for (let pendingStudents of showGroup.pending) {%>
+        <form action="/group/<%= showGroup._id %>/accept/<%= pendingStudents._id %>" method="POST">
           <div class="list-group-item  d-flex justify-content-between">
             <%= pendingStudents.username %>
             <button class="btn btn-primary ">Accept</button>
@@ -48,7 +48,7 @@
        <hr class="dropdown-divider " /></li>
        <div class="d-flex justify-content-end align-items-center mt-2">
         <select name="postTo" class="form-select" aria-label="Default select example" required>
-          <option value="<%= showClass._id %>" selected><%= showClass.name %></option>
+          <option value="<%= showGroup._id %>" selected><%= showGroup.name %></option>
         </select>
          <button class="btn btn-primary ms-3 px-4">Post</button>
         </div>
@@ -64,7 +64,7 @@
             <h5 class="card-title fw-bold text-capitalize">
               <%= post.author.fullName %>  
               <span class="text-muted">Posted to </span>
-              <%= post.class.name %> 
+              <%= post.group.name %> 
             </h5>
           </div>
           <div class="card-text ms-5 fw-bold">

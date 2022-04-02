@@ -2,6 +2,7 @@ const { postSchema, profileSchema } = require('../schemas');
 const ExpressError = require('../utils/ExpressError');
 const Post = require('../models/posts');
 const Class = require('../models/class');
+const Group = require('../models/group');
 
 module.exports.validatePost = (req, res, next) => {
     const { error } = postSchema.validate(req.body);
@@ -41,7 +42,7 @@ module.exports.validateProfile = (req, res, next) => {
     }
 }
 
-module.exports.isMember = async (req, res, next) => {
+module.exports.isClassMember = async (req, res, next) => {
     try {
         const { id } = req.params;
         const currentClass = await Class.findById(id);
@@ -53,6 +54,21 @@ module.exports.isMember = async (req, res, next) => {
     } catch (e) {
         req.flash('error', 'Cannot find that class')
         res.redirect('/class')
+    }
+}
+
+module.exports.isGroupMember = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const currentGroup = await Group.findById(id);
+        if (!currentGroup.students.includes(req.user._id)) {
+            req.flash('error', 'Your not a member');
+            return res.redirect('/group');
+        }
+        next();
+    } catch (e) {
+        req.flash('error', 'Cannot find that group')
+        res.redirect('/group')
     }
 }
 

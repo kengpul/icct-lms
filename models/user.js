@@ -30,6 +30,12 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Class'
         }
+    ],
+    groups: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Group'
+        }
     ]
 })
 

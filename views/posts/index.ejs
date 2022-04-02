@@ -59,39 +59,75 @@
         </div>
        <hr class="dropdown-divider" /></li>
        <div class="d-flex justify-content-end align-items-center mt-2">
-        <select name="class" class="form-select" aria-label="Default select example" required>
+        <select name="postTo" class="form-select" aria-label="Default select example" required>
           <% for (let _class of user.classes) { %>
           <option value="<%= _class._id %>"><%= _class.name %></option>
           <% } %> 
+          <% for (let group of user.groups) { %>
+            <option value="<%= group._id %>"><%= group.name %></option>
+            <% } %> 
         </select>
+          
          <button class="btn btn-primary ms-3 px-4">Post</button>
         </div>
       </form>
     </div>
 
-    <% for (let post of posts) {%> 
-      <a class="link-dark" href="/post/<%= post._id %> ">
+    <% for (let classPost of classPosts) {%> 
+      <a class="link-dark" href="/post/<%= classPost._id %> ">
       <div class="card mt-3">
         <div class="card-body">
           <div class="author d-flex align-items-center">
             <img src="images/user-image.png" class="img-fluid me-2" width="50" alt="">
             <h5 class="card-title fw-bold text-capitalize">
-              <%= post.author.fullName %>  
+              <%= classPost.author.fullName %>
               <span class="text-muted">Posted to </span>
-              <%= post.class.name %> 
+               <% if (classPost.class) {%>
+                <%= classPost.class.name %>  
+               <% }else { %> 
+                <%= classPost.group.name %> 
+               <% } %> 
           </h5>
           </div>
           <div class="card-text ms-5 fw-bold">
-            <div class="text-muted"><%= post.author.type %></div>
+            <div class="text-muted"><%= classPost.author.type %></div>
             <div class="text-muted">Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i></div>
           </div>
           <div class="card-content mt-4">
-            <div class="card-subtitle"><%= post.text %></div>
+            <div class="card-subtitle"><%= classPost.text %></div>
           </div>
         </div>
       </div>
     </a>
       <% } %> 
+
+      <% for (let groupPost of groupPosts) {%> 
+        <a class="link-dark" href="/post/<%= groupPost._id %> ">
+        <div class="card mt-3">
+          <div class="card-body">
+            <div class="author d-flex align-items-center">
+              <img src="images/user-image.png" class="img-fluid me-2" width="50" alt="">
+              <h5 class="card-title fw-bold text-capitalize">
+                <%= groupPost.author.fullName %>
+                <span class="text-muted">Posted to </span>
+                 <% if (groupPost.class) {%>
+                  <%= groupPost.class.name %>  
+                 <% }else { %> 
+                  <%= groupPost.group.name %> 
+                 <% } %> 
+            </h5>
+            </div>
+            <div class="card-text ms-5 fw-bold">
+              <div class="text-muted"><%= groupPost.author.type %></div>
+              <div class="text-muted">Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i></div>
+            </div>
+            <div class="card-content mt-4">
+              <div class="card-subtitle"><%= groupPost.text %></div>
+            </div>
+          </div>
+        </div>
+      </a>
+        <% } %> 
     </div>
 
     <div class="col-4 col-lg-4 d-md-block d-none h-100">
@@ -133,9 +169,9 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <% if (currentUser.type === 'Teacher') {%> 
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createClassModal">Create a Class</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join a Class</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join Class</a></li>
               <% } else { %> 
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join a Class</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join Class</a></li>
               <% } %> 
             </ul>
           </div>
@@ -144,7 +180,7 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Join a Class</h5>
+                  <h5 class="modal-title" id="exampleModalLabel">Join Class</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="/class/join" method="POST" class="validate" novalidate>
@@ -207,6 +243,95 @@
           <div class="d-grid gap-2 mt-4">
             <% for (let _class of user.classes) { %>
               <div class="border-start border-danger border-3 px-2 ms-2"><a href="/class/<%= _class._id %>"><%= _class.name %> </a></div>
+            <% } %> 
+          </div>
+        </div>
+      </div>
+
+      <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
+        <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
+          <h5 class="pt-2">MY GROUPS</h5>
+          <div class="dropdown">
+            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuGroupButton">
+              <% if (currentUser.type === 'Teacher') {%> 
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createGroupModal">Create Group</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join Group</a></li>
+              <% } else { %> 
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join Group</a></li>
+              <% } %> 
+            </ul>
+          </div>
+
+          <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="GroupModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="GroupModalLabel">Join Class</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/group/join" method="POST" class="validate" novalidate>
+                  <div class="modal-body">
+                    <div class="form-floating">
+                      <input type="text" class="form-control" name="code" id="Code" placeholder="Code" required>
+                      <label for="Code">Code</label>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary px-4">Join</button>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="createGroupLabel">Create Group</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="/group" method="POST" class="validate" novalidate>
+                  <div class="modal-body">
+                    <div class="form-floating mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        placeholder="Name"
+                        required
+                      />
+                      <label for="name">Name of the group</label>
+                    </div>
+                    <div class="form-floating">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="code"
+                        id="code"
+                        placeholder="code"
+                        required
+                      />
+                      <label for="code">Code of the group</label>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary px-4">Create</button>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="dropdown-divider " /></li>
+        <div class="classes">
+          <div class="d-grid gap-2 mt-4">
+            <% for (let group of user.groups) { %>
+              <div class="border-start border-danger border-3 px-2 ms-2"><a href="/group/<%= group._id %>"><%= group.name %></a></div>
             <% } %> 
           </div>
         </div>

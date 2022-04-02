@@ -2,7 +2,7 @@ const Joi = require('joi');
 
 module.exports.postSchema = Joi.object({
     text: Joi.string().required(),
-    class: Joi.any().optional()
+    postTo: Joi.string().required()
 })
 
 module.exports.profileSchema = Joi.object({

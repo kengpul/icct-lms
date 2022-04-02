@@ -10,6 +10,10 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Class'
     },
+    group: {
+        type: Schema.Types.ObjectId,
+        ref: 'Group'
+    },
     author: {
         type: Schema.Types.ObjectId,
         ref: 'User',

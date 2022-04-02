@@ -10,7 +10,7 @@ router.route('/')
 
 router.route('/:id')
     .get(isLoggedIn, catchAsync(post.showPost))
-    .put(isLoggedIn, isAuthor, validatePost, catchAsync(post.editPost))
+    .put(isLoggedIn, isAuthor, catchAsync(post.editPost))
     .delete(isLoggedIn, isAuthor, catchAsync(post.deletePost))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(post.renderEditPost))
