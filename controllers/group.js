@@ -26,6 +26,9 @@ module.exports.showGroup = async (req, res) => {
             path: 'name'
         }
     }).populate('author');
+    posts.sort(function (a, b) {
+        return b.created - a.created;
+    })
     const groups = await Group.find({});
     res.render('group/show', { showGroup, posts, groups });
 }

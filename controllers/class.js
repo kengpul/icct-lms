@@ -26,6 +26,9 @@ module.exports.showClass = async (req, res) => {
             path: 'name'
         }
     }).populate('author');
+    posts.sort(function (a, b) {
+        return b.created - a.created;
+    })
     const classes = await Class.find({});
     res.render('class/show', { showClass, posts, classes });
 }

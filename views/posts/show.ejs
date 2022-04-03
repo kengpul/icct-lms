@@ -15,17 +15,17 @@
             <h5 class="card-title fw-bold text-capitalize">
               <%= post.author.fullName %>
               <span class="text-muted">Posted to </span>
-              <% if (post.class) {%>
-                <%= post.class.name %>  
-               <% }else { %> 
-                <%= post.group.name %> 
-               <% } %> 
+              <% if (post.class) {%> <%= post.class.name %> <% }else { %> <%=
+              post.group.name %> <% } %>
             </h5>
           </div>
           <div class="card-text ms-5 fw-bold">
             <div class="text-muted"><%= post.author.type %></div>
             <div class="text-muted">
-              Nov 18, 2022 10:11pm <i class="fas fa-users me-2"></i>
+              <%= post.created.toLocaleDateString( 'en-us', { weekday:"long",
+              year:"numeric", month:"short", day:"numeric", hour: 'numeric',
+              minute: 'numeric', hour12: true} )%>
+              <i class="fas fa-users me-2"></i>
             </div>
           </div>
           <div class="card-content mt-4">

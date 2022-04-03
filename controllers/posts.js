@@ -2,12 +2,18 @@ const Post = require('../models/posts');
 const User = require('../models/user');
 const Classes = require('../models/class');
 
+// var sorted = a.sort(function(date1,date2){return date1.getTime() - date2.getTime()});
+
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id).populate('classes').populate('groups');
     const classPosts = await Post.find({ class: { $in: req.user.classes } }).populate('class').populate('author');
     const groupPosts = await Post.find({ group: { $in: req.user.groups } }).populate('group').populate('author');
     const classes = await Classes.find({});
-    res.render('posts/index', { classPosts, groupPosts, user, classes });
+    const posts = [...classPosts, ...groupPosts];
+    posts.sort(function (a, b) {
+        return new Date(b.created) - new Date(a.created);
+    });
+    res.render('posts/index', { classPosts, groupPosts, user, classes, posts });
 }
 
 module.exports.createPost = async (req, res) => {
@@ -15,16 +21,16 @@ module.exports.createPost = async (req, res) => {
         const { text, postTo } = req.body;
         const _class = await Classes.findById(postTo);
         let post;
+        const created = new Date();
         if (!_class) {
-            post = new Post({ text, group: postTo });
+            post = new Post({ text, created, group: postTo });
         } else {
-            post = new Post({ text, class: postTo });
+            post = new Post({ text, created, class: postTo });
         }
         post.author = req.user._id;
         await post.save();
     } catch (e) {
-        //We are not supposed to reach here but just in case
-        console.log('something went wrong', e)
+        console.log('something went wrong', e);
     }
     req.flash('success', 'Successfully Created a Post');
     res.redirect(`/post`);
