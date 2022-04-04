@@ -1,16 +1,12 @@
 const User = require('../models/user');
 
-module.exports.renderLoginForm = (req, res) => {
-    res.render('users/login');
+module.exports.connect = (req, res) => {
+    res.render('users/connect');
 }
 
 module.exports.login = (req, res) => {
     req.flash('success', 'Welcome back');
     res.redirect('/post');
-}
-
-module.exports.renderRegisterForm = (req, res) => {
-    res.render('users/register');
 }
 
 module.exports.register = async (req, res, next) => {

@@ -1,3 +1,6 @@
+
+<link rel="stylesheet" href="/stylesheets/authentication.css">
+
 <div class="container-fluid contact-details d-none d-sm-block">
   <div
     class="container-fluid container-md py-1 d-flex justify-content-center justify-content-md-end"
@@ -68,12 +71,8 @@
       >
         <% if (!currentUser) { %>
         <li class="nav-item">
-          <a class="nav-link btn px-3 me-3" href="/login">Log In</a>
+          <a class="nav-link btn transparent" href="/connect">LOGIN/REGISTER</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link btn btn-outline-light px-4 py-1" href="/register"
-            >Sign Up</a
-          >
         </li>
         <% } else {%>
         <li class="nav-item">
