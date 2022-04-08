@@ -710,7 +710,7 @@ svg {
 /*i use header to put my background for this*/
 
 .modal-content header {
-    background-image: url(background-modal.jpg);
+    background-image: url('/images/background-modal.jpg');
     object-fit: fill;
     width: 100%;
     height: 150px;
