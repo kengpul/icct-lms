@@ -97,7 +97,8 @@ svg {
     display: flex;
     align-items: center;
     border-radius: 60px;
-    padding: 5px 5px;
+    padding-bottom: 10px;
+    padding-left: 10px;
     backdrop-filter: blur(4px) saturate(180%);
 }
 
@@ -192,7 +193,7 @@ svg {
 .class-container {
     background-color: #ffffff;
     padding: 1px;
-    padding-top: 50px;
+    /* padding-top: 50px; */
     height: 65vh;
     overflow-y: scroll;
     width: 100%;
@@ -227,6 +228,10 @@ svg {
 .list {
     display: grid;
     grid-template-columns: 100%;
+}
+.list a {
+    grid-column: 1/4;
+    background-color: #041662;
 }
 
 .list .class {
@@ -303,6 +308,10 @@ svg {
     position: relative;
 }
 
+.grid a {
+    background-color: #041662;
+}
+
 .grid .detail .info {
     display: flex;
 }
@@ -356,7 +365,7 @@ svg {
     background-color: #041662;
 }
 
-.grid #cont1 {
+.grid .cont1 {
     border: 5px solid #041662;
 }
 
@@ -415,7 +424,7 @@ svg {
     background-color: #041662;
     position: relative;
     width: 100%;
-    height: 40%;
+    height: 43%;
     padding: 2rem;
     text-align: center;
     border-top-left-radius: 20px;
@@ -678,7 +687,7 @@ svg {
 }
 /*for modal btn*/
 
-#myBtn {
+.myBtn {
     background: #58629b;
     outline: none;
     border: none;
@@ -750,6 +759,7 @@ svg {
         grid-column: 1/4;
         grid-row: 4/4;
     }
+    
 }
 
 @media (max-width: 530px) {
@@ -757,4 +767,9 @@ svg {
         grid-template-columns: 97%;
         margin-left: 10px;
     }
+    .toggle-btns {
+        display: block;
+        text-align: center;
+    }
+    
 }

@@ -14,4 +14,6 @@ router.get('/:id', isLoggedIn, isClassMember, catchAsync(classes.showClass))
 
 router.post('/:classId/accept/:studentId', isLoggedIn, isTeacher, classes.acceptStudent)
 
+router.post('/:classId/leave/:studentId', isLoggedIn, classes.leaveStudent)
+
 module.exports = router;

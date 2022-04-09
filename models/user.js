@@ -46,7 +46,7 @@ userSchema.virtual('givenName').get(function () {
 
 userSchema.virtual('fullName').get(function () {
     if (this.firstname || this.lastname) {
-        return `${this.lastname}, ${this.firstname}`;
+        return `${this.firstname} ${this.lastname}`;
     }
     return this.username;
 })
