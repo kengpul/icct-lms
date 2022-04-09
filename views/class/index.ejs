@@ -43,7 +43,7 @@
           </div>
 
           <!-- this is the join-class modal-->
-          <% if (!currentUser === 'Teacher') { %> 
+          <% if (currentUser.type !== 'Teacher') { %> 
           <button id="myBtn" class="myBtn">Join Class</button>
           <!-- The Modal -->
           <div id="myModal" class="modal">
@@ -53,8 +53,10 @@
                       <h2>Join Class</h2>
                       <span class="close">&times;</span>
                   </header>
-                  <input class="input-class" type="text" placeholder="Input your class code here.">
-                  <button class="enter-join">Enter</button>
+                  <form action="/class/join" method="POST" class="validate" novalidate>
+                    <input class="input-class form-control" type="text" name="code" placeholder="Input your class here." required>
+                    <button class="enter-join w-100">Enter</button>
+                  </form>
               </div>
           </div>
           <% } else { %>

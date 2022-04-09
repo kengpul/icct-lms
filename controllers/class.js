@@ -69,7 +69,7 @@ module.exports.leaveStudent = async (req, res) => {
     const { classId, studentId } = req.params;
     const currentClass = await Class.findById(classId);
     const user = await User.findById(studentId);
-    user.classes.splice(user.classes.indexOf(user._id), 1);
+    user.classes.splice(user.classes.indexOf(currentClass._id), 1);
     currentClass.students.splice(currentClass.students.indexOf(user._id), 1);
     await currentClass.save();
     await user.save();

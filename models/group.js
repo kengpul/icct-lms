@@ -10,6 +10,10 @@ const groupSchema = new Schema({
         type: String,
         required: true,
     },
+    teacher: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     pending: [
         {
             type: Schema.Types.ObjectId,
