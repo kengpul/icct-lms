@@ -2,8 +2,6 @@ const Post = require('../models/posts');
 const User = require('../models/user');
 const Classes = require('../models/class');
 
-// var sorted = a.sort(function(date1,date2){return date1.getTime() - date2.getTime()});
-
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id).populate('classes').populate('groups');
     const classPosts = await Post.find({ class: { $in: req.user.classes } }).populate('class').populate('author');
