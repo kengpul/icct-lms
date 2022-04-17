@@ -26,7 +26,7 @@ module.exports.createClass = async (req, res) => {
 
 module.exports.showClass = async (req, res) => {
     const { id } = req.params;
-    const showClass = await Class.findById(id).populate('pending');
+    const showClass = await Class.findById(id).populate('pending').populate('teacher');
     const posts = await Post.find({ class: id }).populate({
         path: 'class',
         populate: {
@@ -36,8 +36,8 @@ module.exports.showClass = async (req, res) => {
     posts.sort(function (a, b) {
         return b.created - a.created;
     })
-    const classes = await Class.find({});
-    res.render('class/show', { showClass, posts, classes });
+    const user = await User.findById(req.user._id).populate('classes');
+    res.render('class/show', { showClass, posts, user });
 }
 
 module.exports.joinClass = async (req, res) => {
@@ -62,7 +62,7 @@ module.exports.acceptStudent = async (req, res) => {
     await currentClass.save();
     await user.save();
     req.flash('success', `${user.username} added to the class`);
-    res.redirect(`/class/${classId}`);
+    res.redirect(`/class/${classId}/members`);
 }
 
 module.exports.leaveStudent = async (req, res) => {
@@ -75,4 +75,23 @@ module.exports.leaveStudent = async (req, res) => {
     await user.save();
     req.flash('success', `Bye!`);
     res.redirect('/class');
+}
+
+module.exports.rejectStudent = async (req, res) => {
+    const { classId, studentId } = req.params;
+    const currentClass = await Class.findById(classId);
+    const user = await User.findById(studentId);
+    currentClass.pending.splice(currentClass.pending.indexOf(user._id), 1);
+    await currentClass.save();
+    req.flash('success', `Rejected ${user.fullName}`);
+    res.redirect(`/class/${classId}/members`);
+}
+
+module.exports.showMembers = async (req, res) => {
+    const showClass = await Class.findById(req.params.id)
+        .populate('students')
+        .populate('teacher')
+        .populate('pending')
+    const user = await User.findById(req.user._id).populate('classes');
+    res.render('class/members', { showClass, user })
 }

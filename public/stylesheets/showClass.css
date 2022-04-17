@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header-class, 
+.dropdown .btn-secondary, 
+.nav-pills .nav-link.active, 
+.list-group-item.active,
+.btn-primary {
+    background-color: #041562;
+}
+.dropdown .btn-secondary {
+    height: 5rem;
+    padding: 23px;
+}
