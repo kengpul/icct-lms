@@ -12,8 +12,12 @@ router.post('/join', isLoggedIn, catchAsync(group.joinGroup))
 
 router.get('/:id', isLoggedIn, isGroupMember, catchAsync(group.showGroup))
 
+router.get('/:id/members', isLoggedIn, isGroupMember, group.showMembers)
+
 router.post('/:groupId/accept/:studentId', isLoggedIn, isTeacher, group.acceptStudent)
 
 router.post('/:groupId/leave/:studentId', isLoggedIn, group.leaveStudent)
+
+router.post('/:groupId/reject/:studentId', isLoggedIn, group.rejectStudent)
 
 module.exports = router;
