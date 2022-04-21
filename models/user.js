@@ -65,6 +65,9 @@ userSchema.virtual('profilePicture').get(function () {
 })
 
 userSchema.virtual('profilePostIcon').get(function () {
+    if (!this.image.url) {
+        return `/images/user-image.png`;
+    }
     return cloudinary.url(this.image.filename,
         { width: 50, height: 50, gravity: "faces", crop: "thumb" })
 })
