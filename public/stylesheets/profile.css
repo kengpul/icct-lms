@@ -95,7 +95,7 @@ option {
 .profile-pic {
   position: absolute;
   height: 120px;
-  width: 120px;
+  text-align: center;
   left: 50%;
   transform: translateX(-50%);
   top: 0px;

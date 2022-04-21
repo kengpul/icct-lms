@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const passportLocalMongoose = require('passport-local-mongoose');
+const { cloudinary } = require('../cloudinary');
 
 const userSchema = new Schema({
     email: {
@@ -18,6 +19,10 @@ const userSchema = new Schema({
     birthday: String,
     number: String,
     course: String,
+    image: {
+        url: String,
+        filename: String
+    },
     campus: {
         type: String,
         enum: [
@@ -49,6 +54,19 @@ userSchema.virtual('fullName').get(function () {
         return `${this.firstname} ${this.lastname}`;
     }
     return this.username;
+})
+
+userSchema.virtual('profilePicture').get(function () {
+    if (!this.image.url) {
+        return `/images/user-image.png`;
+    }
+    return cloudinary.url(this.image.filename,
+        { width: 80, height: 80, gravity: "faces", crop: "thumb" });
+})
+
+userSchema.virtual('profilePostIcon').get(function () {
+    return cloudinary.url(this.image.filename,
+        { width: 50, height: 50, gravity: "faces", crop: "thumb" })
 })
 
 userSchema.plugin(passportLocalMongoose);

@@ -13,16 +13,6 @@
     >
       <!-- <img src="https://dummyimage.com/600x400/000/"> -->
 
-      <div class="profile-pic">
-        <img
-          alt="User Pic"
-          src="https://d30y9cdsu7xlg0.cloudfront.net/png/138926-200.png"
-          id="profile-image1"
-          height="200"
-        />
-        <!-- <input id="profile-image-upload" class="hidden" type="file" onchange="previewFile()" > -->
-        <div style="color: #999"></div>
-      </div>
       <br />
       <br />
       <br />
@@ -32,7 +22,25 @@
 
       <div class="profile-container container">
         <div class="col-md-7 offset-md-3">
-          <form action="/profile" method="POST">
+          <form action="/profile" method="POST" enctype="multipart/form-data">
+            <div class="profile-pic">
+              <img
+                alt="User Pic"
+                src="<%= user.profilePicture %>"
+                id="profile-image1"
+                height="200"
+                class="mb-3"
+              />
+              <div style="color: #999"></div>
+              <div class="mb-3">
+                <input
+                  class="form-control"
+                  type="file"
+                  id="formFile"
+                  name="profile-picture"
+                />
+              </div>
+            </div>
             <div class="profile-row d-flex">
               <div class="profile-col-25">
                 <label for="fname">First Name:</label>
