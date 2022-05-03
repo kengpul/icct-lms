@@ -1,294 +1,290 @@
 <% layout('layouts/lms-boilerplate') -%>
 
-<div class="container-fluid mb-5">
-  <div class="row mt-3 d-flex justify-content-center justify-content-lg-start">
-    <%- include('../partials/side-nav')  %> 
-    <div class="col col-lg-5 posts p-0 mx-2">
-      <div class="bg-white p-3 rounded">
-      <form action="/post" method="POST" class="validate" novalidate>
-        <div class="form-floating">
-          <textarea
-            class="form-control posts-form"
-            placeholder="Type your post here..."
-            id="floatingTextarea2"
-            name="text"
-            required
-          ></textarea>
-          <label for="floatingTextarea2 fw-bold">Type your post here...</label>
-        </div>
-       <hr class="dropdown-divider" /></li>
-       <div class="d-flex justify-content-end align-items-center mt-2">
-        <select name="postTo" class="form-select" aria-label="Default select example" required>
-          <% for (let _class of user.classes) { %>
-          <option value="<%= _class._id %>"><%= _class.name %></option>
-          <% } %> 
-          <% for (let group of user.groups) { %>
-            <option value="<%= group._id %>"><%= group.name %></option>
-            <% } %> 
-        </select>
-          
-         <button class="btn btn-primary ms-3 px-4">Post</button>
-        </div>
-      </form>
-    </div>
-
-        <% for (let post of posts) {%> 
-          <a class="link-dark" href="/post/<%= post._id %> ">
-          <div class="card mt-3">
-            <div class="card-body">
-              <div class="author d-flex align-items-center">
-                <img src="<%= post.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
-                <h5 class="card-title fw-bold text-capitalize">
-                  <%= post.author.fullName %>
-                  <span class="text-muted">Posted to </span>
-                   <% if (post.class) {%>
-                    <%= post.class.name %>  
-                   <% }else { %> 
-                    <%= post.group.name %> 
-                   <% } %> 
-              </h5>
+  <div class="container-fluid mb-5">
+    <div class="row mt-3 d-flex justify-content-center justify-content-lg-start">
+      <%- include('../partials/side-nav') %>
+        <div class="col col-lg-5 posts p-0 mx-2">
+          <div class="bg-white p-3 rounded">
+            <form action="/post" method="POST" class="validate" novalidate>
+              <div class="form-floating">
+                <textarea class="form-control posts-form" placeholder="Type your post here..." id="floatingTextarea2"
+                  name="text" required></textarea>
+                <label for="floatingTextarea2 fw-bold">Type your post here...</label>
               </div>
-              <div class="card-text ms-5 ps-2 fw-bold">
-                <div class="text-muted"><%= post.author.type %></div>
-                <div class="text-muted">
-                  <%= post.created.toLocaleDateString(
-                    'en-us',
-                    { weekday:"long", year:"numeric", month:"short", day:"numeric", hour: 'numeric', minute: 'numeric', hour12: true}
-                    )%> 
-                  <i class="fas fa-users me-2"></i>
+              <hr class="dropdown-divider" />
+              </li>
+              <div class="d-flex justify-content-end align-items-center mt-2">
+                <select name="postTo" class="form-select" aria-label="Default select example" required>
+                  <% for (let _class of user.classes) { %>
+                    <option value="<%= _class._id %>">
+                      <%= _class.name %>
+                    </option>
+                    <% } %>
+                      <% for (let group of user.groups) { %>
+                        <option value="<%= group._id %>">
+                          <%= group.name %>
+                        </option>
+                        <% } %>
+                </select>
+
+                <button class="btn btn-primary ms-3 px-4">Post</button>
+              </div>
+            </form>
+          </div>
+
+          <% for (let post of posts) {%>
+            <a class="link-dark" href="/post/<%= post._id %> ">
+              <div class="card mt-3">
+                <div class="card-body">
+                  <div class="author d-flex align-items-center">
+                    <img src="<%= post.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
+                    <h5 class="card-title fw-bold text-capitalize">
+                      <%= post.author.fullName %>
+                        <span class="text-muted">Posted to </span>
+                        <% if (post.class) {%>
+                          <%= post.class.name %>
+                            <% }else { %>
+                              <%= post.group.name %>
+                                <% } %>
+                    </h5>
+                  </div>
+                  <div class="card-text ms-5 ps-2 fw-bold">
+                    <div class="text-muted">
+                      <%= post.author.type %>
+                    </div>
+                    <div class="text-muted">
+                      <%= post.created.toLocaleDateString( 'en-us' , { weekday:"long", year:"numeric", month:"short",
+                        day:"numeric", hour: 'numeric' , minute: 'numeric' , hour12: true} )%>
+                        <i class="fas fa-users me-2"></i>
+                    </div>
+                  </div>
+                  <div class="card-content mt-4">
+                    <div class="card-subtitle">
+                      <%= post.text %>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="card-content mt-4">
-                <div class="card-subtitle"><%= post.text %></div>
-              </div>
-            </div>
-          </div>
-        </a>
-          <% } %> 
-    </div>
-
-    <div class="col-4 col-lg-4 d-md-block d-none h-100">
-      <div class="side-card bg-white h-50 overflow-hidden rounded">
-        <div class="upcoming-header d-flex justify-content-between align-items-center pt-2 px-2">
-          <h5 class="pt-2">UPCOMING</h5>
+            </a>
+            <% } %>
         </div>
-        <hr class="dropdown-divider " /></li>
-        <div class="upcoming">
-          <div class="d-grid gap-2 ">
-            <div class="d-flex justify-content-start align-items-center">
-              <div>
-                <i class="far fa-file-alt text-white bg-primary border p-2 rounded-circle px-2 mx-2"></i>
-              </div>
-              <div class="pt-3">
-                <h6 class="fs-6">THS1 BSCS OL2216 PART 1 QUIZ</h6>
-                <p class="text-danger">Due Date Dec 11</p>
-              </div>
-            </div>
-            <div class="d-flex justify-content-start align-items-center">
-              <div>
-                <i class="far fa-file-alt text-white bg-primary border p-2 rounded-circle px-2 mx-2"></i>
-              </div>
-              <div class="pt-3">
-                <h6 class="fs-6">THS1 BSCS OL2216 PART 2 QUIZ</h6>
-                <p class="text-danger">Due Date Dec 12</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> 
-      <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
-        <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
-          <h5 class="pt-2">MY CLASSES</h5>
-          <div class="dropdown">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <% if (currentUser.type === 'Teacher') {%> 
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createClassModal">Create a Class</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join Class</a></li>
-              <% } else { %> 
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join Class</a></li>
-              <% } %> 
-            </ul>
-          </div>
 
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Join Class</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="col-4 col-lg-4 d-md-block d-none h-100">
+          <div class="side-card bg-white h-50 overflow-hidden rounded">
+            <div class="upcoming-header d-flex justify-content-between align-items-center pt-2 px-2">
+              <h5 class="pt-2">UPCOMING</h5>
+            </div>
+            <hr class="dropdown-divider " />
+            </li>
+            <div class="upcoming">
+              <div class="d-grid gap-2 ">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <i class="far fa-file-alt text-white bg-primary border p-2 rounded-circle px-2 mx-2"></i>
+                  </div>
+                  <div class="pt-3">
+                    <h6 class="fs-6">THS1 BSCS OL2216 PART 1 QUIZ</h6>
+                    <p class="text-danger">Due Date Dec 11</p>
+                  </div>
                 </div>
-                <form action="/class/join" method="POST" class="validate" novalidate>
-                  <div class="modal-body">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" name="code" id="Code" placeholder="Code" required>
-                      <label for="Code">Code</label>
-                    </div>
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <i class="far fa-file-alt text-white bg-primary border p-2 rounded-circle px-2 mx-2"></i>
                   </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary px-4">Join</button>
+                  <div class="pt-3">
+                    <h6 class="fs-6">THS1 BSCS OL2216 PART 2 QUIZ</h6>
+                    <p class="text-danger">Due Date Dec 12</p>
                   </div>
-              </form>
-              </div>
-            </div>
-          </div>
-          
-          <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="createClassLabel">Create a Class</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="/class" method="POST" class="validate" novalidate>
-                  <div class="modal-body">
-                    <div class="form-floating mb-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="name"
-                        id="name"
-                        placeholder="Name"
-                        required
-                      />
-                      <label for="name">Name of the class</label>
-                    </div>
-                    <div class="form-floating">
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="code"
-                        id="code"
-                        placeholder="code"
-                        required
-                      />
-                      <label for="code">Code of the class</label>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary px-4">Create</button>
-                  </div>
-              </form>
               </div>
             </div>
           </div>
-        </div>
-        <hr class="dropdown-divider " /></li>
-        <div class="classes">
-          <div class="d-grid gap-2 mt-4">
-            <% for (let _class of user.classes) { %>
-              <div class="border-start border-danger border-3 px-2 ms-2"><a href="/class/<%= _class._id %>"><%= _class.name %> </a></div>
-            <% } %> 
-          </div>
-        </div>
-      </div>
+          <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
+            <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
+              <h5 class="pt-2">MY CLASSES</h5>
+              <div class="dropdown">
+                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <% if (currentUser.type==='Teacher' ) {%>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                        data-bs-target="#createClassModal">Create a Class</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join
+                        Class</a></li>
+                    <% } else { %>
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join
+                          Class</a></li>
+                      <% } %>
+                </ul>
+              </div>
 
-      <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
-        <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
-          <h5 class="pt-2">MY GROUPS</h5>
-          <div class="dropdown">
-            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuGroupButton" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fas fa-ellipsis-v"></i>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuGroupButton">
-              <% if (currentUser.type === 'Teacher') {%> 
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#createGroupModal">Create Group</a></li>
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join Group</a></li>
-              <% } else { %> 
-              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join Group</a></li>
-              <% } %> 
-            </ul>
-          </div>
-
-          <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="GroupModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="GroupModalLabel">Join Class</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Join Class</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/class/join" method="POST" class="validate" novalidate>
+                      <div class="modal-body">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" name="code" id="Code" placeholder="Code" required>
+                          <label for="Code">Code</label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary px-4">Join</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-                <form action="/group/join" method="POST" class="validate" novalidate>
-                  <div class="modal-body">
-                    <div class="form-floating">
-                      <input type="text" class="form-control" name="code" id="Code" placeholder="Code" required>
-                      <label for="Code">Code</label>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary px-4">Join</button>
-                  </div>
-              </form>
               </div>
-            </div>
-          </div>
-          
-          <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="createGroupLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="createGroupLabel">Create Group</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="/group" method="POST" class="validate" novalidate>
-                  <div class="modal-body">
-                    <div class="form-floating mb-3">
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="name"
-                        id="name"
-                        placeholder="Name"
-                        required
-                      />
-                      <label for="name">Name of the group</label>
-                    </div>
-                    <div class="form-floating">
-                      <input
-                        type="text"
-                        class="form-control"
-                        name="code"
-                        id="code"
-                        placeholder="code"
-                        required
-                      />
-                      <label for="code">Code of the group</label>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary px-4">Create</button>
-                  </div>
-              </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <hr class="dropdown-divider " /></li>
-        <div class="classes">
-          <div class="d-grid gap-2 mt-4">
-            <% for (let group of user.groups) { %>
-              <div class="border-start border-danger border-3 px-2 ms-2"><a href="/group/<%= group._id %>"><%= group.name %></a></div>
-            <% } %> 
-          </div>
-        </div>
-      </div>
 
-      <div class="side-card bg-white h-50 mt-2 pb-3 rounded">
-        <div class="materials-header d-flex justify-content-between align-items-center pt-2 px-2">
-          <h5 class="pt-2">MATERIALS</h5>
-        </div>
-        <hr class="dropdown-divider " /></li>
-        <div class="materials">
-          <div class="d-grid gap-2 mt-4">
-            <div class="border-start border-primary border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> OS1.pdf</div>
-            <div class="border-start border-secondary border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> PL1.pdf</div>
-            <div class="border-start border-info border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> THS1.pdf</div>
-            <div class="border-start border-danger border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> SE1.pdf</div>
+              <div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="createClassLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="createClassLabel">Create a Class</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/class" method="POST" class="validate" novalidate>
+                      <div class="modal-body">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control" name="name" id="name" placeholder="Name" required />
+                          <label for="name">Name of the class</label>
+                        </div>
+                        <div class="form-floating">
+                          <input type="text" class="form-control" name="code" id="code" placeholder="code" required />
+                          <label for="code">Code of the class</label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary px-4">Create</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="dropdown-divider " />
+            </li>
+            <div class="classes">
+              <div class="d-grid gap-2 mt-4">
+                <% for (let _class of user.classes) { %>
+                  <div class="border-start border-danger border-3 px-2 ms-2"><a href="/class/<%= _class._id %>">
+                      <%= _class.name %>
+                    </a></div>
+                  <% } %>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
+            <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
+              <h5 class="pt-2">MY GROUPS</h5>
+              <div class="dropdown">
+                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuGroupButton"
+                  data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuGroupButton">
+                  <% if (currentUser.type==='Teacher' ) {%>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                        data-bs-target="#createGroupModal">Create Group</a></li>
+                    <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join
+                        Group</a></li>
+                    <% } else { %>
+                      <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join
+                          Group</a></li>
+                      <% } %>
+                </ul>
+              </div>
+
+              <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="GroupModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="GroupModalLabel">Join Class</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/group/join" method="POST" class="validate" novalidate>
+                      <div class="modal-body">
+                        <div class="form-floating">
+                          <input type="text" class="form-control" name="code" id="Code" placeholder="Code" required>
+                          <label for="Code">Code</label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary px-4">Join</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="createGroupModal" tabindex="-1" aria-labelledby="createGroupLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="createGroupLabel">Create Group</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="/group" method="POST" class="validate" novalidate>
+                      <div class="modal-body">
+                        <div class="form-floating mb-3">
+                          <input type="text" class="form-control" name="name" id="name" placeholder="Name" required />
+                          <label for="name">Name of the group</label>
+                        </div>
+                        <div class="form-floating">
+                          <input type="text" class="form-control" name="code" id="code" placeholder="code" required />
+                          <label for="code">Code of the group</label>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary px-4">Create</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="dropdown-divider " />
+            </li>
+            <div class="classes">
+              <div class="d-grid gap-2 mt-4">
+                <% for (let group of user.groups) { %>
+                  <div class="border-start border-danger border-3 px-2 ms-2"><a href="/group/<%= group._id %>">
+                      <%= group.name %>
+                    </a></div>
+                  <% } %>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-card bg-white h-50 mt-2 pb-3 rounded">
+            <div class="materials-header d-flex justify-content-between align-items-center pt-2 px-2">
+              <h5 class="pt-2">MATERIALS</h5>
+            </div>
+            <hr class="dropdown-divider " />
+            </li>
+            <div class="materials">
+              <div class="d-grid gap-2 mt-4">
+                <div class="border-start border-primary border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> OS1.pdf
+                </div>
+                <div class="border-start border-secondary border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> PL1.pdf
+                </div>
+                <div class="border-start border-info border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> THS1.pdf</div>
+                <div class="border-start border-danger border-3 px-2 ms-2"><i class="fas fa-file-pdf"></i> SE1.pdf</div>
+              </div>
+            </div>
           </div>
         </div>
-      </div> 
     </div>
   </div>
-</div>
-<%- include('../partials/bottom-nav')  %> 
+  <%- include('../partials/bottom-nav') %>

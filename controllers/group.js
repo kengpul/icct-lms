@@ -46,6 +46,14 @@ module.exports.joinGroup = async (req, res) => {
         req.flash('error', 'The code you entered is invalid!')
         return res.redirect('/post');
     }
+    if (joinGroup.pending.includes(req.user._id)) {
+        req.flash('success', 'You are already in the pending list');
+        return res.redirect('/post');
+    }
+    if (joinGroup.students.includes(req.user._id)) {
+        req.flash('success', 'You are already member of this group');
+        return res.redirect('/post');
+    }
     joinGroup.pending.push(req.user._id);
     await joinGroup.save();
     req.flash('success', 'Teacher will approve you to join in this group')

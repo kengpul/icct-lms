@@ -13,6 +13,7 @@ module.exports.index = async (req, res) => {
     res.render('class/index', { classes, user });
 }
 
+// TODO: class/group code must be unique
 module.exports.createClass = async (req, res) => {
     const newClass = new Class(req.body);
     await newClass.save();
@@ -44,6 +45,14 @@ module.exports.joinClass = async (req, res) => {
     const joinClass = await Class.findOne({ code: req.body.code });
     if (!joinClass) {
         req.flash('error', 'The code you entered is invalid!')
+        return res.redirect('/post');
+    }
+    if (joinClass.pending.includes(req.user._id)) {
+        req.flash('success', 'You are already in the pending list');
+        return res.redirect('/post');
+    }
+    if (joinClass.students.includes(req.user._id)) {
+        req.flash('success', 'You are already member of this class');
         return res.redirect('/post');
     }
     joinClass.pending.push(req.user._id);

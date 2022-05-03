@@ -24,7 +24,7 @@ const groupRoutes = require('./routes/group');
 const calendarRoutes = require('./routes/calendar');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/icct-lms';
-mongoose.connect('mongodb://localhost:27017/icct-lms');
+mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
