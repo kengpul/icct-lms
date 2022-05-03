@@ -13,12 +13,9 @@ module.exports.register = async (req, res, next) => {
     try {
         const { username, email, type, password } = req.body;
         const user = new User({ username, email, type });
-        const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-            if (err) return next(err);
-            req.flash('success', `Welcome ${username}`);
-            res.redirect('/post');
-        })
+        await User.register(user, password);
+        req.flash('success', `Welcome ${username}, You may now login your account`);
+        return res.redirect('/connect');
     } catch (e) {
         req.flash('error', e.message);
         res.redirect('/connect');

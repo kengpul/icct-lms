@@ -1,5 +1,5 @@
-if (process.env.NODE_ENV !== "production") {
-    require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
 }
 
 const express = require('express');
@@ -23,12 +23,12 @@ const classRoutes = require('./routes/class');
 const groupRoutes = require('./routes/group');
 const calendarRoutes = require('./routes/calendar');
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/authentication'
-mongoose.connect(dbUrl);
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/icct-lms';
+mongoose.connect('mongodb://localhost:27017/icct-lms');
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
-    console.log('Database connected');
+	console.log('Database connected');
 });
 
 app.engine('ejs', ejsMate);
@@ -40,24 +40,24 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
 const store = MongoStore.create({
-    mongoUrl: dbUrl,
-    secret: 'secretKey',
-    touchAfter: 24 * 60 * 60
-})
+	mongoUrl: dbUrl,
+	secret: 'secretKey',
+	touchAfter: 24 * 60 * 60
+});
 
 const sessionConfig = {
-    name: 'session',
-    store,
-    secret: 'thisisasecretkey',
-    resave: false,
-    saveUninitialized: true,
-    secure: true,
-    cookie: {
-        httpOnly: true,
-        expires: Date.now() * 1000 * 60 * 60 * 24 * 7,
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    }
-}
+	name: 'session',
+	store,
+	secret: 'thisisasecretkey',
+	resave: false,
+	saveUninitialized: true,
+	secure: true,
+	cookie: {
+		httpOnly: true,
+		expires: Date.now() * 1000 * 60 * 60 * 24 * 7,
+		maxAge: 1000 * 60 * 60 * 24 * 7
+	}
+};
 
 app.use(session(sessionConfig));
 app.use(flash());
@@ -69,19 +69,18 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    res.locals.success = req.flash('success');
-    res.locals.error = req.flash('error');
-    next();
-})
+	res.locals.currentUser = req.user;
+	res.locals.success = req.flash('success');
+	res.locals.error = req.flash('error');
+	next();
+});
 
 app.get('/', (req, res) => {
-    if (!req.isAuthenticated()) {
-        return res.render('home');
-    }
-    return res.redirect('/post')
-})
-
+	if (!req.isAuthenticated()) {
+		return res.render('home');
+	}
+	return res.redirect('/post');
+});
 
 app.use('/', userRoutes);
 app.use('/post', postRoutes);
@@ -91,16 +90,16 @@ app.use('/group', groupRoutes);
 app.use('/calendar', calendarRoutes);
 
 app.all('*', (req, res, next) => {
-    next(new ExpressError('Page not Found'), 404);
-})
+	next(new ExpressError('Page not Found'), 404);
+});
 
 app.use((err, req, res, next) => {
-    const { statusCode = 500 } = err;
-    if (!err.message) message = 'Something Went Wrong!'
-    res.status(statusCode).render('error', { err });
-})
+	const { statusCode = 500 } = err;
+	if (!err.message) message = 'Something Went Wrong!';
+	res.status(statusCode).render('error', { err });
+});
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`ON PORT ${PORT}`);
-})
+	console.log(`ON PORT ${PORT}`);
+});
