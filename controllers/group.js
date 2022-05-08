@@ -14,6 +14,11 @@ module.exports.index = async (req, res) => {
 }
 
 module.exports.createGroup = async (req, res) => {
+    const group = await Group.findOne({ code: req.body.code })
+    if (group) {
+        req.flash('error', 'Code already in use');
+        return res.redirect('/post');
+    }
     const newGroup = new Group(req.body);
     await newGroup.save();
     newGroup.students.push(req.user._id);

@@ -13,8 +13,12 @@ module.exports.index = async (req, res) => {
     res.render('class/index', { classes, user });
 }
 
-// TODO: class/group code must be unique
 module.exports.createClass = async (req, res) => {
+    const _class = await Class.findOne({ code: req.body.code })
+    if (_class) {
+        req.flash('error', 'Code already in use');
+        return res.redirect('/post');
+    }
     const newClass = new Class(req.body);
     await newClass.save();
     newClass.teacher = req.user._id;
@@ -22,7 +26,7 @@ module.exports.createClass = async (req, res) => {
     req.user.classes.push(newClass._id);
     await newClass.save();
     await req.user.save();
-    res.redirect('/post');
+    res.redirect(`/class/${newClass._id}`);
 }
 
 module.exports.showClass = async (req, res) => {
