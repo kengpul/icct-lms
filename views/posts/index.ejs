@@ -5,7 +5,7 @@
       <%- include('../partials/side-nav') %>
         <div class="col col-lg-5 posts p-0 mx-2">
           <div class="bg-white p-3 rounded">
-            <form action="/post" method="POST" class="validate" novalidate>
+            <form action="/post" method="POST" class="validate" novalidate enctype="multipart/form-data">
               <div class="form-floating">
                 <textarea class="form-control posts-form" placeholder="Type your post here..." id="floatingTextarea2"
                   name="text" required></textarea>
@@ -14,6 +14,13 @@
               <hr class="dropdown-divider" />
               </li>
               <div class="d-flex justify-content-end align-items-center mt-2">
+                <div class="image-upload me-3">
+                  <label for="image-upload">
+                    <i class="fas fa-2x fa-image" role="button"></i>
+                  </label>
+
+                  <input id="image-upload" name="post-picture" type="file" class="d-none" multiple />
+                </div>
                 <select name="postTo" class="form-select" aria-label="Default select example" required>
                   <% for (let _class of user.classes) { %>
                     <option value="<%= _class._id %>">
@@ -26,8 +33,7 @@
                         </option>
                         <% } %>
                 </select>
-
-                <button class="btn btn-primary ms-3 px-4">Post</button>
+                <button class="btn btn-primary ms-3 ">Post</button>
               </div>
             </form>
           </div>
@@ -35,8 +41,8 @@
           <% for (let post of posts) {%>
             <a class="link-dark" href="/post/<%= post._id %> ">
               <div class="card mt-3">
-                <div class="card-body">
-                  <div class="author d-flex align-items-center">
+                <div class="card-body px-0 pb-0">
+                  <div class="author d-flex align-items-center px-4">
                     <img src="<%= post.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
                     <h5 class="card-title fw-bold text-capitalize">
                       <%= post.author.fullName %>
@@ -48,7 +54,7 @@
                                 <% } %>
                     </h5>
                   </div>
-                  <div class="card-text ms-5 ps-2 fw-bold">
+                  <div class="card-text ms-5 ps-2 fw-bold px-4">
                     <div class="text-muted">
                       <%= post.author.type %>
                     </div>
@@ -59,9 +65,35 @@
                     </div>
                   </div>
                   <div class="card-content mt-4">
-                    <div class="card-subtitle">
+                    <div class="card-subtitle px-4 mb-4">
                       <%= post.text %>
                     </div>
+
+                    <% if (post.images) { %>
+                      <div id="image-<%= post._id %>" class="carousel slide" data-bs-interval="false"
+                        data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                          <% post.postImage.forEach((img, i)=> { %>
+                            <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                              <img src="<%= img %>" class="d-block w-100" alt="...">
+                            </div>
+                            <% }) %>
+                        </div>
+                        <% if (post.images.length> 1) { %>
+                          <button class="carousel-control-prev bg-transparent" type="button"
+                            data-bs-target="#image-<%= post._id %>" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next bg-transparent" type="button"
+                            data-bs-target="#image-<%= post._id %>" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                          <% } %>
+                      </div>
+                      <% } %>
+
                   </div>
                 </div>
               </div>

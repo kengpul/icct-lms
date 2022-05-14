@@ -1,6 +1,7 @@
 const Post = require('../models/posts');
 const User = require('../models/user');
 const Classes = require('../models/class');
+const { cloudinary } = require('../cloudinary');
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id).populate('classes').populate('groups');
@@ -26,8 +27,10 @@ module.exports.createPost = async (req, res) => {
             post = new Post({ text, created, class: postTo });
         }
         post.author = req.user._id;
+        post.images = req.files.map(image => ({ url: image.path, filename: image.filename }));
         await post.save();
     } catch (e) {
+        // We are not suppusoed to reach here, but jus in case
         console.log('something went wrong', e);
     }
     req.flash('success', 'Successfully Created a Post');
@@ -57,7 +60,15 @@ module.exports.renderEditPost = async (req, res) => {
 module.exports.editPost = async (req, res) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, req.body);
+    const imgs = req.files.map(image => ({ url: image.path, filename: image.filename }));
+    post.images.push(...imgs)
     await post.save();
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await post.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+    }
     req.flash('success', 'Successfully updated your post!');
     res.redirect(`/post/${id}`);
 }

@@ -1,26 +1,42 @@
 <% layout('layouts/lms-boilerplate') -%>
 
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-md-3 mt-5">
-            <div class="bg-white p-3 rounded">
-                <form action="/post/<%=post._id %>?_method=PUT" method="POST" class="validate" novalidate>
-                  <div class="form-floating">
-                    <textarea
-                      class="form-control posts-form"
-                      placeholder="Update your Post"
-                      id="floatingTextarea2"
-                      name="text"
-                      required
-                    ><%= post.text %></textarea>
-                    <label for="floatingTextarea2 fw-bold">Update your Post</label>
+      <div class="col-md-6 offset-md-3 mt-5">
+        <div class="bg-white p-3 rounded">
+          <form action="/post/<%=post._id %>?_method=PUT" method="POST" class="validate" novalidate
+            enctype="multipart/form-data">
+            <div class="form-floating mb-3">
+              <textarea class="form-control posts-form" placeholder="Update your Post" id="floatingTextarea2"
+                name="text" required><%= post.text %></textarea>
+              <label for="floatingTextarea2 fw-bold">Update your Post</label>
+            </div>
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Upload Images</label>
+              <input class="form-control" name="post-picture" type="file" id="formFile" multiple>
+            </div>
+            <hr class="dropdown-divider " />
+            </li>
+            <div class="mb-3 row row-cols-2">
+              <% post.images.forEach((img, i)=> { %>
+                <div>
+                  <img src="<%= img.url %>" class="img-thumbnail " alt="...">
+                  <div class="form-check">
+                    <input class="form-check-input" name="deleteImages[]" type="checkbox" value="<%= img.filename %>"
+                      id="image-<%= i %>">
+                    <label class="form-check-label" for="image-<%= i %>">
+                      Delete?
+                    </label>
                   </div>
-                 <hr class="dropdown-divider " /></li>
-                 <div class="text-end">
-                   <button class="btn btn-primary mt-1 px-4 ">Update</button>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <% }) %>
+
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-primary mt-1 px-4">Update</button>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
