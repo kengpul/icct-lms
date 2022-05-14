@@ -14,14 +14,14 @@
               <hr class="dropdown-divider" />
               </li>
               <div class="d-flex justify-content-end align-items-center mt-2">
-                <div class="image-upload me-3">
+                <div class="image-upload me-auto">
                   <label for="image-upload">
                     <i class="fas fa-2x fa-image" role="button"></i>
                   </label>
 
                   <input id="image-upload" name="post-picture" type="file" class="d-none" multiple />
                 </div>
-                <select name="postTo" class="form-select" aria-label="Default select example" required>
+                <select name="postTo" class="form-select w-25" aria-label="Default select example" required>
                   <% for (let _class of user.classes) { %>
                     <option value="<%= _class._id %>">
                       <%= _class.name %>

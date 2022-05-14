@@ -49,4 +49,12 @@ postSchema.virtual('editPostImage').get(function () {
     return images;
 })
 
+postSchema.post('findOneAndDelete', async function (doc) {
+    if (doc.images) {
+        for (let image of doc.images) {
+            await cloudinary.uploader.destroy(image.filename);
+        }
+    }
+})
+
 module.exports = mongoose.model('Post', postSchema);
