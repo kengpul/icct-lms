@@ -1,176 +1,146 @@
 <% layout('layouts/lms-boilerplate') -%>
 
-<link rel="stylesheet" href="/stylesheets/showClass.css" />
+  <link rel="stylesheet" href="/stylesheets/showClass.css" />
 
-<div class="container-fluid">
-  <div class="row mt-3">
-    <%- include('../partials/side-nav') %>
-    <div class="col mx-1 mx-md-5">
-      <div class="row header-class rounded mb-4">
-        <div
-          class="col d-flex flex-column flex-md-row justify-content-between align-items-center text-white pt-5 pb-3"
-        >
-          <div
-            class="header-left border-start border-danger border-5 mb-5 mb-md-0"
-          >
-            <h4 class="fw-bold ms-2"><%= showGroup.name %></h4>
-            <p class="ms-2 mb-0">Teacher: <%= showGroup.teacher.fullName %></p>
-          </div>
-          <div
-            class="header-right d-flex justify-content-around align-items-center text-center me-0 me-md-5"
-          >
-            <div class="me-5">
-              <a href="#" class="link-light">
-                <i class="fas fa-clipboard-list fa-2x"></i>
-                <p>Attendance</p>
-              </a>
+  <div class="container-fluid">
+    <div class="row mt-3">
+      <%- include('../partials/side-nav') %>
+        <div class="col mx-1 mx-md-5">
+          <div class="row header-class rounded mb-4">
+            <div
+              class="col d-flex flex-column flex-md-row justify-content-between align-items-center text-white pt-5 pb-3">
+              <div class="header-left border-start border-danger border-5 mb-5 mb-md-0">
+                <h4 class="fw-bold ms-2">
+                  <%= showGroup.name %>
+                </h4>
+                <p class="ms-2 mb-0">Teacher: <%= showGroup.teacher.fullName %>
+                </p>
+              </div>
+              <div class="header-right d-flex justify-content-around align-items-center text-center me-0 me-md-5">
+                <div class="me-5">
+                  <a href="#" class="link-light">
+                    <i class="fas fa-clipboard-list fa-2x"></i>
+                    <p>Attendance</p>
+                  </a>
+                </div>
+                <div>
+                  <a href="#" class="link-light">
+                    <i class="fas fa-video fa-2x"></i>
+                    <p>Video Conferrence</p>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div>
-              <a href="#" class="link-light">
-                <i class="fas fa-video fa-2x"></i>
-                <p>Video Conferrence</p>
-              </a>
-            </div>
           </div>
-        </div>
-      </div>
-      <div class="row d-flex flex-column-reverse flex-md-row">
-        <div class="col-md-8 ps-md-0 mt-3 mt-md-0">
-          <ul class="nav nav-pills nav-justified mb-3">
-            <li class="nav-item">
-              <a class="nav-link active" data-bs-toggle="pill" href="#members"
-                >Members</a
-              >
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="pill" href="#teacher"
-                >Teacher</a
-              >
-            </li>
-            <% if (currentUser.type === 'Teacher') {%>
-            <li class="nav-item">
-              <a class="nav-link" data-bs-toggle="pill" href="#pending"
-                >Pending</a
-              >
-            </li>
-            <% } %>
-          </ul>
+          <div class="row d-flex flex-column-reverse flex-md-row">
+            <div class="col-md-8 ps-md-0 mt-3 mt-md-0">
+              <ul class="nav nav-pills nav-justified mb-3">
+                <li class="nav-item">
+                  <a class="nav-link active" data-bs-toggle="pill" href="#members">Members</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="pill" href="#teacher">Teacher</a>
+                </li>
+                <% if (currentUser.type==='Teacher' ) {%>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="pill" href="#pending">Pending</a>
+                  </li>
+                  <% } %>
+              </ul>
 
-          <div class="tab-content">
-            <div class="tab-pane container active" id="members">
-              <% for (let student of showGroup.students) { %>
-              <ul class="list-group">
-                <li class="list-group-item d-flex align-items-center">
-                  <img
-                    src="<%= student.profilePicture %>"
-                    class="rounded-circle me-3"
-                    width="50"
-                    alt=""
-                  />
-                  <div class="mt-3">
-                    <h5><%= student.fullName %></h5>
-                    <p class="text-muted"><%= student.type %></p>
-                  </div>
-                </li>
-              </ul>
-              <% } %>
+              <div class="tab-content">
+                <div class="tab-pane container active" id="members">
+                  <% for (let student of showGroup.students) { %>
+                    <ul class="list-group">
+                      <li class="list-group-item d-flex align-items-center">
+                        <img src="<%= student.profilePicture %>" class="rounded-circle me-3" width="50" alt="" />
+                        <div class="mt-3">
+                          <h5>
+                            <%= student.fullName %>
+                          </h5>
+                          <p class="text-muted">
+                            <%= student.type %>
+                          </p>
+                        </div>
+                      </li>
+                    </ul>
+                    <% } %>
+                </div>
+                <div class="tab-pane container fade" id="teacher">
+                  <ul class="list-group">
+                    <li class="list-group-item d-flex align-items-center">
+                      <img src="<%= showGroup.teacher.profilePicture %>" class="rounded-circle me-3" width="50"
+                        alt="" />
+                      <div class="mt-3">
+                        <h5>
+                          <%= showGroup.teacher.fullName %>
+                        </h5>
+                        <p class="text-muted">Teacher</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="tab-pane container fade" id="pending">
+                  <% for (let pendingStudent of showGroup.pending) {%>
+                    <ul class="list-group">
+                      <li class="list-group-item d-flex align-items-center">
+                        <img src="<%= pendingStudent.profilePicture %>" class="rounded-circle me-3" width="50" alt="" />
+                        <div class="mt-3">
+                          <h5>
+                            <%= pendingStudent.fullName %>
+                          </h5>
+                          <p class="text-muted">
+                            <%= pendingStudent.type %>
+                          </p>
+                        </div>
+                        <div class="ms-auto d-flex flex-column flex-md-row">
+                          <form action="/group/<%= showGroup._id %>/accept/<%= pendingStudent._id %>" method="POST"
+                            class="validate">
+                            <button class="btn btn-primary mb-1 mb-md-0 me-md-1">
+                              Accept
+                            </button>
+                          </form>
+                          <form action="/group/<%= showGroup._id %>/reject/<%= pendingStudent._id %>" method="POST"
+                            class="validate">
+                            <button class="btn btn-danger w-100">Reject</button>
+                          </form>
+                        </div>
+                      </li>
+                    </ul>
+                    <% } %>
+                </div>
+              </div>
             </div>
-            <div class="tab-pane container fade" id="teacher">
-              <ul class="list-group">
-                <li class="list-group-item d-flex align-items-center">
-                  <img
-                    src="<%= showGroup.teacher.profilePicture %>"
-                    class="rounded-circle me-3"
-                    width="50"
-                    alt=""
-                  />
-                  <div class="mt-3">
-                    <h5><%= showGroup.teacher.fullName %></h5>
-                    <p class="text-muted">Teacher</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="tab-pane container fade" id="pending">
-              <% for (let pendingStudent of showGroup.pending) {%>
-              <ul class="list-group">
-                <li class="list-group-item d-flex align-items-center">
-                  <img
-                    src="<%= pendingStudent.profilePicture %>"
-                    class="rounded-circle me-3"
-                    width="50"
-                    alt=""
-                  />
-                  <div class="mt-3">
-                    <h5><%= pendingStudent.fullName %></h5>
-                    <p class="text-muted"><%= pendingStudent.type %></p>
-                  </div>
-                  <div class="ms-auto d-flex flex-column flex-md-row">
-                    <form
-                      action="/group/<%= showGroup._id %>/accept/<%= pendingStudent._id %>"
-                      method="POST"
-                    >
-                      <button class="btn btn-primary mb-1 mb-md-0 me-md-1">
-                        Accept
-                      </button>
-                    </form>
-                    <form
-                      action="/group/<%= showGroup._id %>/reject/<%= pendingStudent._id %>"
-                      method="POST"
-                    >
-                      <button class="btn btn-danger w-100">Reject</button>
-                    </form>
-                  </div>
-                </li>
-              </ul>
-              <% } %>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4 pe-md-0">
-          <div>
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary btn-lg w-100 dropdown-toggle text-start overflow-show"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <p class="fs-4"><i class="fas fa-bars me-2"></i> My Group</p>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <% for (let group of user.groups) { %>
-                <li>
-                  <a class="dropdown-item" href="/group/<%= group._id %>"
-                    ><%= group.name %></a
-                  >
-                </li>
-                <% } %>
-              </ul>
-            </div>
-          </div>
-          <div>
-            <div class="list-group mt-2 fs-5 d-flex flex-row d-md-block">
-              <a
-                href="/group/<%= showGroup._id %>"
-                class="list-group-item list-group-item-action fw-bold"
-              >
-                Post
-              </a>
-              <a href="#" class="list-group-item list-group-item-action fw-bold"
-                >Folder</a
-              >
-              <a
-                href="#"
-                class="list-group-item list-group-item-action fw-bold active"
-                aria-current="true"
-                >Members</a
-              >
+            <div class="col-md-4 pe-md-0">
+              <div>
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-lg w-100 dropdown-toggle text-start overflow-show" type="button"
+                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p class="fs-4"><i class="fas fa-bars me-2"></i> My Group</p>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <% for (let group of user.groups) { %>
+                      <li>
+                        <a class="dropdown-item" href="/group/<%= group._id %>">
+                          <%= group.name %>
+                        </a>
+                      </li>
+                      <% } %>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <div class="list-group mt-2 fs-5 d-flex flex-row d-md-block">
+                  <a href="/group/<%= showGroup._id %>" class="list-group-item list-group-item-action fw-bold">
+                    Post
+                  </a>
+                  <a href="#" class="list-group-item list-group-item-action fw-bold">Folder</a>
+                  <a href="#" class="list-group-item list-group-item-action fw-bold active"
+                    aria-current="true">Members</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
-</div>

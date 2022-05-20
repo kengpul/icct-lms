@@ -12,6 +12,12 @@
                 if (!form.checkValidity()) {
                     event.preventDefault()
                     event.stopPropagation()
+                } else {
+                    form.elements[form.elements.length - 1].disabled = true;
+                    form.elements[form.elements.length - 1].innerHTML =
+                        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                         Loading`;
+
                 }
 
                 form.classList.add('was-validated')
