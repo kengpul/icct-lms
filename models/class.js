@@ -20,12 +20,17 @@ const classSchema = new Schema({
             ref: 'User'
         }
     ],
+    pin: {
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+        default: null
+    },
     students: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
 })
 
 module.exports = mongoose.model('Class', classSchema);

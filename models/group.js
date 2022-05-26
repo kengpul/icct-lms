@@ -14,6 +14,11 @@ const groupSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    pin: {
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+        default: null
+    },
     pending: [
         {
             type: Schema.Types.ObjectId,

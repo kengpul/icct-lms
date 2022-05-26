@@ -49,6 +49,10 @@ module.exports.showPost = async (req, res) => {
             path: 'name'
         }
     }).populate('author');
+    if (!post) {
+        req.flash('error', 'Cannot find that post');
+        return res.redirect('/post');
+    }
     res.render('posts/show', { post })
 }
 

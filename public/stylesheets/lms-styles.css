@@ -85,6 +85,9 @@ a {
   background-color: #f4f4f7;
   height: 100px;
 }
+.card .card-text {
+  margin-left: 80px;
+}
 
 @media (max-width: 992px) {
   .notification-container {

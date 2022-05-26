@@ -1,120 +1,234 @@
 <% layout('layouts/lms-boilerplate') -%>
 
-<link rel="stylesheet" href="/stylesheets/showClass.css" />
+  <link rel="stylesheet" href="/stylesheets/showClass.css" />
 
-<div class="container-fluid mb-5">
-  <div class="row mt-3">
-    <%- include('../partials/side-nav') %>
-    <div class="col mx-1 mx-md-5">
-      <div class="row header-class rounded mb-4">
-        <div
-          class="col d-flex flex-column flex-md-row justify-content-between align-items-center text-white pt-5 pb-3"
-        >
-          <div
-            class="header-left border-start border-danger border-5 mb-5 mb-md-0"
-          >
-            <h4 class="fw-bold ms-2"><%= showGroup.name %></h4>
-            <p class="ms-2 mb-0">Teacher: <%= showGroup.teacher.fullName %></p>
-          </div>
-          <div
-            class="header-right d-flex justify-content-around align-items-center text-center me-0 me-md-5"
-          >
-            <div class="me-5">
-              <a href="#" class="link-light">
-                <i class="fas fa-clipboard-list fa-2x"></i>
-                <p>Attendance</p>
-              </a>
-            </div>
-            <div>
-              <a href="#" class="link-light">
-                <i class="fas fa-video fa-2x"></i>
-                <p>Video Conferrence</p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row d-flex flex-column-reverse flex-md-row">
-        <div class="col-md-8 ps-md-0 mt-3 mt-md-0">
-          <% for (let post of posts) {%>
-          <a class="link-dark" href="/post/<%= post._id %>">
-            <div class="card mb-3">
-              <div class="card-body">
-                <div class="author d-flex align-items-center">
-                  <img
-                    src="<%= post.author.profilePicture %>"
-                    class="img-fluid me-2"
-                    width="50"
-                    alt=""
-                  />
-                  <h5 class="card-title fw-bold text-capitalize">
-                    <%= post.author.fullName %>
-                    <span class="text-muted">Posted to </span>
-                    <%= post.group.name %>
-                  </h5>
+  <div class="container-fluid mb-5">
+    <div class="row mt-3">
+      <%- include('../partials/side-nav') %>
+        <div class="col mx-1 mx-md-5">
+          <div class="row header-class rounded mb-4">
+            <div
+              class="col d-flex flex-column flex-md-row justify-content-between align-items-center text-white pt-5 pb-3">
+              <div class="header-left border-start border-danger border-5 mb-5 mb-md-0">
+                <h4 class="fw-bold ms-2">
+                  <%= showGroup.name %>
+                </h4>
+                <p class="ms-2 mb-0">Teacher: <%= showGroup.teacher.fullName %>
+                </p>
+              </div>
+              <div class="header-right d-flex justify-content-around align-items-center text-center me-0 me-md-5">
+                <div class="me-5">
+                  <a href="#" class="link-light">
+                    <i class="fas fa-clipboard-list fa-2x"></i>
+                    <p>Attendance</p>
+                  </a>
                 </div>
-                <div class="card-text ms-5 fw-bold">
-                  <div class="text-muted"><%= post.author.type %></div>
-                  <div class="text-muted">
-                    <%= post.created.toLocaleDateString( 'en-us', {
-                    weekday:"long", year:"numeric", month:"short",
-                    day:"numeric", hour: 'numeric', minute: 'numeric', hour12:
-                    true} )%>
-                    <i class="fas fa-users me-2"></i>
-                  </div>
-                </div>
-                <div class="card-content mt-4">
-                  <div class="card-subtitle"><%= post.text %></div>
+                <div>
+                  <a href="#" class="link-light">
+                    <i class="fas fa-video fa-2x"></i>
+                    <p>Video Conferrence</p>
+                  </a>
                 </div>
               </div>
             </div>
-          </a>
-          <% } %>
-        </div>
-        <div class="col-md-4 pe-2 pe-md-0">
-          <div>
-            <div class="dropdown">
-              <button
-                class="btn btn-secondary btn-lg w-100 dropdown-toggle text-start overflow-show"
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <p class="fs-4"><i class="fas fa-bars me-2"></i> My Group</p>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <% for (let group of user.groups) { %>
-                <li>
-                  <a class="dropdown-item" href="/group/<%= group._id %>"
-                    ><%= group.name %></a
-                  >
-                </li>
+          </div>
+          <div class="row d-flex flex-column-reverse flex-md-row">
+            <div class="col-md-8 ps-md-0 mt-3 mt-md-0">
+              <% if (showGroup.pin) { %>
+                <div class="card border border-3 border-primary mb-3">
+                  <i class="fas fa-thumbtack position-absolute top-0 end-0 mt-3 me-5 fs-5 text-primary"></i>
+                  <div class="dropdown position-absolute top-0 end-0">
+                    <button class="btn btn-sm bg-transparent dropdown-toggle" type="button" id="postDropdown"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="postDropdown">
+                      <% if (currentUser && showGroup.pin.author.equals(currentUser._id)) {%>
+                        <li><a class="dropdown-item" href="/post/<%= showGroup.pin._id %>">Go to Post</a></li>
+                        <li><a class="dropdown-item" href="/post/<%= showGroup.pin._id %>/edit">Edit</a></li>
+                        <li>
+                          <form class="dropdown-item" action="/post/<%= showGroup.pin._id %>?_method=DELETE"
+                            method="POST">
+                            <button class="border-0 bg-transparent w-100 text-start">Delete</button>
+                          </form>
+                        </li>
+                        <li>
+                          <form class="dropdown-item" action="/group/<%= showGroup.pin._id %>/unPin" method="POST">
+                            <button class="border-0 bg-transparent w-100 text-start">Unpin</button>
+                          </form>
+                        </li>
+                        <% } else { %>
+                          <li><a class="dropdown-item" href="/post/<%= showGroup.pin._id %>">Go to Post</a></li>
+                          <% } %>
+                    </ul>
+                  </div>
+                  <div class="card-body px-0 pb-0">
+                    <div class="author d-flex align-items-center px-4">
+                      <img src="<%= showGroup.pin.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
+                      <h5 class="card-title fw-bold text-capitalize">
+                        <%= showGroup.pin.author.fullName %>
+                          <span class="text-muted">Posted to </span>
+                          <a href="/group/<%= showGroup._id %>">
+                            <%= showGroup.name %>
+                          </a>
+                      </h5>
+                    </div>
+                    <div class="card-text fw-bold">
+                      <div class="text-muted">
+                        <%= showGroup.pin.author.type %>
+                      </div>
+                      <div class="text-muted">
+                        <%= showGroup.pin.created.toLocaleDateString( 'en-us' , { weekday:"long", year:"numeric",
+                          month:"short", day:"numeric", hour: 'numeric' , minute: 'numeric' , hour12: true} )%>
+                          <i class="fas fa-users me-2"></i>
+                      </div>
+                    </div>
+                    <div class="card-content mt-4">
+                      <div class="card-subtitle px-4 mb-4">
+                        <%= showGroup.pin.text %>
+                      </div>
+
+                      <% if (showGroup.pin.images) { %>
+                        <div id="image-<%= showGroup.pin._id %>" class="carousel slide" data-bs-interval="false"
+                          data-bs-ride="carousel">
+                          <div class="carousel-inner">
+                            <% showGroup.pin.postImage.forEach((img, i)=> { %>
+                              <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                                <img src="<%= img %>" class="d-block w-100" alt="...">
+                              </div>
+                              <% }) %>
+                          </div>
+                          <% if (showGroup.pin.images.length> 1) { %>
+                            <button class="carousel-control-prev bg-transparent" type="button"
+                              data-bs-target="#image-<%= post._id %>" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next bg-transparent" type="button"
+                              data-bs-target="#image-<%= post._id %>" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                            <% } %>
+                        </div>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
                 <% } %>
-              </ul>
+
+                  <% for (let post of groupPosts) {%>
+                    <div class="card mb-3">
+                      <div class="dropdown position-absolute top-0 end-0">
+                        <button class="btn btn-sm bg-transparent dropdown-toggle" type="button" id="postDropdown"
+                          data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="postDropdown">
+                          <% if (currentUser && post.author.equals(currentUser._id)) {%>
+                            <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
+                            <li><a class="dropdown-item" href="/post/<%= post._id %>/edit">Edit</a></li>
+                            <li>
+                              <form class="dropdown-item" action="/post/<%= post._id %>?_method=DELETE" method="POST">
+                                <button class="border-0 bg-transparent w-100 text-start">Delete</button>
+                              </form>
+                            </li>
+                            <li>
+                              <form class="dropdown-item" action="/group/<%= post._id %>/pin" method="POST">
+                                <button class="border-0 bg-transparent w-100 text-start">Pin</button>
+                              </form>
+                            </li>
+                            <% } else { %>
+                              <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
+                              <% } %>
+                        </ul>
+                      </div>
+                      <div class="card-body px-0 pb-0">
+                        <div class="author d-flex align-items-center px-4">
+                          <img src="<%= post.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
+                          <h5 class="card-title fw-bold text-capitalize">
+                            <%= post.author.fullName %>
+                              <span class="text-muted">Posted to </span>
+                              <a href="/group/<%= showGroup._id %>">
+                                <%= showGroup.name %>
+                              </a>
+                          </h5>
+                        </div>
+                        <div class="card-text fw-bold">
+                          <div class=" text-muted">
+                            <%= post.author.type %>
+                          </div>
+                          <div class="text-muted">
+                            <%= post.created.toLocaleDateString( 'en-us' , { weekday:"long", year:"numeric",
+                              month:"short", day:"numeric", hour: 'numeric' , minute: 'numeric' , hour12: true} )%>
+                              <i class="fas fa-users me-2"></i>
+                          </div>
+                        </div>
+                        <div class="card-content mt-4">
+                          <div class="card-subtitle px-4 mb-4">
+                            <%= post.text %>
+                          </div>
+
+                          <% if (post.images) { %>
+                            <div id="image-<%= post._id %>" class="carousel slide" data-bs-interval="false"
+                              data-bs-ride="carousel">
+                              <div class="carousel-inner">
+                                <% post.postImage.forEach((img, i)=> { %>
+                                  <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                                    <img src="<%= img %>" class="d-block w-100" alt="...">
+                                  </div>
+                                  <% }) %>
+                              </div>
+                              <% if (post.images.length> 1) { %>
+                                <button class="carousel-control-prev bg-transparent" type="button"
+                                  data-bs-target="#image-<%= post._id %>" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next bg-transparent" type="button"
+                                  data-bs-target="#image-<%= post._id %>" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                                <% } %>
+                            </div>
+                            <% } %>
+                        </div>
+                      </div>
+                    </div>
+                    <% } %>
             </div>
-          </div>
-          <div>
-            <div class="list-group mt-2 fs-5 d-flex flex-row d-md-block">
-              <a
-                href="/group/<%= showGroup._id %>"
-                class="list-group-item list-group-item-action fw-bold active"
-                arai-current="true"
-              >
-                Post
-              </a>
-              <a href="" class="list-group-item list-group-item-action fw-bold"
-                >Folder</a
-              >
-              <a
-                href="/group/<%= showGroup._id %>/members"
-                class="list-group-item list-group-item-action fw-bold"
-                >Members</a
-              >
+            <div class="col-md-4 pe-2 pe-md-0">
+              <div>
+                <div class="dropdown">
+                  <button class="btn btn-secondary btn-lg w-100 dropdown-toggle text-start overflow-show" type="button"
+                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <p class="fs-4"><i class="fas fa-bars me-2"></i> My Group</p>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <% for (let group of user.groups) { %>
+                      <li>
+                        <a class="dropdown-item" href="/group/<%= group._id %>">
+                          <%= group.name %>
+                        </a>
+                      </li>
+                      <% } %>
+                  </ul>
+                </div>
+              </div>
+              <div>
+                <div class="list-group mt-2 fs-5 d-flex flex-row d-md-block">
+                  <a href="/group/<%= showGroup._id %>" class="list-group-item list-group-item-action fw-bold active"
+                    arai-current="true">
+                    Post
+                  </a>
+                  <a href="" class="list-group-item list-group-item-action fw-bold">Folder</a>
+                  <a href="/group/<%= showGroup._id %>/members"
+                    class="list-group-item list-group-item-action fw-bold">Members</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
-</div>

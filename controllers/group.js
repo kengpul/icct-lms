@@ -31,7 +31,15 @@ module.exports.createGroup = async (req, res) => {
 
 module.exports.showGroup = async (req, res) => {
     const { id } = req.params;
-    const showGroup = await Group.findById(id).populate('pending').populate('teacher');
+    const showGroup = await Group.findById(id)
+        .populate('pending')
+        .populate('teacher')
+        .populate({
+            path: 'pin',
+            populate: {
+                path: 'author'
+            }
+        })
     const posts = await Post.find({ group: id }).populate({
         path: 'group',
         populate: {
@@ -41,8 +49,9 @@ module.exports.showGroup = async (req, res) => {
     posts.sort(function (a, b) {
         return b.created - a.created;
     })
+    const groupPosts = posts.filter(post => !post.equals(showGroup.pin));
     const user = await User.findById(req.user._id).populate('groups');
-    res.render('group/show', { showGroup, posts, user });
+    res.render('group/show', { showGroup, groupPosts, user });
 }
 
 module.exports.joinGroup = async (req, res) => {
@@ -108,4 +117,20 @@ module.exports.showMembers = async (req, res) => {
         .populate('pending')
     const user = await User.findById(req.user._id).populate('groups');
     res.render('group/members', { showGroup, user })
+}
+
+module.exports.pin = async (req, res) => {
+    const post = await Post.findById(req.params.id);
+    const group = await Group.findById(post.group);
+    group.pin = post._id;
+    await group.save();
+    res.redirect(`/group/${group._id}`);
+}
+
+module.exports.unPin = async (req, res) => {
+    const post = await Post.findById(req.params.id);
+    const group = await Group.findById(post.group);
+    group.pin = null;
+    await group.save();
+    res.redirect(`/group/${group._id}`);
 }

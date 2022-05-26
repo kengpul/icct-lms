@@ -46,7 +46,7 @@
               <div class="dropdown position-absolute top-0 end-0">
                 <button class="btn btn-sm bg-transparent dropdown-toggle" type="button" id="postDropdown"
                   data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-h"></i>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="postDropdown">
                   <% if (currentUser && post.author.equals(currentUser._id)) {%>
@@ -57,7 +57,12 @@
                         <button class="bg-transparent w-100 text-start">Delete</button>
                       </form>
                     </li>
-                    <li><a class="dropdown-item" href="#">Pin</a></li>
+                    <li>
+                      <form class="dropdown-item" action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin"
+                        method="POST">
+                        <button class="bg-transparent w-100 text-start">Pin</button>
+                      </form>
+                    </li>
                     <% } else { %>
                       <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
                       <% } %>
@@ -70,13 +75,17 @@
                     <%= post.author.fullName %>
                       <span class="text-muted">Posted to </span>
                       <% if (post.class) {%>
-                        <%= post.class.name %>
-                          <% }else { %>
+                        <a href="/class/<%= post.class._id %>">
+                          <%= post.class.name %>
+                        </a>
+                        <% }else { %>
+                          <a href="/group/<%= post.group._id %>">
                             <%= post.group.name %>
-                              <% } %>
+                          </a>
+                          <% } %>
                   </h5>
                 </div>
-                <div class="card-text ms-5 ps-2 fw-bold px-4">
+                <div class="card-text fw-bold">
                   <div class="text-muted">
                     <%= post.author.type %>
                   </div>
@@ -115,7 +124,6 @@
                         <% } %>
                     </div>
                     <% } %>
-
                 </div>
               </div>
             </div>
@@ -163,7 +171,8 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <% if (currentUser.type==='Teacher' ) {%>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                        data-bs-target="#createClassModal">Create a Class</a></li>
+                        data-bs-target="#createClassModal">Create a
+                        Class</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Join
                         Class</a></li>
                     <% } else { %>
@@ -247,7 +256,8 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuGroupButton">
                   <% if (currentUser.type==='Teacher' ) {%>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                        data-bs-target="#createGroupModal">Create Group</a></li>
+                        data-bs-target="#createGroupModal">Create
+                        Group</a></li>
                     <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#groupModal">Join
                         Group</a></li>
                     <% } else { %>

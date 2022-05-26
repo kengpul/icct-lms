@@ -31,7 +31,15 @@ module.exports.createClass = async (req, res) => {
 
 module.exports.showClass = async (req, res) => {
     const { id } = req.params;
-    const showClass = await Class.findById(id).populate('pending').populate('teacher');
+    const showClass = await Class.findById(id)
+        .populate('pending')
+        .populate('teacher')
+        .populate({
+            path: 'pin',
+            populate: {
+                path: 'author'
+            }
+        });
     const posts = await Post.find({ class: id }).populate({
         path: 'class',
         populate: {
@@ -41,8 +49,9 @@ module.exports.showClass = async (req, res) => {
     posts.sort(function (a, b) {
         return b.created - a.created;
     })
+    const classPosts = posts.filter(post => !post.equals(showClass.pin));
     const user = await User.findById(req.user._id).populate('classes');
-    res.render('class/show', { showClass, posts, user });
+    res.render('class/show', { showClass, classPosts, user });
 }
 
 module.exports.joinClass = async (req, res) => {
@@ -107,4 +116,20 @@ module.exports.showMembers = async (req, res) => {
         .populate('pending')
     const user = await User.findById(req.user._id).populate('classes');
     res.render('class/members', { showClass, user })
+}
+
+module.exports.pin = async (req, res) => {
+    const post = await Post.findById(req.params.id);
+    const _class = await Class.findById(post.class);
+    _class.pin = post._id;
+    await _class.save();
+    res.redirect(`/class/${_class._id}`);
+}
+
+module.exports.unPin = async (req, res) => {
+    const post = await Post.findById(req.params.id);
+    const _class = await Class.findById(post.class);
+    _class.pin = null;
+    await _class.save();
+    res.redirect(`/class/${_class._id}`);
 }
