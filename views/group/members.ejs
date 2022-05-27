@@ -17,18 +17,48 @@
                 </p>
               </div>
               <div class="header-right d-flex justify-content-around align-items-center text-center me-0 me-md-5">
-                <div class="me-5">
-                  <a href="#" class="link-light">
-                    <i class="fas fa-clipboard-list fa-2x"></i>
-                    <p>Attendance</p>
-                  </a>
-                </div>
-                <div>
-                  <a href="#" class="link-light">
-                    <i class="fas fa-video fa-2x"></i>
-                    <p>Video Conferrence</p>
-                  </a>
-                </div>
+                <% if (currentUser.type==='Teacher' ) {%>
+                  <div class="me-5">
+                    <div class="dropdown mt-2">
+                      <i class="fas fa-clipboard-list fa-2x dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <p class="lead m-0 p-0 mt-1">Attendance</p>
+                      </i>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="<%= showGroup.link.attendance %>" target="_blank">Open</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/group/<%= showGroup._id %>/link">Edit</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="dropdown mt-2">
+                      <i class="fas fas fa-video fa-2x dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <p class="lead m-0 p-0 mt-1">Video Conferrence</p>
+                      </i>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="<%= showGroup.link.video %>" target="_blank">Open</a></li>
+                        <li><a class="dropdown-item" href="/group/<%= showGroup._id %>/link">Edit</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                  <% } else { %>
+                    <% if (showGroup.link.attendance){ %>
+                      <div class="me-5">
+                        <a href="<%= showGroup.link.attendance %>" class="link-light" target="_blank">
+                          <i class="fas fa-clipboard-list fa-2x"></i>
+                          <p>Attendance</p>
+                        </a>
+                      </div>
+                      <% } %>
+                        <% if (showGroup.link.video) { %>
+                          <a href="<%= showGroup.link.video %>" class="link-light" target="_blank">
+                            <i class="fas fa-video fa-2x"></i>
+                            <p>Video Conferrence</p>
+                          </a>
+                          <% } %>
+                            <% } %>
               </div>
             </div>
           </div>

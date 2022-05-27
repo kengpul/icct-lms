@@ -1,0 +1,33 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-5">
+                <div class="bg-white p-3 rounded">
+                    </p>
+                    <form action="/class/<%= _class._id %>/link" method="post" class="validate" novalidate>
+                        <div class="form-floating mb-3">
+                            <input type="url" class="form-control" name="attendance" id="attendance"
+                                placeholder="Attendance"
+                                value="<%= _class.link.attendance === null? '': _class.link.attendance %>">
+                            <label for="attendance">Attendance</label>
+                            <div class="invalid-feedback">
+                                Please input a valid url: <span class="text-primary">https://sample.com</span>
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="url" class="form-control" name="video" id="Video Conference"
+                                placeholder="Video Conference" value=" <%=_class.link.video===null? '' :
+                                _class.link.video %>">
+                            <label for="Video Conference">Video Conference</label>
+                            <div class="invalid-feedback">
+                                Please input a valid url: <span class="text-primary">https://sample.com</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary w-100">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

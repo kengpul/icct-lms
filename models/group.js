@@ -19,6 +19,16 @@ const groupSchema = new Schema({
         ref: 'Post',
         default: null
     },
+    link: {
+        attendance: {
+            type: String,
+            default: null
+        },
+        video: {
+            type: String,
+            default: null
+        }
+    },
     pending: [
         {
             type: Schema.Types.ObjectId,

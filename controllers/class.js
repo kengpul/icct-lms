@@ -133,3 +133,18 @@ module.exports.unPin = async (req, res) => {
     await _class.save();
     res.redirect(`/class/${_class._id}`);
 }
+
+module.exports.renderEditLinks = async (req, res) => {
+    const _class = await Class.findById(req.params.id);
+    res.render('class/edit', { _class });
+}
+
+module.exports.editLinks = async (req, res) => {
+    const { attendance, video } = req.body;
+    const _class = await Class.findById(req.params.id);
+    _class.link.attendance = attendance
+    _class.link.video = video
+    await _class.save();
+    req.flash('success', 'Successfully update links');
+    res.redirect(`/class/${_class._id}`);
+}

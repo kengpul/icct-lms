@@ -134,3 +134,18 @@ module.exports.unPin = async (req, res) => {
     await group.save();
     res.redirect(`/group/${group._id}`);
 }
+
+module.exports.renderEditLinks = async (req, res) => {
+    const group = await Group.findById(req.params.id);
+    res.render('group/edit', { group });
+}
+
+module.exports.editLinks = async (req, res) => {
+    const { attendance, video } = req.body;
+    const group = await Group.findById(req.params.id);
+    group.link.attendance = attendance
+    group.link.video = video
+    await group.save();
+    req.flash('success', 'Successfully update links');
+    res.redirect(`/group/${group._id}`);
+}

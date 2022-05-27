@@ -14,17 +14,27 @@ const classSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    pin: {
+        type: Schema.Types.ObjectId,
+        ref: 'Post',
+        default: null
+    },
+    link: {
+        attendance: {
+            type: String,
+            default: null
+        },
+        video: {
+            type: String,
+            default: null
+        }
+    },
     pending: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
     ],
-    pin: {
-        type: Schema.Types.ObjectId,
-        ref: 'Post',
-        default: null
-    },
     students: [
         {
             type: Schema.Types.ObjectId,

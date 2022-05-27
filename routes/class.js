@@ -18,6 +18,10 @@ router.post('/:id/pin', isLoggedIn, isTeacher, classes.pin)
 
 router.post('/:id/unpin', isLoggedIn, isTeacher, classes.unPin)
 
+router.route('/:id/link')
+    .get(isLoggedIn, isTeacher, classes.renderEditLinks)
+    .post(isLoggedIn, isTeacher, catchAsync(classes.editLinks))
+
 router.post('/:classId/accept/:studentId', isLoggedIn, isTeacher, classes.acceptStudent)
 
 router.post('/:classId/leave/:studentId', isLoggedIn, classes.leaveStudent)
