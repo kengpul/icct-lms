@@ -57,15 +57,25 @@
                         <button class="bg-transparent w-100 text-start">Delete</button>
                       </form>
                     </li>
-                    <li>
-                      <form class="dropdown-item" action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin"
-                        method="POST">
-                        <button class="bg-transparent w-100 text-start">Pin</button>
-                      </form>
-                    </li>
-                    <% } else { %>
-                      <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
+                    <% if (currentUser.type==='Teacher' ) { %>
+                      <li>
+                        <form class="dropdown-item" action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin"
+                          method="POST">
+                          <button class="bg-transparent w-100 text-start">Pin</button>
+                        </form>
+                      </li>
                       <% } %>
+                        <% } else { %>
+                          <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
+                          <% if (currentUser.type==='Teacher' ) { %>
+                            <li>
+                              <form class="dropdown-item"
+                                action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin" method="POST">
+                                <button class="bg-transparent w-100 text-start">Pin</button>
+                              </form>
+                            </li>
+                            <% } %>
+                              <% } %>
                 </ul>
               </div>
               <div class="card-body px-0 pb-0">
