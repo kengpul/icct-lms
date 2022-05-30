@@ -38,9 +38,9 @@
                             <!--for searchBar-->
                             <div class="searchBar">
                                 <!--the link in form is for example only-->
-                                <form action="#" class="search-bar">
-                                    <input type="text" placeholder="Search Classes" name="q">
-                                    <button type="button" id="searchBtn" title="searchBTN">
+                                <form action="/class" method="GET" class="search-bar">
+                                    <input type="text" placeholder="Search class name" name="search">
+                                    <button type="submit" id="searchBtn" class="mt-2 me-2" title="searchBTN">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                             <path
@@ -109,82 +109,86 @@
                         <!--this is the for classes// it connects in the grid and list icons in toggle-->
                         <div class="class-container list">
 
-                            <% for (let _class of user.classes) { %>
-                                <!--container1-->
+                            <% if (classes.length) { %>
+                                <% for (let _class of classes) { %>
+                                    <!--container1-->
 
-                                <div class="class cont1">
-                                    <div class="top-menu" id="container1">
-                                        <!--3 dot icon //  can work as dropdown -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi-three-dots-vertical" viewBox="0 0 16 16">
-                                            <path
-                                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                        </svg>
-                                        <!--this for dropdown-->
-                                        <div class="dropdown-content">
-                                            <form action="/class/<%= _class._id %>/leave/<%= currentUser._id %>"
-                                                method="POST">
-                                                <button class="btn">Leave</button>
-                                            </form>
+                                    <div class="class cont1">
+                                        <div class="top-menu" id="container1">
+                                            <!--3 dot icon //  can work as dropdown -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi-three-dots-vertical" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                            </svg>
+                                            <!--this for dropdown-->
+                                            <div class="dropdown-content">
+                                                <form action="/class/<%= _class._id %>/leave/<%= currentUser._id %>"
+                                                    method="POST">
+                                                    <button class="btn">Leave</button>
+                                                </form>
 
-                                        </div>
-                                    </div>
-
-
-
-                                    <!--profile image of teacher-->
-                                    <img src="<%= _class.teacher.profilePicture %>" alt="" class="profile-img">
-
-                                    <h4 class="class-teacher">
-                                        <%= _class.teacher.fullName %>
-                                            <BR>
-                                            <p style="font-size: 15px;">Teacher</p>
-                                    </h4>
-
-                                    <!--title of sub-->
-                                    <h2 class="class-title">
-                                        <%= _class.name %>
-                                    </h2>
-
-                                    <!--other info about subject // include: task no or push notif and shedule of subject-->
-                                    <div class="class-info" style="background-color: transparent; color: black;">
-                                        <!--detail 1-->
-                                        <div class="detail">
-                                            <div class="info">
-                                                <!--icons for task-->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" style="color:#1a51c6" class="bi-list-task"
-                                                    viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd"
-                                                        d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" />
-                                                    <path
-                                                        d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z" />
-                                                    <path fill-rule="evenodd"
-                                                        d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" />
-                                                </svg>
-                                                <p>Total task: <span class="notif" id="counter">3</span></p>
                                             </div>
                                         </div>
-                                        <!--detail 2-->
-                                        <div class="detail flex">
-                                            <div class="info">
-                                                <!--icons for schedule-->
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                    fill="currentColor" style="color:#1a51c6" class="bi-calendar-event"
-                                                    viewBox="0 0 16 16">
-                                                    <path
-                                                        d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
-                                                    <path
-                                                        d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
-                                                </svg>
-                                                <p>Schedule: T TH S - 04:00 - 05:00 pm</p>
+
+
+
+                                        <!--profile image of teacher-->
+                                        <img src="<%= _class.teacher.profilePicture %>" alt="" class="profile-img">
+
+                                        <h4 class="class-teacher">
+                                            <%= _class.teacher.fullName %>
+                                                <BR>
+                                                <p style="font-size: 15px;">Teacher</p>
+                                        </h4>
+
+                                        <!--title of sub-->
+                                        <h2 class="class-title">
+                                            <%= _class.name %>
+                                        </h2>
+
+                                        <!--other info about subject // include: task no or push notif and shedule of subject-->
+                                        <div class="class-info" style="background-color: transparent; color: black;">
+                                            <!--detail 1-->
+                                            <div class="detail">
+                                                <div class="info">
+                                                    <!--icons for task-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" style="color:#1a51c6" class="bi-list-task"
+                                                        viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd"
+                                                            d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" />
+                                                        <path
+                                                            d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z" />
+                                                        <path fill-rule="evenodd"
+                                                            d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" />
+                                                    </svg>
+                                                    <p>Total task: <span class="notif" id="counter">3</span></p>
+                                                </div>
+                                            </div>
+                                            <!--detail 2-->
+                                            <div class="detail flex">
+                                                <div class="info">
+                                                    <!--icons for schedule-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" style="color:#1a51c6"
+                                                        class="bi-calendar-event" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z" />
+                                                        <path
+                                                            d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                                                    </svg>
+                                                    <p>Schedule: T TH S - 04:00 - 05:00 pm</p>
+                                                </div>
                                             </div>
                                         </div>
+                                        <!--end of container 1-->
+                                        <a href="/class/<%= _class._id %>" class="btn btn-primary">View Class</a>
                                     </div>
-                                    <!--end of container 1-->
-                                    <a href="/class/<%= _class._id %>" class="btn btn-primary">View Class</a>
-                                </div>
-                                <% } %>
+                                    <% } %>
+                                        <% } else { %>
+                                            <h2 class="text-center mt-5">No Classes Found</h2>
+                                            <% } %>
                         </div>
                     </div>
                     <!--#####################Separation############################-->

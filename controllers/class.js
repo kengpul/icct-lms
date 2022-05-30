@@ -3,14 +3,20 @@ const Post = require('../models/posts');
 const User = require('../models/user');
 
 module.exports.index = async (req, res) => {
-    const classes = await Class.find({});
     const user = await User.findById(req.user).populate({
         path: 'classes',
         populate: {
             path: 'teacher'
         }
-    })
-    res.render('class/index', { classes, user });
+    });
+    const classes = user.classes;
+    if (req.query.search) {
+        const searchClasses = user.classes;
+        const query = req.query.search.toLowerCase();
+        const classes = searchClasses.filter(c => c.name.toLowerCase().includes(query));
+        return res.render('class/index', { classes });
+    }
+    res.render('class/index', { classes });
 }
 
 module.exports.createClass = async (req, res) => {

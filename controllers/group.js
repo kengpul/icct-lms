@@ -3,14 +3,20 @@ const Post = require('../models/posts');
 const User = require('../models/user');
 
 module.exports.index = async (req, res) => {
-    const groups = await Group.find({});
     const user = await User.findById(req.user).populate({
         path: 'groups',
         populate: {
             path: 'teacher'
         }
-    })
-    res.render('group/index', { groups, user });
+    });
+    const groups = user.groups;
+    if (req.query.search) {
+        const searchGroups = user.groups;
+        const query = req.query.search.toLowerCase();
+        const groups = searchGroups.filter(c => c.name.toLowerCase().includes(query));
+        return res.render('group/index', { groups });
+    }
+    res.render('group/index', { groups });
 }
 
 module.exports.createGroup = async (req, res) => {
