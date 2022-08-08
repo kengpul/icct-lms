@@ -22,6 +22,7 @@ const profileRoutes = require('./routes/profile');
 const classRoutes = require('./routes/class');
 const groupRoutes = require('./routes/group');
 const calendarRoutes = require('./routes/calendar');
+const chatRoutes = require('./routes/chat');
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/icct-lms';
 mongoose.connect(dbUrl);
@@ -88,6 +89,7 @@ app.use('/profile', profileRoutes);
 app.use('/class', classRoutes);
 app.use('/group', groupRoutes);
 app.use('/calendar', calendarRoutes);
+app.use('/chat', chatRoutes);
 
 app.all('*', (req, res, next) => {
 	next(new ExpressError('Page not Found'), 404);

@@ -1,0 +1,18 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+    <div class="container mt-5">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            <% for (let chat of groupChats) { %>
+                <div class="col">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title text-truncate">
+                                <%= chat.split(' ')[0] %>
+                            </h4>
+                            <a href="/chat/<%= chat.split(' ')[0] %>" class="btn btn-primary w-100">Open</a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+        </div>
+    </div>

@@ -41,6 +41,14 @@ const classSchema = new Schema({
             ref: 'User'
         }
     ],
+    chat: {
+        name: String,
+        chats: [
+            {
+                text: String
+            }
+        ]
+    }
 })
 
 module.exports = mongoose.model('Class', classSchema);
