@@ -1,6 +1,44 @@
 <% layout('layouts/lms-boilerplate') -%>
 
-    <div class="container">
-        <h1>this is the looby for <%= id %>
-        </h1>
+    <link rel="stylesheet" href="/stylesheets/chat.css">
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="chat-container">
+                    <p class="bg-white w-50 rounded p-2">chat</p>
+                    <p class="bg-primary text-white w-50 ms-auto rounded p-2">another chat</p>
+                    <p class="bg-white w-50 rounded p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
+                        laudantium
+                        accusantium! Voluptates odio impedit enim minus reiciendis blanditiis saepe, rem unde cumque
+                        molestias laborum neque provident nobis consequuntur, alias ex?</p>
+                    <p class="bg-primary text-white w-50 ms-auto rounded p-2">another chat</p>
+                    <p class="bg-white w-50 rounded p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
+                        laudantium
+                        accusantium! Voluptates odio impedit enim minus reiciendis blanditiis saepe, rem unde cumque
+                        molestias laborum neque provident nobis consequuntur, alias ex?</p>
+                    <p class="bg-primary text-white w-50 ms-auto rounded p-2">another chat</p>
+                    <p class="bg-white w-50 rounded p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
+                        laudantium
+                        accusantium! Voluptates odio impedit enim minus reiciendis blanditiis saepe, rem unde cumque
+                        molestias laborum neque provident nobis consequuntur, alias ex?</p>
+                </div>
+                <div class="my-1">
+                    <form class="d-flex chat-form">
+                        <input type="text" name="<%= currentUser._id %>" class="form-control chat-input" autofocus
+                            required>
+                        <button class="btn btn-success ms-3 chat-button">Send</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-2">
+                lists
+            </div>
+        </div>
     </div>
+
+    <script>
+        const user = '<%- currentUser._id %>';
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascripts/chat.js"></script>

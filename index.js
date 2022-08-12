@@ -15,7 +15,12 @@ const User = require('./models/user');
 const ExpressError = require('./utils/ExpressError');
 const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override');
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
 
+const { sockets } = require('./controllers/chat');
 const userRoutes = require('./routes/users');
 const postRoutes = require('./routes/posts');
 const profileRoutes = require('./routes/profile');
@@ -83,6 +88,7 @@ app.get('/', (req, res) => {
 	return res.redirect('/post');
 });
 
+sockets(io);
 app.use('/', userRoutes);
 app.use('/post', postRoutes);
 app.use('/profile', profileRoutes);
@@ -102,6 +108,6 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	console.log(`ON PORT ${PORT}`);
 });

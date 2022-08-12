@@ -31,9 +31,11 @@ module.exports.createClass = async (req, res) => {
     newClass.teacher = req.user._id;
     newClass.students.push(req.user._id);
     newClass.chat.name = newClass.name;
+    newClass.chat.id = newClass._id;
     req.user.classes.push(newClass._id);
     await newClass.save();
     await req.user.save();
+    console.log(newClass)
     res.redirect(`/class/${newClass._id}`);
 }
 
