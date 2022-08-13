@@ -3,42 +3,60 @@
     <link rel="stylesheet" href="/stylesheets/chat.css">
 
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="chat-container">
-                    <p class="bg-white w-50 rounded p-2">chat</p>
-                    <p class="bg-primary text-white w-50 ms-auto rounded p-2">another chat</p>
-                    <p class="bg-white w-50 rounded p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                        laudantium
-                        accusantium! Voluptates odio impedit enim minus reiciendis blanditiis saepe, rem unde cumque
-                        molestias laborum neque provident nobis consequuntur, alias ex?</p>
-                    <p class="bg-primary text-white w-50 ms-auto rounded p-2">another chat</p>
-                    <p class="bg-white w-50 rounded p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                        laudantium
-                        accusantium! Voluptates odio impedit enim minus reiciendis blanditiis saepe, rem unde cumque
-                        molestias laborum neque provident nobis consequuntur, alias ex?</p>
-                    <p class="bg-primary text-white w-50 ms-auto rounded p-2">another chat</p>
-                    <p class="bg-white w-50 rounded p-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                        laudantium
-                        accusantium! Voluptates odio impedit enim minus reiciendis blanditiis saepe, rem unde cumque
-                        molestias laborum neque provident nobis consequuntur, alias ex?</p>
+        <div class=" row">
+            <div class="col-md-10 ps-0">
+                <div class="chat-header">
+                    <h4
+                        class="bg-white p-2 mb-0 border-bottom border-3 rounded text-center d-md-flex align-items-center justify-content-between">
+                        <div class="fs-6">
+                            <button class="btn" onclick="history.back()"><i
+                                    class="fas fa-long-arrow-alt-left fa-2x"></i></button>
+                            <%= _class.name %>
+                        </div>
+                        <div class="text-muted fs-6">
+                            Teacher: <%= _class.teacher.username %>
+                        </div>
+                    </h4>
+                </div>
+                <div class="chat-container ps-3 ">
+
+                    <div class="bg-white mt-3 ms-auto p-3 chat-body text-end shadow">
+                        <div class="chat-text-header d-flex justify-content-between border-bottom">
+                            <p>Name</p>
+                            <p class="text-muted">time</p>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas possimus numquam sequi, harum
+                            doloribus, ipsa unde blanditiis quia repellat atque voluptates libero qui. Magni laudantium
+                            aliquam asperiores voluptatum quaerat mollitia.</p>
+                    </div>
+
+                    <div class="bg-white mt-3 p-3 chat-body text-end shadow">
+                        <div class="chat-text-header d-flex justify-content-between border-bottom">
+                            <p>Name</p>
+                            <p class="text-muted">time</p>
+                        </div>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas possimus numquam sequi, harum
+                            doloribus, ipsa unde blanditiis quia repellat atque voluptates libero qui. Magni laudantium
+                            aliquam asperiores voluptatum quaerat mollitia.</p>
+                    </div>
+
                 </div>
                 <div class="my-1">
                     <form class="d-flex chat-form">
-                        <input type="text" name="<%= currentUser._id %>" class="form-control chat-input" autofocus
-                            required>
+                        <input type="text" name="<%= currentUser.username %>" class="form-control chat-input ms-3"
+                            autofocus required>
                         <button class="btn btn-success ms-3 chat-button">Send</button>
                     </form>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 d-none d-md-block">
                 lists
             </div>
         </div>
     </div>
 
     <script>
-        const user = '<%- currentUser._id %>';
+        const user = '<%- currentUser.username %>';
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/chat.js"></script>

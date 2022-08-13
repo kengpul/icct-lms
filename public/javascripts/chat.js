@@ -12,22 +12,35 @@ window.addEventListener('load', () => {
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!chatInput.value) return;
-    socket.emit('chat', chatInput.value, room, chatInput.name);
+    socket.emit('chat', chat(chatInput.name, chatInput.value, room));
     chatInput.value = ''
 })
 
-socket.on('displayChat', (chat, id) => {
-    displayChat(chat, id);
+const chat = (name, input, room) => {
+    return {
+        name,
+        input,
+        room,
+        time: new Date()
+    }
+}
+
+socket.on('displayChat', chat => {
+    displayChat(chat);
 })
 
-const displayChat = (chat, id) => {
+const displayChat = (chat) => {
     const p = document.createElement('p');
-    p.innerText = chat;
-    if (id === user) {
-        p.classList.add('bg-primary', 'text-white', 'w-50', 'ms-auto', 'rounded', 'p-2');
-    } else {
-        p.classList.add('w-50', 'rounded', 'p-2');
-    }
+    const margin = user == chat.name ? 'ms-auto' : '';
+    p.innerHTML = `
+    <div class="bg-white mt-3 ${margin} p-3 chat-body text-end shadow">
+        <div class="chat-text-header d-flex justify-content-between border-bottom">
+            <p>${chat.name}</p>
+            <p class="text-muted">${chat.time}</p>
+        </div>
+        <p>${chat.input}</p>
+    </div>
+    `
     chatContainer.append(p);
     chatContainer.scrollTop = chatContainer.scrollHeight;
 }
