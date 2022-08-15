@@ -19,27 +19,22 @@
                     </h4>
                 </div>
                 <div class="chat-container ps-3 ">
-
-                    <div class="bg-white mt-3 ms-auto p-3 chat-body text-end shadow">
-                        <div class="chat-text-header d-flex justify-content-between border-bottom">
-                            <p>Name</p>
-                            <p class="text-muted">time</p>
+                    <% for (let chat of chats) {%>
+                        <div
+                            class="bg-white mt-3 <%= chat.name === currentUser.username? 'ms-auto': '' %>  p-3 chat-body text-end shadow">
+                            <div class="chat-text-header d-flex justify-content-between border-bottom">
+                                <p>
+                                    <%= chat.name %>
+                                </p>
+                                <p class="text-muted ms-3">
+                                    <%= formatDistanceToNow(Date.parse(chat.time), {addSuffix: true}) %>
+                                </p>
+                            </div>
+                            <p>
+                                <%= chat.input %>
+                            </p>
                         </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas possimus numquam sequi, harum
-                            doloribus, ipsa unde blanditiis quia repellat atque voluptates libero qui. Magni laudantium
-                            aliquam asperiores voluptatum quaerat mollitia.</p>
-                    </div>
-
-                    <div class="bg-white mt-3 p-3 chat-body text-end shadow">
-                        <div class="chat-text-header d-flex justify-content-between border-bottom">
-                            <p>Name</p>
-                            <p class="text-muted">time</p>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas possimus numquam sequi, harum
-                            doloribus, ipsa unde blanditiis quia repellat atque voluptates libero qui. Magni laudantium
-                            aliquam asperiores voluptatum quaerat mollitia.</p>
-                    </div>
-
+                        <% } %>
                 </div>
                 <div class="my-1">
                     <form class="d-flex chat-form">

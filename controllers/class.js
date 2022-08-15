@@ -1,7 +1,6 @@
 const Class = require('../models/class');
 const Post = require('../models/posts');
 const User = require('../models/user');
-const Chat = require('../models/chat');
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user).populate({

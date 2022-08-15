@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Class = require('../models/class');
+const Chat = require('../models/chat');
 const { formatDistanceToNow } = require('date-fns');
 
 module.exports.index = async (req, res) => {
@@ -15,8 +16,9 @@ module.exports.index = async (req, res) => {
 
 module.exports.groupChat = async (req, res) => {
     const { id } = req.params;
-    const _class = await Class.findById(id).populate('teacher'); // use this to store messages
-    res.render('chat/group-chat', { _class });
+    const _class = await Class.findById(id).populate('teacher');
+    const chats = await Chat.find({ room: id });
+    res.render('chat/group-chat', { _class, chats, formatDistanceToNow });
 }
 
 module.exports.sockets = (io) => {
@@ -24,10 +26,12 @@ module.exports.sockets = (io) => {
         socket.on('joinChat', room => {
             socket.join(room);
         })
-        socket.on('chat', chat => {
+        socket.on('chat', async (chat) => {
+            const saveChat = new Chat(chat);
+            saveChat.save();
             io.to(chat.room).emit('displayChat', ({
                 ...chat,
-                time: formatDistanceToNow(Date.parse(chat.time))
+                time: formatDistanceToNow(Date.parse(chat.time), { addSuffix: true })
             }))
         })
     })

@@ -44,11 +44,6 @@ const classSchema = new Schema({
     chat: {
         name: String,
         id: String,
-        chats: [
-            {
-                text: String
-            }
-        ]
     }
 })
 

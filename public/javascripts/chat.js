@@ -36,7 +36,7 @@ const displayChat = (chat) => {
     <div class="bg-white mt-3 ${margin} p-3 chat-body text-end shadow">
         <div class="chat-text-header d-flex justify-content-between border-bottom">
             <p>${chat.name}</p>
-            <p class="text-muted">${chat.time}</p>
+            <p class="text-muted ms-3">${chat.time}</p>
         </div>
         <p>${chat.input}</p>
     </div>

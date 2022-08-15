@@ -5,11 +5,18 @@ const chatSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    chats: [
-        {
-            type: String
-        }
-    ]
+    input: {
+        type: String,
+        require: true,
+    },
+    room: {
+        type: String,
+        require: true,
+    },
+    time: {
+        type: Date,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('Chat', chatSchema);
