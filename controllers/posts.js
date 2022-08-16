@@ -2,6 +2,7 @@ const Post = require('../models/posts');
 const User = require('../models/user');
 const Classes = require('../models/class');
 const { cloudinary } = require('../cloudinary');
+const { formatDistanceToNow } = require('date-fns');
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id).populate('classes').populate('groups');
@@ -12,7 +13,7 @@ module.exports.index = async (req, res) => {
     posts.sort(function (a, b) {
         return new Date(b.created) - new Date(a.created);
     });
-    res.render('posts/index', { classPosts, groupPosts, user, classes, posts });
+    res.render('posts/index', { classPosts, groupPosts, user, classes, posts, formatDistanceToNow });
 }
 
 module.exports.createPost = async (req, res) => {
@@ -53,7 +54,7 @@ module.exports.showPost = async (req, res) => {
         req.flash('error', 'Cannot find that post');
         return res.redirect('/post');
     }
-    res.render('posts/show', { post })
+    res.render('posts/show', { post, formatDistanceToNow })
 }
 
 module.exports.renderEditPost = async (req, res) => {

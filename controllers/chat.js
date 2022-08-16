@@ -10,13 +10,19 @@ module.exports.index = async (req, res) => {
             path: 'teacher'
         }
     });
-    const groupChats = user.classes.map(_class => ({ name: _class.name, id: _class.id, teacher: _class.teacher.username }));
+    const groupChats = user.classes.map(_class => ({
+        name: _class.name,
+        id: _class.id,
+        teacher: _class.teacher.username
+    }));
     res.render('chat/index', { groupChats });
 }
 
 module.exports.groupChat = async (req, res) => {
     const { id } = req.params;
-    const _class = await Class.findById(id).populate('teacher');
+    const _class = await Class.findById(id)
+        .populate('teacher')
+        .populate('students');
     const chats = await Chat.find({ room: id });
     res.render('chat/group-chat', { _class, chats, formatDistanceToNow });
 }

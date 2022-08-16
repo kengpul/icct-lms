@@ -33,7 +33,7 @@ const displayChat = (chat) => {
     const p = document.createElement('p');
     const margin = user == chat.name ? 'ms-auto' : '';
     p.innerHTML = `
-    <div class="bg-white mt-3 ${margin} p-3 chat-body text-end shadow">
+    <div class="bg-white my-3 ${margin} p-3 chat-body text-end shadow">
         <div class="chat-text-header d-flex justify-content-between border-bottom">
             <p>${chat.name}</p>
             <p class="text-muted ms-3">${chat.time}</p>

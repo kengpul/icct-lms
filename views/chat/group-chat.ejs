@@ -21,7 +21,7 @@
                 <div class="chat-container ps-3 ">
                     <% for (let chat of chats) {%>
                         <div
-                            class="bg-white mt-3 <%= chat.name === currentUser.username? 'ms-auto': '' %>  p-3 chat-body text-end shadow">
+                            class="bg-white my-3 <%= chat.name === currentUser.username? 'ms-auto': '' %>  p-3 chat-body text-end shadow">
                             <div class="chat-text-header d-flex justify-content-between border-bottom">
                                 <p>
                                     <%= chat.name %>
@@ -44,14 +44,31 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-2 d-none d-md-block">
-                lists
+            <div class="col-md-2 d-none d-md-block border-5 border-start border-success mt-1">
+                <h4>Teacher</h4>
+                <ul>
+                    <li>
+                        <%= _class.teacher.username %>
+                    </li>
+                </ul>
+                <h4>Students</h4>
+                <ul>
+                    <% for (let student of _class.students) {%>
+                        <% if (student.type !=='Teacher' ){ %>
+                            <li>
+                                <%= student.username %>
+                            </li>
+                            <% } %>
+                                <% } %>
+                </ul>
+                <p class="text-muted">TODO: Adding this list of users so that in the future we can direct message
+                    users.</p>
             </div>
         </div>
     </div>
 
     <script>
-        const user = '<%- currentUser.username %>';
+        const user = ' <%- currentUser.username %>';
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/chat.js"></script>

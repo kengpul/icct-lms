@@ -100,8 +100,7 @@
                     <%= post.author.type %>
                   </div>
                   <div class="text-muted">
-                    <%= post.created.toLocaleDateString( 'en-us' , { weekday:"long", year:"numeric", month:"short",
-                      day:"numeric", hour: 'numeric' , minute: 'numeric' , hour12: true} )%>
+                    <%= formatDistanceToNow(Date.parse(post.created), {addSuffix: true})%>
                       <i class="fas fa-users me-2"></i>
                   </div>
                 </div>
