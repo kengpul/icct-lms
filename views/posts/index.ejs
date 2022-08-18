@@ -40,103 +40,107 @@
             </form>
           </div>
 
-          <% for (let post of posts) {%>
+          <% if (!posts.length) { %>
+            <h3 class="text-center text-muted mt-5">No post yet!</h3>
+            <% } %>
 
-            <div class="card mt-3">
-              <div class="dropdown position-absolute top-0 end-0">
-                <button class="btn btn-sm bg-transparent dropdown-toggle" type="button" id="postDropdown"
-                  data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fas fa-ellipsis-h"></i>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="postDropdown">
-                  <% if (currentUser && post.author.equals(currentUser._id)) {%>
-                    <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
-                    <li><a class="dropdown-item" href="/post/<%= post._id %>/edit">Edit</a></li>
-                    <li>
-                      <form class="dropdown-item" action="/post/<%= post._id %>?_method=DELETE" method="POST">
-                        <button class="bg-transparent w-100 text-start">Delete</button>
-                      </form>
-                    </li>
-                    <% if (currentUser.type==='Teacher' ) { %>
-                      <li>
-                        <form class="dropdown-item" action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin"
-                          method="POST">
-                          <button class="bg-transparent w-100 text-start">Pin</button>
-                        </form>
-                      </li>
-                      <% } %>
-                        <% } else { %>
-                          <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
-                          <% if (currentUser.type==='Teacher' ) { %>
-                            <li>
-                              <form class="dropdown-item"
-                                action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin" method="POST">
-                                <button class="bg-transparent w-100 text-start">Pin</button>
-                              </form>
-                            </li>
-                            <% } %>
-                              <% } %>
-                </ul>
-              </div>
-              <div class="card-body px-0 pb-0">
-                <div class="author d-flex align-items-center px-4">
-                  <img src="<%= post.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
-                  <h5 class="card-title fw-bold text-capitalize">
-                    <%= post.author.fullName %>
-                      <span class="text-muted">Posted to </span>
-                      <% if (post.class) {%>
-                        <a href="/class/<%= post.class._id %>">
-                          <%= post.class.name %>
-                        </a>
-                        <% }else { %>
-                          <a href="/group/<%= post.group._id %>">
-                            <%= post.group.name %>
-                          </a>
+              <% for (let post of posts) {%>
+
+                <div class="card mt-3">
+                  <div class="dropdown position-absolute top-0 end-0">
+                    <button class="btn btn-sm bg-transparent dropdown-toggle" type="button" id="postDropdown"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="postDropdown">
+                      <% if (currentUser && post.author.equals(currentUser._id)) {%>
+                        <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
+                        <li><a class="dropdown-item" href="/post/<%= post._id %>/edit">Edit</a></li>
+                        <li>
+                          <form class="dropdown-item" action="/post/<%= post._id %>?_method=DELETE" method="POST">
+                            <button class="bg-transparent w-100 text-start">Delete</button>
+                          </form>
+                        </li>
+                        <% if (currentUser.type==='Teacher' ) { %>
+                          <li>
+                            <form class="dropdown-item"
+                              action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin" method="POST">
+                              <button class="bg-transparent w-100 text-start">Pin</button>
+                            </form>
+                          </li>
                           <% } %>
-                  </h5>
-                </div>
-                <div class="card-text fw-bold">
-                  <div class="text-muted">
-                    <%= post.author.type %>
+                            <% } else { %>
+                              <li><a class="dropdown-item" href="/post/<%= post._id %>">Go to Post</a></li>
+                              <% if (currentUser.type==='Teacher' ) { %>
+                                <li>
+                                  <form class="dropdown-item"
+                                    action="/<%= post.class? 'class': 'group' %>/<%= post._id %>/pin" method="POST">
+                                    <button class="bg-transparent w-100 text-start">Pin</button>
+                                  </form>
+                                </li>
+                                <% } %>
+                                  <% } %>
+                    </ul>
                   </div>
-                  <div class="text-muted">
-                    <%= formatDistanceToNow(Date.parse(post.created), {addSuffix: true})%>
-                      <i class="fas fa-users me-2"></i>
-                  </div>
-                </div>
-                <div class="card-content mt-4">
-                  <div class="card-subtitle px-4 mb-4">
-                    <%= post.text %>
-                  </div>
-
-                  <% if (post.images) { %>
-                    <div id="image-<%= post._id %>" class="carousel slide" data-bs-interval="false"
-                      data-bs-ride="carousel">
-                      <div class="carousel-inner">
-                        <% post.postImage.forEach((img, i)=> { %>
-                          <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
-                            <img src="<%= img %>" class="d-block w-100" alt="...">
-                          </div>
-                          <% }) %>
+                  <div class="card-body px-0 pb-0">
+                    <div class="author d-flex align-items-center px-4">
+                      <img src="<%= post.author.profilePostIcon %>" class="img-fluid me-2" width="50" alt="">
+                      <h5 class="card-title fw-bold text-capitalize">
+                        <%= post.author.fullName %>
+                          <span class="text-muted">Posted to </span>
+                          <% if (post.class) {%>
+                            <a href="/class/<%= post.class._id %>">
+                              <%= post.class.name %>
+                            </a>
+                            <% }else { %>
+                              <a href="/group/<%= post.group._id %>">
+                                <%= post.group.name %>
+                              </a>
+                              <% } %>
+                      </h5>
+                    </div>
+                    <div class="card-text fw-bold">
+                      <div class="text-muted">
+                        <%= post.author.type %>
                       </div>
-                      <% if (post.images.length> 1) { %>
-                        <button class="carousel-control-prev bg-transparent" type="button"
-                          data-bs-target="#image-<%= post._id %>" data-bs-slide="prev">
-                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next bg-transparent" type="button"
-                          data-bs-target="#image-<%= post._id %>" data-bs-slide="next">
-                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                          <span class="visually-hidden">Next</span>
-                        </button>
+                      <div class="text-muted">
+                        <%= formatDistanceToNow(Date.parse(post.created), {addSuffix: true})%>
+                          <i class="fas fa-users me-2"></i>
+                      </div>
+                    </div>
+                    <div class="card-content mt-4">
+                      <div class="card-subtitle px-4 mb-4">
+                        <%= post.text %>
+                      </div>
+
+                      <% if (post.images) { %>
+                        <div id="image-<%= post._id %>" class="carousel slide" data-bs-interval="false"
+                          data-bs-ride="carousel">
+                          <div class="carousel-inner">
+                            <% post.postImage.forEach((img, i)=> { %>
+                              <div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+                                <img src="<%= img %>" class="d-block w-100" alt="...">
+                              </div>
+                              <% }) %>
+                          </div>
+                          <% if (post.images.length> 1) { %>
+                            <button class="carousel-control-prev bg-transparent" type="button"
+                              data-bs-target="#image-<%= post._id %>" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next bg-transparent" type="button"
+                              data-bs-target="#image-<%= post._id %>" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Next</span>
+                            </button>
+                            <% } %>
+                        </div>
                         <% } %>
                     </div>
-                    <% } %>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <% } %>
+                <% } %>
         </div>
 
         <div class="col-4 col-lg-4 d-md-block d-none h-100">

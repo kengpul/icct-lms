@@ -40,7 +40,11 @@ const groupSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
+    chat: {
+        name: String,
+        id: String,
+    }
 })
 
 module.exports = mongoose.model('Group', groupSchema);

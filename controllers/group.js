@@ -29,6 +29,8 @@ module.exports.createGroup = async (req, res) => {
     await newGroup.save();
     newGroup.students.push(req.user._id);
     newGroup.teacher = req.user._id;
+    newGroup.chat.name = newGroup.name;
+    newGroup.chat.id = newGroup._id;
     req.user.groups.push(newGroup._id);
     await newGroup.save();
     await req.user.save();

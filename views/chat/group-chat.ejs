@@ -11,30 +11,35 @@
                         <div class="fs-6">
                             <button class="btn" onclick="history.back()"><i
                                     class="fas fa-long-arrow-alt-left fa-2x"></i></button>
-                            <%= _class.name %>
+                            <%= room.name %>
                         </div>
                         <div class="text-muted fs-6">
-                            Teacher: <%= _class.teacher.username %>
+                            Teacher: <%= room.teacher.username %>
                         </div>
                     </h4>
                 </div>
                 <div class="chat-container ps-3 ">
-                    <% for (let chat of chats) {%>
-                        <div
-                            class="bg-white my-3 <%= chat.name === currentUser.username? 'ms-auto': '' %>  p-3 chat-body text-end shadow">
-                            <div class="chat-text-header d-flex justify-content-between border-bottom">
-                                <p>
-                                    <%= chat.name %>
-                                </p>
-                                <p class="text-muted ms-3">
-                                    <%= formatDistanceToNow(Date.parse(chat.time), {addSuffix: true}) %>
-                                </p>
-                            </div>
-                            <p>
-                                <%= chat.input %>
-                            </p>
-                        </div>
+                    <% if (!chats.length){ %>
+                        <h3 class="text-center text-muted mt-5">Welcome to <%= room.name %>
+                        </h3>
+                        <p class="text-center text-muted">Start a chat now</p>
                         <% } %>
+                            <% for (let chat of chats) {%>
+                                <div
+                                    class="bg-white my-3 <%= chat.name === currentUser.username? 'ms-auto': '' %>  p-3 chat-body text-end shadow">
+                                    <div class="chat-text-header d-flex justify-content-between border-bottom">
+                                        <p>
+                                            <%= chat.name %>
+                                        </p>
+                                        <p class="text-muted ms-3">
+                                            <%= formatDistanceToNow(Date.parse(chat.time), {addSuffix: true}) %>
+                                        </p>
+                                    </div>
+                                    <p>
+                                        <%= chat.input %>
+                                    </p>
+                                </div>
+                                <% } %>
                 </div>
                 <div class="my-1">
                     <form class="d-flex chat-form">
@@ -48,12 +53,12 @@
                 <h4>Teacher</h4>
                 <ul>
                     <li>
-                        <%= _class.teacher.username %>
+                        <%= room.teacher.username %>
                     </li>
                 </ul>
                 <h4>Students</h4>
                 <ul>
-                    <% for (let student of _class.students) {%>
+                    <% for (let student of room.students) {%>
                         <% if (student.type !=='Teacher' ){ %>
                             <li>
                                 <%= student.username %>
@@ -68,7 +73,7 @@
     </div>
 
     <script>
-        const user = ' <%- currentUser.username %>';
+        const user = '<%- currentUser.username %>';
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascripts/chat.js"></script>

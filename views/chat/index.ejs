@@ -3,20 +3,23 @@
     <div class="container-fluid mt-3 d-flex ps-0">
         <%- include('../partials/side-nav') %>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 ms-2 w-100">
-                <% for (let chat of groupChats) { %>
-                    <div class="col">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h4 class="card-title text-truncate">
-                                    <%= chat.name %>
-                                        <p class="text-muted fs-6">
-                                            Teacher: <%= chat.teacher %>
-                                        </p>
-                                </h4>
-                                <a href="/chat/<%= chat.id %>" class="btn btn-primary w-100">Open</a>
-                            </div>
-                        </div>
-                    </div>
+                <% if (!groupChats.length) {%>
+                    <h3 class="w-100 text-center text-muted mt-5">No group chats, Join a class or group first!</h3>
                     <% } %>
+                        <% for (let chat of groupChats) { %>
+                            <div class="col">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h4 class="card-title text-truncate">
+                                            <%= chat.name %>
+                                                <p class="text-muted fs-6">
+                                                    Teacher: <%= chat.teacher %>
+                                                </p>
+                                        </h4>
+                                        <a href="/chat/<%= chat.id %>" class="btn btn-primary w-100">Open</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
             </div>
     </div>
