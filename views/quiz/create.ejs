@@ -1,0 +1,39 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+    <div class="container mb-5">
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <form class="main-form" action="/quiz" method="POST">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="title" value="Untitled quiz" autofocus>
+                        <div class="form-floating mt-2">
+                            <input type="text" id="description" name="description" class="form-control"
+                                placeholder="Quiz description">
+                            <label for="description">Quiz description</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 card border border-5">
+                        <div class="card-body" id="question1">
+                            <input type="text" class="form-control" name="question1" value="Untitled question">
+                            <div class="choices w-75 mt-4">
+                                <span class="d-flex mb-3 align-items-center" id="question1-choice1">
+                                    <input type="text" class="form-control" name="choices1[]">
+                                    <button class="btn btn-success btn-sm mx-3" id="question1-correct1"
+                                        onclick="correct(this.id)">Correct</button>
+                                </span>
+                            </div>
+                            <button id="question1" class="btn btn-sm btn-primary mt-2 add-choice w-25"
+                                onclick="clicked(this.id)">Add choice</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="answer">
+                </form>
+                <buton class="btn btn-primary add-question w-100">Add question</buton>
+                <button class="btn btn-success submit w-100 mt-3">Save</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/createQuiz.js"></script>
