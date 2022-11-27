@@ -3,7 +3,7 @@
   <div class="container-fluid mb-5">
     <div class="row mt-3 d-flex justify-content-center justify-content-lg-start">
       <%- include('../partials/side-nav') %>
-        <div class="col col-lg-5 posts p-0 mx-2">
+        <div class="col col-lg-6 posts p-0 ps-2">
           <div class="bg-white p-3 rounded">
             <form action="/post" method="POST" class="validate" novalidate enctype="multipart/form-data">
               <div class="form-floating">
@@ -143,7 +143,7 @@
                 <% } %>
         </div>
 
-        <div class="col-4 col-lg-4 d-md-block d-none h-100">
+        <div class="col-4 col-lg-4 d-md-block d-none h-100 ps-2">
 
           <% if (currentUser.type === 'Student') {%> 
           <div class="side-card bg-white h-50 overflow-hidden rounded">
@@ -185,7 +185,7 @@
           </div>
           <% } %> 
 
-          <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
+          <div class="side-card bg-white h-50 mt-3 pb-5 overflow-hidden rounded">
             <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
               <h5 class="pt-2">MY CLASSES</h5>
               <div class="dropdown">
@@ -273,7 +273,7 @@
             </div>
           </div>
 
-          <div class="side-card bg-white h-50 mt-2 pb-5 overflow-hidden rounded">
+          <div class="side-card bg-white h-50 mt-3 pb-5 overflow-hidden rounded">
             <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
               <h5 class="pt-2">MY GROUPS</h5>
               <div class="dropdown">

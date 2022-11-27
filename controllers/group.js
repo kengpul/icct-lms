@@ -137,7 +137,7 @@ module.exports.showQuizes = async (req, res) => {
                     path: 'quizId'
                 },
             }
-    })
+    }).populate('teacher');
     const user = await User.findById(req.user._id)
         .populate('quizes')
         .populate({
