@@ -2,6 +2,13 @@
 
 <link rel="stylesheet" href="/stylesheets/profile.css" />
 
+
+<div class="container-fluid mt-3">
+  <div class="row">
+
+<%- include('../partials/side-nav') %>
+
+<div class="col">
 <div class="header">
   <a class="logo">PERSONAL INFORMATION</a>
 </div>
@@ -11,7 +18,6 @@
     <div
       class="profile-profile-col-md-4 profile-profile-col-md-offset-4 profile-profile-col-sm-6 profile-profile-col-xs-12 profile-badge"
     >
-      <!-- <img src="https://dummyimage.com/600x400/000/"> -->
 
       <br />
       <br />
@@ -76,19 +82,16 @@
                 <label for="bday">Birthday:</label>
               </div>
               <div class="profile-col-75">
-                <input
-                  type="text"
-                  id="bday"
-                  name="birthday"
-                  placeholder="Month Day,Year"
-                  value="<%= user.birthday %>"
-                />
+                <div class="form-floating">
+                  <input type="date" class="form-control mt-2" id="bday" name="birthday" value="<%= user.birthday %>">
+                  <label for="bday">Birthday:</label>
+              </div>
               </div>
             </div>
 
             <div class="profile-row d-flex">
               <div class="profile-col-25">
-                <label for="cnumber">Contact Number:</label>
+                <label for="cnumber">Number:</label>
               </div>
               <div class="profile-col-75">
                 <input
@@ -136,7 +139,7 @@
                 <label for="country">Campus:</label>
               </div>
               <div class="profile-col-75">
-                <select id="campus" name="campus">
+                <select id="campus" name="campus" class="bg-white">
                   <option value="" disabled selected hidden>
                     Select from the list
                   </option>
@@ -161,6 +164,10 @@
       </div>
     </div>
   </div>
+</div>
+
+</div>
+</div>
 </div>
 
 <script src="/javascripts/profile.js"></script>

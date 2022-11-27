@@ -2,6 +2,12 @@
 
 <link rel="stylesheet" href="/stylesheets/profile.css" />
 
+<div class="container-fluid mt-3">
+  <div class="row">
+
+<%- include('../partials/side-nav') %>
+
+<div class="col">
 <div class="header">
   <a class="logo">PERSONAL INFORMATION</a>
 </div>
@@ -11,7 +17,6 @@
     <div
       class="profile-profile-col-md-4 profile-profile-col-md-offset-4 profile-profile-col-sm-6 profile-profile-col-xs-12 profile-badge"
     >
-      <!-- <img src="https://dummyimage.com/600x400/000/"> -->
 
       <div class="profile-pic">
         <img
@@ -53,13 +58,17 @@
               <label for="bday">Birthday:</label>
             </div>
             <div class="profile-col-75">
-              <div class="profile-col-75 fs-4"><%= user.birthday %></div>
+              <div class="profile-col-75 fs-4">
+                <% if (user.birthday) {%> 
+                <%= format(Date.parse(user.birthday), 'MMMM dd, yyyy') %>
+                <% } %> 
+              </div>
             </div>
           </div>
 
           <div class="profile-row d-flex">
             <div class="profile-col-25">
-              <label for="cnumber">Contact Number:</label>
+              <label for="cnumber">Number:</label>
             </div>
             <div class="profile-col-75">
               <div class="profile-col-75 fs-4"><%= user.number %></div>
@@ -101,6 +110,9 @@
       </div>
     </div>
   </div>
+</div>
+</div>
+</div>
 </div>
 
 <script src="/javascripts/profile.js"></script>

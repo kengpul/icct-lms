@@ -1,8 +1,9 @@
 const User = require('../models/user');
+const {format} = require('date-fns');
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id);
-    res.render('profile/index', { user });
+    res.render('profile/index', { user, format });
 }
 
 module.exports.renderEditForm = async (req, res) => {
