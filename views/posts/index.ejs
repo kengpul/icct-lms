@@ -109,10 +109,28 @@
                       </div>
                     </div>
                     <div class="card-content mt-4">
-                      <div class="card-subtitle px-4 mb-4">
-                        <%= post.text %>
-                      </div>
+                      <div class="card-subtitle px-4">
+                      <% if (post.text.split(' ')[0] === 'Quiz:') {%> 
+                        <div class="card-subtitle px-4 mb-4 border shadow-sm p-3 d-flex justify-content-between align-items-center fw-bold">
+                          <%= post.text %>
+                          <% if (currentUser.type === 'Student') {%> 
+                            <% if (isDone(post.quizLink)) {%> 
+                              <span class="text-muted"> <%= isDone(post.quizLink) %></span>
+                              <% } else { %> 
+                                <a href="/quiz/take/<%= post.group._id %>/<%= post.quizLink %>" class="btn btn-primary">Open</a>
+                            <% } %> 
 
+                          <% } else { %>
+                            <a href="/quiz/open/<%= post.quizLink %>" class="btn btn-primary">Open</a>
+                            <% } %> 
+                        </div>
+
+                      <% } else { %> 
+                        <div class="card-subtitle px-4 mb-4">
+                          <%= post.text %>
+                        </div>
+                      <% } %> 
+                      </div>
                       <% if (post.images) { %>
                         <div id="image-<%= post._id %>" class="carousel slide" data-bs-interval="false"
                           data-bs-ride="carousel">
@@ -146,7 +164,7 @@
         <div class="col-4 col-lg-4 d-md-block d-none h-100 ps-2">
 
           <% if (currentUser.type === 'Student') {%> 
-          <div class="side-card bg-white h-50 overflow-hidden rounded">
+          <div class="side-card bg-white h-50 overflow-hidden rounded mb-3">
             <div class="upcoming-header d-flex justify-content-between align-items-center pt-2 px-2">
               <h5 class="pt-2">UPCOMING</h5>
             </div>
@@ -185,7 +203,7 @@
           </div>
           <% } %> 
 
-          <div class="side-card bg-white h-50 mt-3 pb-5 overflow-hidden rounded">
+          <div class="side-card bg-white h-50 pb-5 overflow-hidden rounded">
             <div class="my-classes-header d-flex justify-content-between align-items-center pt-2 px-2">
               <h5 class="pt-2">MY CLASSES</h5>
               <div class="dropdown">

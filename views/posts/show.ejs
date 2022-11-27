@@ -56,8 +56,27 @@
                   </div>
                 </div>
                 <div class="card-content mt-4">
-                  <div class="card-subtitle">
-                    <%= post.text %>
+                  <div class="card-subtitle px-4 mb-4">
+                    <% if (post.text.split(' ')[0] === 'Quiz:') {%> 
+                      <div class="card-subtitle px-4 mb-4 border shadow-sm p-3 d-flex justify-content-between align-items-center fw-bold">
+                        <%= post.text %>
+                        <% if (currentUser.type === 'Student') {%> 
+                          <% if (isDone(post.quizLink)) {%> 
+                            <span class="text-muted"> <%= isDone(post.quizLink) %></span>
+                            <% } else { %> 
+                              <a href="/quiz/take/<%= post.group._id %>/<%= post.quizLink %>" class="btn btn-primary">Open</a>
+                          <% } %> 
+
+                        <% } else { %>
+                          <a href="/quiz/open/<%= post.quizLink %>" class="btn btn-primary">Open</a>
+                          <% } %> 
+                      </div>
+
+                    <% } else { %> 
+                      <div class="card-subtitle px-4 mb-4">
+                        <%= post.text %>
+                      </div>
+                    <% } %> 
                   </div>
                 </div>
                 <% if (currentUser && post.author.equals(currentUser._id)) {%>

@@ -59,8 +59,25 @@ module.exports.showGroup = async (req, res) => {
         return b.created - a.created;
     })
     const groupPosts = posts.filter(post => !post.equals(showGroup.pin));
-    const user = await User.findById(req.user._id).populate('groups');
-    res.render('group/show', { showGroup, groupPosts, user, formatDistanceToNow });
+    const user = await User.findById(req.user._id).populate('groups').populate({path: 'done', populate: {path: 'quizId'}});
+
+    const isDone = (quizId) => {
+        for (let done of user.done) {
+            if (done.quizId._id == quizId) {
+                return `${done.score}/${done.quizId.quiz.length}`;
+            }
+        }
+        return false;
+       }
+
+    res.render('group/show',
+    { 
+        showGroup,
+        groupPosts,
+        user,
+        formatDistanceToNow,
+        isDone
+     });
 }
 
 module.exports.joinGroup = async (req, res) => {

@@ -11,6 +11,9 @@ module.exports.index = async (req, res) => {
         .populate('classes')
         .populate('groups')
         .populate('quizes')
+        .populate({path: 'done',
+            populate: {path: 'quizId'}
+        });
     const quizes = user.quizes;
     const classPosts = await Post.find({ class: { $in: req.user.classes } })
         .populate('class')
@@ -23,6 +26,16 @@ module.exports.index = async (req, res) => {
     posts.sort(function (a, b) {
         return new Date(b.created) - new Date(a.created);
     });
+
+   const isDone = (quizId) => {
+    for (let done of user.done) {
+        if (done.quizId._id == quizId) {
+            return `${done.score}/${done.quizId.quiz.length}`;
+        }
+    }
+    return false;
+   }
+
     res.render('posts/index', { 
         classPosts,
         groupPosts, 
@@ -31,7 +44,8 @@ module.exports.index = async (req, res) => {
         posts, 
         formatDistanceToNow, 
         format,
-        quizes 
+        quizes ,
+        isDone
     });
 }
 
@@ -58,6 +72,10 @@ module.exports.createPost = async (req, res) => {
 }
 
 module.exports.showPost = async (req, res) => {
+    const user = await User.findById(req.user._id)
+        .populate({path: 'done',
+            populate: {path: 'quizId'}
+        });
     const post = await Post.findById(req.params.id).populate({
         path: 'class',
         populate: {
@@ -73,7 +91,17 @@ module.exports.showPost = async (req, res) => {
         req.flash('error', 'Cannot find that post');
         return res.redirect('/post');
     }
-    res.render('posts/show', { post, formatDistanceToNow })
+
+    const isDone = (quizId) => {
+        for (let done of user.done) {
+            if (done.quizId._id == quizId) {
+                return `${done.score}/${done.quizId.quiz.length}`;
+            }
+        }
+        return false;
+       }
+
+    res.render('posts/show', { post, formatDistanceToNow, isDone })
 }
 
 module.exports.renderEditPost = async (req, res) => {

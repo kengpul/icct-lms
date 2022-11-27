@@ -1,12 +1,12 @@
 const Quiz = require('../models/quiz');
 const User = require('../models/user');
 const Group = require('../models/group');
+const Post = require('../models/posts');
 const { format, formatDistanceToNow } = require('date-fns');
 
 module.exports.index = async(req, res) => {
     const quizes = await Quiz.find({});
     const userQuizes = await User.findById(req.user._id).populate('quizes');
-
     res.render('quiz/index', {quizes, userQuizes, formatDistanceToNow});
 }
 
@@ -54,7 +54,7 @@ module.exports.create = async (req, res) => {
     await user.save();
 
     req.flash('success', 'Quiz created!');
-    res.redirect('/quiz');
+    res.redirect(`/quiz/open/${newQuiz._id}`);
 }
 
 module.exports.edit = async (req, res) => {
@@ -178,6 +178,19 @@ module.exports.assign = async(req, res, next) => {
             }
         }
         await groupId.save();
+
+        const created = new Date();
+
+        let post = new Post({
+            text: `Quiz:  ${quiz.title}`,
+            created,
+            group: groupId._id,
+            author: req.user._id,
+            quizLink: quiz._id
+        });
+
+        await post.save();
+
     }
 
     await quiz.save();
