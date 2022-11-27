@@ -14,6 +14,8 @@ router.get('/:id', isLoggedIn, isGroupMember, catchAsync(group.showGroup))
 
 router.get('/:id/members', isLoggedIn, isGroupMember, group.showMembers)
 
+router.get('/:id/quizes', isLoggedIn, isGroupMember, catchAsync(group.showQuizes))
+
 router.post('/:id/pin', isLoggedIn, isTeacher, group.pin)
 
 router.post('/:id/unpin', isLoggedIn, isTeacher, group.unPin)

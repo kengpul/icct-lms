@@ -1,0 +1,89 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+    <div class="container-fluid mt-3 d-flex ps-0">
+        <%- include('../partials/side-nav') %>
+        <div class="row w-100">
+          <div class="col-md-8">
+      <div class="row w-100">
+        <h2 class="text-center">Edit Quiz</h2>
+        <div class="col mx-5 mb-5">
+
+          <form action="/quiz/edit/<%= quiz._id %>?_method=PUT" method="POST">
+            <div class="mb-3">
+              <input type="text" class="form-control" name="title" value="<%= quiz.title %>" autofocus>
+              <div class="form-floating mt-2">
+                  <input type="text" id="description" name="description" class="form-control" value="<%= quiz.description %>"
+                      placeholder="Quiz description">
+                  <label for="description">Quiz description</label>
+              </div>
+              <div class="form-floating">
+                <input type="date" class="form-control mt-2" id="dueDate" name="dueDate" value="<%= format(new Date(quiz.dueDate), 'yyyy-MM-dd') %>">
+                <label for="dueDate">Due date</label>
+            </div>
+          </div>
+
+            <% for (let [questionIndex, question] of quiz.quiz.entries())  {%> 
+                <div class="card my-3">
+                    <div class="card-body p-0">
+                        <div class=" card border border-5">
+                          <div class="card-body" id="question<%= questionIndex + 1 %>">
+                              <input type="text" class="form-control" name="question<%= questionIndex + 1 %>" value="<%= question.question %>">
+                              <div class="choices w-75 mt-4">
+                                <ul class="list-group list-group-flush">
+                                  <% for (let [answerIndex, choice] of question.choices.entries()) { %> 
+                                    <span class="d-flex mb-3 align-items-center" id="question <%= questionIndex + 1%>-choice<%= answerIndex + 1 %>">
+                                      <input type="text" class="form-control" name="choices<%= questionIndex + 1 %>[]" value="<%= choice %>">
+                                  </span>
+                                  <% } %>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            <% } %> 
+            <button class="btn btn-success w-100">Submit</button>
+        </form>
+
+        </div>
+      </div>
+      </div>
+      
+      <div class="col-md-4 border-5 border">
+        <div class="row d-flex ms-auto">
+           <div class="col d-flex justify-content-center">
+            <div class="mx-5">
+                <h2>Assigned</h2>
+                <form action="/quiz/open/<%= quiz._id %>/unassign" method="POST">
+                <% for (let group of quiz.assignedTo) {%>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="groups[]" value="<%= group._id %>" id="<%= group._id %>">
+                        <label class="form-check-label" for="<%= group._id %>">
+                          <%= group.name %> 
+                        </label>
+                      </div>
+                <% } %> 
+                <button class="btn btn-danger w-100">Unassign</button>
+            </form>
+            </div>
+
+            <div class="mx-5">
+                <h2>Assigning</h2>
+                <form action="/quiz/open/<%= quiz._id %>/assign" method="POST">
+                <% for (let group of assigning) {%>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="groups[]" value="<%= group._id %>" id="<%= group._id %>">
+                        <label class="form-check-label" for="<%= group._id %>">
+                          <%= group.name %> 
+                        </label>
+                      </div>
+                <% } %> 
+                <button class="btn btn-primary w-100">Assign</button>
+            </form>
+            </div>
+
+           </div>
+        </div>
+      </div>
+    </div>
+  </div>

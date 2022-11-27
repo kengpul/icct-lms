@@ -52,93 +52,99 @@
                         </a>
                       </div>
                       <% } %>
-                        <% if (showGroup.link.video) { %>
-                          <a href="<%= showGroup.link.video %>" class="link-light" target="_blank">
-                            <i class="fas fa-video fa-2x"></i>
-                            <p>Video Conferrence</p>
-                          </a>
-                          <% } %>
-                            <% } %>
+                    <% if (showGroup.link.video) { %>
+                        <a href="<%= showGroup.link.video %>" class="link-light" target="_blank">
+                        <i class="fas fa-video fa-2x"></i>
+                        <p>Video Conferrence</p>
+                        </a>
+                        <% } %>
+                        <% } %>
               </div>
             </div>
           </div>
           <div class="row d-flex flex-column-reverse flex-md-row">
             <div class="col-md-8 ps-md-0 mt-3 mt-md-0">
-              <ul class="nav nav-pills nav-justified mb-3">
-                <li class="nav-item">
-                  <a class="nav-link active" data-bs-toggle="pill" href="#members">Members</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="pill" href="#teacher">Teacher</a>
-                </li>
-                <% if (currentUser.type==='Teacher' ) {%>
-                  <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="pill" href="#pending">Pending</a>
-                  </li>
-                  <% } %>
-              </ul>
-
               <div class="tab-content">
+
                 <div class="tab-pane container active" id="members">
-                  <% for (let student of showGroup.students) { %>
+                  
+                <% if (currentUser.type === 'Student') {%> 
+                <h4 class="border-bottom border-5">Pending</h4>
+                <% if (!user.quizes.length) {%>
+                    <h4 class="text-muted text-center">No Pending tasks</h4>
+                    <% } else { %> 
+                    <% if (currentUser.type === 'Student'){ %> 
+                        <% for (let quiz of user.quizes) {%> 
                     <ul class="list-group">
                       <li class="list-group-item d-flex align-items-center">
-                        <img src="<%= student.profilePicture %>" class="rounded-circle me-3" width="50" alt="" />
-                        <div class="mt-3">
+                        <div>
                           <h5>
-                            <%= student.fullName %>
+                            <%= quiz.title %> 
                           </h5>
-                          <p class="text-muted">
-                            <%= student.type %>
-                          </p>
+                        </div>
+                        <div class="ms-auto">
+                            <a href="/quiz/take/<%= quiz.groupId %>/<%= quiz._id %>" class="btn btn-success">Open</a>
                         </div>
                       </li>
                     </ul>
-                    <% } %>
-                </div>
-                <div class="tab-pane container fade" id="teacher">
-                  <ul class="list-group">
-                    <li class="list-group-item d-flex align-items-center">
-                      <img src="<%= showGroup.teacher.profilePicture %>" class="rounded-circle me-3" width="50"
-                        alt="" />
-                      <div class="mt-3">
-                        <h5>
-                          <%= showGroup.teacher.fullName %>
-                        </h5>
-                        <p class="text-muted">Teacher</p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-                <div class="tab-pane container fade" id="pending">
-                  <% for (let pendingStudent of showGroup.pending) {%>
+                    <% } %> 
+                    <% } %> 
+                    <% } %> 
+
+                    <h4 class="border-bottom border-5 mt-5">Done</h4>
+                    <% if (!user.done.length) {%>
+                        <h4 class="text-muted text-center">Nothing here</h4>
+                        <% } else { %> 
+                    <% if (currentUser.type === 'Student'){ %> 
+                        <% for (let quiz of user.done) {%> 
                     <ul class="list-group">
                       <li class="list-group-item d-flex align-items-center">
-                        <img src="<%= pendingStudent.profilePicture %>" class="rounded-circle me-3" width="50" alt="" />
-                        <div class="mt-3">
+                        <div>
                           <h5>
-                            <%= pendingStudent.fullName %>
+                            <%= quiz.quizId.title %> 
                           </h5>
-                          <p class="text-muted">
-                            <%= pendingStudent.type %>
-                          </p>
                         </div>
-                        <div class="ms-auto d-flex flex-column flex-md-row">
-                          <form action="/group/<%= showGroup._id %>/accept/<%= pendingStudent._id %>" method="POST"
-                            class="validate">
-                            <button class="btn btn-primary mb-1 mb-md-0 me-md-1">
-                              Accept
-                            </button>
-                          </form>
-                          <form action="/group/<%= showGroup._id %>/reject/<%= pendingStudent._id %>" method="POST"
-                            class="validate">
-                            <button class="btn btn-danger w-100">Reject</button>
-                          </form>
+                        <div class="ms-auto">
+                           <%= quiz.score %>/ <%= quiz.quizId.quiz.length %> 
                         </div>
                       </li>
                     </ul>
-                    <% } %>
+                    <% } %> 
+                    <% } %> 
+                    <% } %> 
+                    <% } %> 
+
+
+                    <% if (currentUser.type === "Teacher") {%>
+                        <h4 class="border-bottom border-5">Student quizes</h4>
+                        <% if (!doneQuiz.length) {%> 
+                            <h4 class="text-muted text-center">Nothing here yet</h4>
+                            <% } else { %> 
+                        <% for (let quiz of doneQuiz) {%> 
+                            <% if (quiz.done.length) {%> 
+                                <% for (let q of quiz.done) {%> 
+                            <ul class="list-group">
+                              <li class="list-group-item d-flex align-items-center">
+                                <div>
+                                  <h5>
+                                    <%= quiz.fullName %> 
+                                  </h5>
+                                </div>
+                                <div class="ms-auto">
+                                    <h5>
+                                        <%= q.score %>/<%= q.quizId.quiz.length %>  
+                                      </h5>
+                                </div>
+                              </li>
+                            </ul>
+                            <% } %> 
+                            <% } %> 
+                            <% } %> 
+                            <% } %> 
+                        <% } %> 
+               
                 </div>
+                <div class="tab-pane container fade" id="pending"></div>
               </div>
             </div>
             <div class="col-md-4 pe-md-0">
@@ -165,10 +171,10 @@
                     Post
                   </a>
                   <a href="#" class="list-group-item list-group-item-action fw-bold">Folder</a>
-                  <a href="#" class="list-group-item list-group-item-action fw-bold active"
+                  <a href="/group/<%= showGroup._id %>/members" class="list-group-item list-group-item-action fw-bold"
                     aria-current="true">Members</a>
                     <a href="/group/<%= showGroup._id %>/quizes"
-                      class="list-group-item list-group-item-action fw-bold">Quizes</a>
+                      class="list-group-item list-group-item-action fw-bold active">Quizes</a>
                 </div>
               </div>
             </div>

@@ -11,13 +11,21 @@ const quizSchema = new Schema({
     quiz: [
         {
             question: String,
-            choices: Array
+            choices: [String]
         }
     ],
     answer: {
         type: Array,
         required: true
-    }
+    },
+    assignedTo: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Group'
+        }
+    ],
+    groupId: String,
+    dueDate: Date
 }, { timestamps: true })
 
 module.exports = mongoose.model('Quiz', quizSchema);

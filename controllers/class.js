@@ -34,7 +34,7 @@ module.exports.createClass = async (req, res) => {
     req.user.classes.push(newClass._id);
     await newClass.save();
     await req.user.save();
-    console.log(newClass)
+
     res.redirect(`/class/${newClass._id}`);
 }
 

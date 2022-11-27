@@ -1,0 +1,28 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+    <div class="container-fluid mt-3 d-flex p-0">
+        <%- include('../partials/side-nav') %>
+
+        <div class="row w-100">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class="card p-3 shadow">
+                    <div class="card-body">
+                      <h2 class="card-title"><%= quiz.title %> </h2>
+                      <p class="mt-4">
+                        <span class="bg-primary px-2 rounded-circle me-1"></span>
+                        <%= group.name %>
+                        <i class="fas fa-calendar-alt ms-3 me-1"></i>
+                        Due: <%= format(quiz.dueDate, 'MMMM dd, yyyy h:m') %> 
+                      </p>
+                      <p class="card-text m-0">
+                       <%= quiz.quiz.length %> questions <i class="fas fa-clock ms-3 me-1"></i> 60 minutes 
+                       <span class="bg-secondary p-2 rounded-circle text-white ms-5 fw-bold">
+                            <%= score %>/<%= quiz.quiz.length %>
+                        </span> 
+                      </p>
+                      <a href="/quiz" class="btn btn-primary mt-4 w-100">Go to quizes</a>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </div>

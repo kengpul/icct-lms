@@ -41,6 +41,13 @@ const groupSchema = new Schema({
             ref: 'User'
         }
     ],
+    quizes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Quiz',
+            groupId: String
+        }
+    ],
     chat: {
         name: String,
         id: String,

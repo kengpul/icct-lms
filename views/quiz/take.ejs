@@ -1,0 +1,75 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+<div class="container">
+   <div class="row my-5">
+       <div class="col-md-6 offset-md-3">
+           <h2 class="text-center"><%= quiz.title %></h2>
+           <p class="text-center"><%= quiz.description %></p>
+           <h4 class="timer position-sticky top-0 text-center bg-dark text-white" style="z-index: 1">00:00</h4>
+        <form action="/quiz/take/<%= groupId %>/<%= quiz._id %>" method="POST">
+            <% for (let [questionIndex, question] of quiz.quiz.entries())  {%> 
+                <div class="card my-3">
+                    <div class="card-body">
+                        <h5 class="class-title"><%= question.question %> </h5>
+                        <ul class="list-group list-group-flush">
+                        <% for (let [answerIndex, choice] of question.choices.entries()) { %> 
+                            <div class="form-check">
+                                <input 
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="question-<%= questionIndex %>"
+                                    id="question-<%= questionIndex %>_answer-<%= answerIndex %>"
+                                    value="<%= answerIndex %>"
+                                >
+                                <label
+                                    class="form-check-label"
+                                    for="question-<%= questionIndex %>_answer-<%= answerIndex %>"
+                                >
+                                <%= choice %> 
+                                </label>
+                            </div>
+                        <% } %>
+                        </ul>
+                    </div>
+                </div>
+            <% } %> 
+            <button class="btn force-submit btn-success w-100">Submit</button>
+        </form>
+    </div>
+   </div>
+</div>
+
+<script>  
+    const user = '<%- currentUser._id%>';
+    const quiz = '<%- quiz._id %>';
+
+    var time = 30;
+    var saved_countdown = localStorage.getItem(`${user}-quiz-${quiz}-timer`);
+
+    if(saved_countdown == null) {
+        var new_countdown = (new Date().getTime() + (time + 2) * 60 * 60 * 1000);
+
+        time = new_countdown;
+        localStorage.setItem(`${user}-quiz-${quiz}-timer`, new_countdown);
+    } else {
+        time = saved_countdown;
+    }
+
+    var x = setInterval(() => {
+
+        var now = new Date().getTime();
+
+        var distance = time - now;
+
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.querySelector(".timer").innerHTML = `${minutes}:${seconds}`;
+            
+        if (minutes <= 0) {
+            localStorage.removeItem('saved_countdown');
+            document.querySelector(".force-submit").click();
+            clearInterval(x);
+        }
+    }, 1000);
+</script>

@@ -118,8 +118,7 @@
                         <%= showGroup.pin.author.type %>
                       </div>
                       <div class="text-muted">
-                        <%= showGroup.pin.created.toLocaleDateString( 'en-us' , { weekday:"long", year:"numeric",
-                          month:"short", day:"numeric", hour: 'numeric' , minute: 'numeric' , hour12: true} )%>
+                        <%= formatDistanceToNow(Date.parse(showGroup.pin.created), {addSuffix: true})%>
                           <i class="fas fa-users me-2"></i>
                       </div>
                     </div>
@@ -208,8 +207,7 @@
                             <%= post.author.type %>
                           </div>
                           <div class="text-muted">
-                            <%= post.created.toLocaleDateString( 'en-us' , { weekday:"long", year:"numeric",
-                              month:"short", day:"numeric", hour: 'numeric' , minute: 'numeric' , hour12: true} )%>
+                            <%= formatDistanceToNow(Date.parse(post.created), {addSuffix: true}) %>
                               <i class="fas fa-users me-2"></i>
                           </div>
                         </div>
@@ -274,6 +272,8 @@
                   <a href="" class="list-group-item list-group-item-action fw-bold">Folder</a>
                   <a href="/group/<%= showGroup._id %>/members"
                     class="list-group-item list-group-item-action fw-bold">Members</a>
+                  <a href="/group/<%= showGroup._id %>/quizes"
+                    class="list-group-item list-group-item-action fw-bold">Quizes</a>
                 </div>
               </div>
             </div>

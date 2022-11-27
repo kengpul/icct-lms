@@ -41,6 +41,28 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Group'
         }
+    ],
+    quizes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Quiz'
+        }
+    ],
+    done: [
+        {
+            quizId:{
+                type: Schema.Types.ObjectId,
+                ref: 'Quiz'
+            },
+            groupId: {
+                type: Schema.Types.ObjectId,
+                ref: 'Group'
+            },
+            score: {
+                type: Number,
+                default: 0,
+            }
+        }
     ]
 })
 

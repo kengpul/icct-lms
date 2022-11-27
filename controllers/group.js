@@ -1,6 +1,7 @@
 const Group = require('../models/group');
 const Post = require('../models/posts');
 const User = require('../models/user');
+const {formatDistanceToNow} = require('date-fns');
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user).populate({
@@ -59,7 +60,7 @@ module.exports.showGroup = async (req, res) => {
     })
     const groupPosts = posts.filter(post => !post.equals(showGroup.pin));
     const user = await User.findById(req.user._id).populate('groups');
-    res.render('group/show', { showGroup, groupPosts, user });
+    res.render('group/show', { showGroup, groupPosts, user, formatDistanceToNow });
 }
 
 module.exports.joinGroup = async (req, res) => {
@@ -125,6 +126,32 @@ module.exports.showMembers = async (req, res) => {
         .populate('pending')
     const user = await User.findById(req.user._id).populate('groups');
     res.render('group/members', { showGroup, user })
+}
+
+module.exports.showQuizes = async (req, res) => {
+    const showGroup = await Group.findById(req.params.id)
+        .populate({path: 'students',
+            populate: {
+                path: 'done',
+                populate: {
+                    path: 'quizId'
+                },
+            }
+    })
+    const user = await User.findById(req.user._id)
+        .populate('quizes')
+        .populate({
+            path: 'done',
+            populate:{
+                path: 'quizId',
+            }
+        });
+
+    const doneQuiz = [];
+    for (let quiz of showGroup.students) {
+        doneQuiz.push(quiz);
+    }
+    res.render('group/quizes', { showGroup, user, doneQuiz})
 }
 
 module.exports.pin = async (req, res) => {

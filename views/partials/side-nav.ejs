@@ -1,7 +1,7 @@
 <div class="col-0 col-lg-2 d-none d-lg-block side-nav text-white rounded h-100">
   <div class="profile mt-3 mb-5 text-center">
     <img src="<%= currentUser.profilePicture %>" class="img-fluid" width="80" alt="" />
-    <h5 class="mt-3">Hello <%= currentUser.givenName %>
+    <h5 class="mt-3"><%= currentUser.fullName %>
     </h5>
     <a href="/profile" class="link-light">View Profile</a>
   </div>
@@ -9,6 +9,7 @@
     <a href="/post" class="btn btn-primary fw-bold text-start"><i class="fas fa-house-user me-2"></i>DASHBOARD</a>
     <a href="/class" class="btn btn-primary fw-bold text-start"><i class="fas fa-users me-2"></i>MY CLASS</a>
     <a href="/group" class="btn btn-primary fw-bold text-start"><i class="fas fa-users me-2"></i>MY GROUP</a>
+    <a href="/quiz" class="btn btn-primary fw-bold text-start"><i class="fas fa-book-open me-2"></i>MY QUIZ</a>
     <a href="/chat" class="btn btn-primary fw-bold text-start"><i class="fas fa-comment me-2"></i>CHATS</a>
   </div>
 </div>

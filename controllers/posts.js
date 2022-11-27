@@ -1,19 +1,38 @@
 const Post = require('../models/posts');
 const User = require('../models/user');
+const Quiz = require('../models/quiz');
 const Classes = require('../models/class');
+const Groups = require('../models/group');
 const { cloudinary } = require('../cloudinary');
-const { formatDistanceToNow } = require('date-fns');
+const { formatDistanceToNow, format } = require('date-fns');
 
 module.exports.index = async (req, res) => {
-    const user = await User.findById(req.user._id).populate('classes').populate('groups');
-    const classPosts = await Post.find({ class: { $in: req.user.classes } }).populate('class').populate('author');
-    const groupPosts = await Post.find({ group: { $in: req.user.groups } }).populate('group').populate('author');
+    const user = await User.findById(req.user._id)
+        .populate('classes')
+        .populate('groups')
+        .populate('quizes')
+    const quizes = user.quizes;
+    const classPosts = await Post.find({ class: { $in: req.user.classes } })
+        .populate('class')
+        .populate('author');
+    const groupPosts = await Post.find({ group: { $in: req.user.groups } })
+        .populate('group')
+        .populate('author')
     const classes = await Classes.find({});
     const posts = [...classPosts, ...groupPosts];
     posts.sort(function (a, b) {
         return new Date(b.created) - new Date(a.created);
     });
-    res.render('posts/index', { classPosts, groupPosts, user, classes, posts, formatDistanceToNow });
+    res.render('posts/index', { 
+        classPosts,
+        groupPosts, 
+        user, 
+        classes, 
+        posts, 
+        formatDistanceToNow, 
+        format,
+        quizes 
+    });
 }
 
 module.exports.createPost = async (req, res) => {
@@ -31,7 +50,7 @@ module.exports.createPost = async (req, res) => {
         post.images = req.files.map(image => ({ url: image.path, filename: image.filename }));
         await post.save();
     } catch (e) {
-        // We are not suppusoed to reach here, but jus in case
+        // We are not suppusoed to reach here, but just in case
         console.log('something went wrong', e);
     }
     req.flash('success', 'Successfully Created a Post');
