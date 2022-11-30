@@ -7,6 +7,7 @@ const { format, formatDistanceToNow } = require('date-fns');
 module.exports.index = async(req, res) => {
     const quizes = await Quiz.find({});
     const userQuizes = await User.findById(req.user._id).populate('quizes');
+    quizes.reverse();
     res.render('quiz/index', {quizes, userQuizes, formatDistanceToNow});
 }
 

@@ -192,7 +192,7 @@
                   </a> 
                    <% } %> 
 
-                   <% if (index == 3) { %>
+                   <% if (index == 2) { %>
                     <a href="/quiz" class="border-top p-2 ps-3">View all quizes</a>
                     <% } %> 
 
@@ -283,9 +283,9 @@
                     <h5 class="text-muted text-center">No classes</h5>
                   <% } %> 
                 <% for (let _class of user.classes) { %>
-                  <div class="border-start border-danger border-3 px-2 ms-2"><a href="/class/<%= _class._id %>">
+                  <h5 class="border-start border-primary border-3 px-2 ms-2"><a href="/class/<%= _class._id %>">
                       <%= _class.name %>
-                    </a></div>
+                    </a></h5>
                   <% } %>
               </div>
             </div>
@@ -371,9 +371,9 @@
                   <h5 class="text-muted text-center">No groups</h5>
                 <% } %> 
                 <% for (let group of user.groups) { %>
-                  <div class="border-start border-danger border-3 px-2 ms-2"><a href="/group/<%= group._id %>">
+                  <h5 class="border-start border-primary border-3 px-2 ms-2"><a href="/group/<%= group._id %>">
                       <%= group.name %>
-                    </a></div>
+                    </a></h5>
                   <% } %>
               </div>
             </div>
