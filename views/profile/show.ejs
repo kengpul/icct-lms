@@ -1,0 +1,115 @@
+<% layout('layouts/lms-boilerplate') -%>
+
+<link rel="stylesheet" href="/stylesheets/profile.css" />
+
+<div class="container-fluid mt-3">
+  <div class="row">
+
+<%- include('../partials/side-nav') %>
+
+<div class="col">
+<div class="header">
+  <a class="logo">PERSONAL INFORMATION</a>
+</div>
+
+<div class="profile-container">
+  <div class="profile-profile-row">
+    <div
+      class="profile-profile-col-md-4 profile-profile-col-md-offset-4 profile-profile-col-sm-6 profile-profile-col-xs-12 profile-badge"
+    >
+
+      <div class="profile-pic">
+        <img
+          alt="User Pic"
+          src="<%= user.profilePicture %>"
+          id="profile-image1"
+          height="200"
+        />
+        <!-- <input id="profile-image-upload" class="hidden" type="file" onchange="previewFile()" > -->
+        <div style="color: #999"></div>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <div class="profile-container container">
+        <div class="col-md-7 offset-md-3">
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="fname">First Name:</label>
+            </div>
+            <div class="profile-col-75 fs-4"><%= user.firstname %></div>
+          </div>
+
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="lname">Last Name:</label>
+            </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.lastname %></div>
+            </div>
+          </div>
+
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="bday">Birthday:</label>
+            </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4">
+                <% if (user.birthday) {%> 
+                <%= format(Date.parse(user.birthday), 'MMMM dd, yyyy') %>
+                <% } %> 
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="cnumber">Number:</label>
+            </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.number %></div>
+            </div>
+          </div>
+
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="email">E-mail:</label>
+            </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.email %></div>
+            </div>
+          </div>
+
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="course">Course:</label>
+            </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.course %></div>
+            </div>
+          </div>
+
+          <div class="profile-row d-flex">
+            <div class="profile-col-25">
+              <label for="country">Campus:</label>
+            </div>
+            <div class="profile-col-75">
+              <div class="profile-col-75 fs-4"><%= user.campus %></div>
+            </div>
+          </div>
+
+          <br />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="/javascripts/profile.js"></script>

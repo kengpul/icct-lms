@@ -3,6 +3,7 @@ const {format} = require('date-fns');
 
 module.exports.index = async (req, res) => {
     const user = await User.findById(req.user._id);
+    console.log(user._id);
     res.render('profile/index', { user, format });
 }
 
@@ -19,4 +20,12 @@ module.exports.edit = async (req, res) => {
     }
     await editUser.save();
     res.redirect('/profile');
+}
+
+
+module.exports.show = async (req, res) => {
+    const {id} = req.params;
+    const user = await User.findById(id);
+
+    res.render('profile/show', {user, format});
 }

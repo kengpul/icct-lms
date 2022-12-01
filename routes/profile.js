@@ -5,6 +5,7 @@ const { validateProfile } = require('../middlewares');
 const multer = require('multer');
 const { storage } = require('../cloudinary');
 const upload = multer({ storage });
+const catchAsync = require('../utils/catchAsync');
 
 router.route('/')
     .get(profile.index)
@@ -12,5 +13,7 @@ router.route('/')
 
 
 router.get('/edit', profile.renderEditForm);
+
+router.get('/:id', catchAsync(profile.show));
 
 module.exports = router;

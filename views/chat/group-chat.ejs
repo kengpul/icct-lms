@@ -53,7 +53,9 @@
                 <h4>Teacher</h4>
                 <ul>
                     <li>
+                        <a href="/profile/<%= room.teacher._id %>">
                         <%= room.teacher.username %>
+                    </a>
                     </li>
                 </ul>
                 <h4>Students</h4>
@@ -61,7 +63,7 @@
                     <% for (let student of room.students) {%>
                         <% if (student.type !=='Teacher' ){ %>
                             <li>
-                                <%= student.username %>
+                               <a href="/profile/<%= student._id %>"><%= student.username %></a> 
                             </li>
                             <% } %>
                                 <% } %>
