@@ -2,9 +2,14 @@ const form = document.querySelector('.main-form');
 const addQuestion = document.querySelector('.add-question');
 const submit = document.querySelector('.submit');
 let questionsLength = document.querySelectorAll('.card').length;
+const title = document.querySelector('#title');
+const dueDate = document.querySelector('#dueDate');
+const errorMessage = document.querySelector('.error-message');
 
 submit.addEventListener('click', () => {
     form.answer.value = Object.values(correctAnswers);
+    if (!title.value) return errorMessage.innerHTML = 'Title is required';
+    if (!dueDate.value) return errorMessage.innerHTML = 'Due date is requried';
     form.submit();
 })
 

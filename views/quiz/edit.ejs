@@ -8,16 +8,23 @@
         <h2 class="text-center">Edit Quiz</h2>
         <div class="col mx-1 mx-md-5 mb-5">
 
-          <form action="/quiz/edit/<%= quiz._id %>?_method=PUT" method="POST">
+          <form action="/quiz/edit/<%= quiz._id %>?_method=PUT" method="POST" class="validate" novalidate>
             <div class="mb-3">
-              <input type="text" class="form-control" name="title" value="<%= quiz.title %>" autofocus>
+              <input type="text" class="form-control" name="title" value="<%= quiz.title %>" autofocus required>
               <div class="form-floating mt-2">
                   <input type="text" id="description" name="description" class="form-control" value="<%= quiz.description %>"
                       placeholder="Quiz description">
                   <label for="description">Quiz description</label>
               </div>
               <div class="form-floating">
-                <input type="date" class="form-control mt-2" id="dueDate" name="dueDate" value="<%= format(new Date(quiz.dueDate), 'yyyy-MM-dd') %>">
+                <input
+                type="date"
+                class="form-control mt-2"
+                id="dueDate"
+                name="dueDate"
+                value="<%= format(new Date(quiz.dueDate), 'yyyy-MM-dd') %>"
+                required
+                >
                 <label for="dueDate">Due date</label>
             </div>
           </div>
@@ -43,6 +50,7 @@
                 </div>
             <% } %> 
             <button class="btn btn-success w-100">Submit</button>
+            <p class="error-message text-danger mt-1"></p>
         </form>
 
         </div>
