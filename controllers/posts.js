@@ -1,9 +1,6 @@
 const Post = require('../models/posts');
 const User = require('../models/user');
-const Quiz = require('../models/quiz');
 const Classes = require('../models/class');
-const Groups = require('../models/group');
-const Chat = require('../models/chat')
 const { cloudinary } = require('../cloudinary');
 const { formatDistanceToNow, format } = require('date-fns');
 

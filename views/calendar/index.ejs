@@ -34,40 +34,30 @@
 
         <div class="timeline">
 
-            <h3>Pending task</h3>
-            <label>23 in the last 7 hours</label>
-
+            <h3><%= currentUser.type === 'Teacher' ? 'Quizes': 'Pending task' %></h3>
             <div class="outer">
-                <div class="card">
-                    <div class="info">
-                        <h3 class="title">Activity 1 - PL1</h3>
-                        <p>Due-date: April 20, 20XX</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="info">
-                        <h3 class="title">Quiz 1- SE1</h3>
-                        <p>Due-date: May 5, 20XX</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="info">
-                        <h3 class="title">Zoom meeting in OS1</h3>
-                        <p>Meeting hour: 4:00-5-00 pm</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="info">
-                        <h3 class="title">Activity 1 - PL1</h3>
-                        <p>Due-date: April 20, 20XX</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="info">
-                        <h3 class="title">Activity 1 - PL1</h3>
-                        <p>Due-date: April 20, 20XX</p>
-                    </div>
-                </div>
+                <% if (currentUser.type === 'Teacher') {%>
+                    <% for (let quiz of quizes) {%> 
+                        <a href="/quiz/open/<%= quiz._id %>" class="card">
+                            <div class="info">
+                                <h3 class="title"><%= quiz.title %></h3>
+                                <p><%= formatDistanceToNow(Date.parse(quiz.dueDate), {addSuffix: true}) %></p>
+                            </div>
+                        </a>
+                    <% } %> 
+                <% } %> 
+
+
+                <% if (currentUser.type === 'Student') {%>
+                    <% for (let quiz of quizes) {%> 
+                        <a href="/quiz/take/<%= quiz.groupId %>/<%= quiz._id %>" class="card">
+                            <div class="info">
+                                <h3 class="title"><%= quiz.title %></h3>
+                                <p><%= formatDistanceToNow(Date.parse(quiz.dueDate), {addSuffix: true}) %></p>
+                            </div>
+                        </a>
+                    <% } %> 
+                <% } %> 
             </div>
         </div>
 
