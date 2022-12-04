@@ -48,14 +48,14 @@ app.use(methodOverride('_method'));
 
 const store = MongoStore.create({
 	mongoUrl: dbUrl,
-	secret: 'secretKey',
+	secret: process.env.SECRET || 'mongoSecret',
 	touchAfter: 24 * 60 * 60
 });
 
 const sessionConfig = {
 	name: 'session',
 	store,
-	secret: 'thisisasecretkey',
+	secret: process.env.SECRET || 'sessionSecret',
 	resave: false,
 	saveUninitialized: true,
 	secure: true,
