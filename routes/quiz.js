@@ -21,9 +21,12 @@ router.put('/edit/:id', isLoggedIn, isTeacher, catchAsync(quiz.edit))
 
 router.get('/open/:id', isLoggedIn, isTeacher, catchAsync(quiz.renderEdit))
 
+router.get('/delete/:id', isLoggedIn, isTeacher, catchAsync(quiz.delete))
+
 router.post('/open/:id/assign',isLoggedIn, isTeacher, catchAsync(quiz.assign))
 
 router.post('/open/:id/unassign', isLoggedIn, isTeacher, catchAsync(quiz.unassign))
+
 
 
 module.exports = router;

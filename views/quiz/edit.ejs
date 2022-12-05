@@ -49,7 +49,10 @@
                     </div>
                 </div>
             <% } %> 
-            <button class="btn btn-success w-100">Submit</button>
+            <div class="d-flex">
+              <button class="btn btn-success w-50 me-1">Submit</button>
+              <a href="/quiz/delete/<%= quiz._id %>" class="btn btn-danger w-50">Delete</a>
+            </div>
             <p class="error-message text-danger mt-1"></p>
         </form>
 

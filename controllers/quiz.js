@@ -232,3 +232,10 @@ module.exports.unassign = async(req, res) => {
 
     res.redirect(`/quiz/open/${id}`);
 }
+
+module.exports.delete = async (req, res) => {
+    await Quiz.deleteOne({_id: req.params.id});
+
+    req.flash('success', 'Quiz deleted!');
+    res.redirect('/quiz');
+}
